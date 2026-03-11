@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shield Sheep</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3 {
+            color: gold;
+        }
+        a {
+            color: red;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: gold;
+        }
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .cart-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cart-button:hover {
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Shield Sheep</h1>
+    </header>
+    <div class="cart">
+        <h2>Your Cart</h2>
+        <button class="cart-button">Checkout</button>
+    </div>
+    <main>
+        <h2>Product Listings</h2>
+        <p>Explore our collection of the finest shields!</p>
+        <!-- Additional product listings will go here -->
+    </main>
+    <footer>
+        <p>&copy; 2026 Shield Sheep. All rights reserved.</p>
+    </footer>
+</body>
+</html>
