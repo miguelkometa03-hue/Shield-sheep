@@ -1053,8 +1053,53 @@
         <section class="content-section" id="images">
             <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Gestión de Imágenes</h2>
 
-            <div class="form-container">
-                <h2>Subir Imagen de Producto</h2>
+            <!-- Quick Cloudinary Paste Section -->
+            <div class="form-container" style="border-color: var(--verde);">
+                <h2 style="display:flex;align-items:center;gap:0.8rem;">
+                    <i class="fas fa-link" style="color:var(--verde);"></i>
+                    Agregar Cloudinary URL Rápido
+                </h2>
+                <p style="color:var(--gris-texto);font-size:0.9rem;margin-bottom:1.5rem;">
+                    Pega un enlace de Cloudinary y asígnalo directamente a un producto existente.
+                </p>
+                <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.2);border-radius:8px;padding:1rem;margin-bottom:1.5rem;">
+                    <p style="font-size:0.8rem;color:var(--gris-texto);margin:0;line-height:1.5;">
+                        <i class="fas fa-info-circle" style="color:var(--verde);margin-right:0.4rem;"></i>
+                        Desde Cloudinary: clic derecho en imagen → <strong>"Copy Image Address"</strong>. Recomendado usar <code style="background:#222;padding:2px 6px;border-radius:4px;">f_auto,q_auto</code> en la URL.
+                    </p>
+                </div>
+
+                <form onsubmit="handleQuickCloudinaryUrl(event)">
+                    <div class="form-group-admin">
+                        <label>Selecciona Producto</label>
+                        <select id="quickImageProductSelect" required>
+                            <option value="">-- Selecciona un producto --</option>
+                        </select>
+                    </div>
+                    <div class="form-group-admin" style="margin-top:1.5rem;">
+                        <label>Cloudinary Image URL</label>
+                        <input type="url" id="quickCloudinaryUrl" placeholder="https://res.cloudinary.com/dkfqhyxqo/image/upload/f_auto,q_auto/tu-imagen.jpg" required style="width:100%;padding:0.9rem;background:rgba(255,255,255,0.05);border:2px solid #333;border-radius:8px;color:var(--blanco);font-size:0.88rem;font-family:'Montserrat',sans-serif;transition:var(--transition);">
+                    </div>
+
+                    <div id="quickUrlPreviewContainer" style="margin-top:1rem;display:none;">
+                        <p style="font-size:0.75rem;color:var(--gris-texto);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:1px;">Vista previa:</p>
+                        <img id="quickUrlPreview" style="max-width:100%;max-height:200px;border-radius:10px;border:2px solid var(--verde);object-fit:contain;">
+                    </div>
+
+                    <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+                        <button type="button" onclick="previewQuickCloudinaryUrl()" style="flex:1;padding:0.9rem;background:transparent;color:var(--oro);border:2px solid var(--oro);border-radius:8px;font-weight:700;cursor:pointer;text-transform:uppercase;font-size:0.85rem;transition:var(--transition);font-family:'Montserrat',sans-serif;" onmouseover="this.style.background='rgba(212,175,55,0.1)'" onmouseout="this.style.background='transparent'">
+                            <i class="fas fa-eye"></i> Vista Previa
+                        </button>
+                        <button type="submit" class="btn-submit" style="flex:1;">
+                            <i class="fas fa-save"></i> Asignar al Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Existing Upload Section -->
+            <div class="form-container" style="margin-top:2rem;">
+                <h2>Subir Imagen desde Archivo</h2>
                 <form onsubmit="handleImageUpload(event)">
                     <div class="form-group-admin">
                         <label>Selecciona Producto</label>
@@ -1069,7 +1114,7 @@
                             <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--oro); margin-bottom: 1rem;"></i>
                             <p>Arrastra tu imagen aquí o haz click para seleccionar</p>
                             <p style="font-size: 0.85rem; margin-top: 0.5rem;">Formato: JPG, PNG (Máx 10MB)</p>
-                            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+                            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)" style="display:none;">
                         </div>
                         <img id="imagePreview" class="image-preview" style="display: none;">
                     </div>
@@ -1217,13 +1262,53 @@
             </div>
 
             <div class="form-group-admin" style="margin-top: 1rem;">
-                <label>Imagen <span id="imageHelperText" style="color: var(--gris-texto); font-size: 0.85rem; display: none;"> (Cambiar imagen)</span></label>
-                <div class="image-upload" onclick="document.getElementById('productImage').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--oro);"></i>
-                    <p id="uploadText">Selecciona una imagen</p>
-                    <input type="file" id="productImage" accept="image/*" onchange="previewProductImage(event)">
+                <label>Imagen del Producto</label>
+
+                <!-- Tabs: Cloudinary URL / Upload -->
+                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;">
+                    <button type="button" class="tab-btn active" id="tabCloudinary" onclick="switchImageTab('cloudinary')" style="flex:1;padding:0.8rem;background:var(--oro);color:var(--negro-puro);border:2px solid var(--oro);border-radius:8px;font-weight:700;cursor:pointer;text-transform:uppercase;font-size:0.8rem;letter-spacing:1px;transition:var(--transition);font-family:'Montserrat',sans-serif;">
+                        <i class="fas fa-link"></i> Cloudinary URL
+                    </button>
+                    <button type="button" class="tab-btn" id="tabUpload" onclick="switchImageTab('upload')" style="flex:1;padding:0.8rem;background:transparent;color:var(--gris-texto);border:2px solid #333;border-radius:8px;font-weight:700;cursor:pointer;text-transform:uppercase;font-size:0.8rem;letter-spacing:1px;transition:var(--transition);font-family:'Montserrat',sans-serif;">
+                        <i class="fas fa-cloud-upload-alt"></i> Subir Archivo
+                    </button>
                 </div>
-                <img id="productImagePreview" class="image-preview" style="display: none;">
+
+                <!-- Cloudinary URL Input -->
+                <div id="cloudinaryInputPanel">
+                    <div class="form-group-admin" style="margin-bottom:0.8rem;">
+                        <label style="font-size:0.75rem;color:var(--muted,#888);text-transform:none;letter-spacing:0;">Pega tu enlace de Cloudinary aquí:</label>
+                        <input type="url" id="productCloudinaryUrl" placeholder="https://res.cloudinary.com/tu-cuenta/image/upload/f_auto,q_auto/imagen.jpg" style="width:100%;padding:0.9rem;background:rgba(255,255,255,0.05);border:2px solid #333;border-radius:8px;color:var(--blanco);font-size:0.88rem;font-family:'Montserrat',sans-serif;transition:var(--transition);">
+                    </div>
+                    <div style="background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+                        <p style="font-size:0.78rem;color:var(--gris-texto);margin:0;line-height:1.5;">
+                            <i class="fas fa-info-circle" style="color:var(--oro);margin-right:0.4rem;"></i>
+                            Tip: En Cloudinary, haz clic derecho en la imagen → <strong>"Copy URL"</strong>. Se recomienda usar <code style="background:#222;padding:2px 6px;border-radius:4px;">f_auto,q_auto</code> para optimización automática.
+                        </p>
+                    </div>
+                    <button type="button" onclick="previewCloudinaryUrl()" style="width:100%;padding:0.7rem;background:transparent;color:var(--oro);border:2px solid var(--oro);border-radius:8px;font-weight:600;cursor:pointer;font-size:0.85rem;text-transform:uppercase;transition:var(--transition);font-family:'Montserrat',sans-serif;margin-bottom:1rem;" onmouseover="this.style.background='rgba(212,175,55,0.1)'" onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-eye"></i> Vista Previa
+                    </button>
+                </div>
+
+                <!-- Upload File Panel -->
+                <div id="uploadFilePanel" style="display:none;">
+                    <div class="image-upload" onclick="document.getElementById('productImage').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:var(--oro);"></i>
+                        <p id="uploadText">Selecciona una imagen</p>
+                        <p style="font-size:0.8rem;color:var(--gris-texto);margin-top:0.5rem;">JPG, PNG, WebP — máx. 5MB</p>
+                        <input type="file" id="productImage" accept="image/*" onchange="previewProductImage(event)" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Shared Preview -->
+                <div id="productImagePreviewContainer" style="margin-top:1rem;display:none;">
+                    <p style="font-size:0.75rem;color:var(--gris-texto);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:1px;">Vista previa:</p>
+                    <img id="productImagePreview" style="max-width:100%;max-height:250px;border-radius:10px;border:2px solid var(--oro);object-fit:contain;">
+                    <button type="button" onclick="removeProductPreview()" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--rojo);color:var(--blanco);border:none;border-radius:6px;font-size:0.8rem;cursor:pointer;font-weight:600;font-family:'Montserrat',sans-serif;transition:var(--transition);" onmouseover="this.style.background='#ff0000'" onmouseout="this.style.background='var(--rojo)'">
+                        <i class="fas fa-trash"></i> Quitar imagen
+                    </button>
+                </div>
             </div>
 
             <div class="form-buttons" style="margin-top: 2rem;">
@@ -1358,9 +1443,9 @@
         document.getElementById('productSaveBtn').textContent = 'Crear Producto';
         document.getElementById('editingProductId').value = '';
         document.getElementById('productForm').reset();
-        document.getElementById('productImagePreview').style.display = 'none';
-        document.getElementById('imageHelperText').style.display = 'none';
-        document.getElementById('uploadText').textContent = 'Selecciona una imagen';
+        document.getElementById('productCloudinaryUrl').value = '';
+        document.getElementById('productImagePreviewContainer').style.display = 'none';
+        switchImageTab('cloudinary');
         document.getElementById('productModal').classList.add('active');
         setTimeout(() => document.getElementById('productName').focus(), 100);
     }
@@ -1380,7 +1465,15 @@
         const stock = parseInt(document.getElementById('productStock').value);
         const category = document.getElementById('productCategory').value;
         const imagePreview = document.getElementById('productImagePreview');
-        let image = imagePreview.src || 'https://via.placeholder.com/400x500?text=Sin+Imagen';
+        const cloudinaryUrl = document.getElementById('productCloudinaryUrl').value.trim();
+
+        // Determine image source: Cloudinary URL takes priority, then uploaded file, then placeholder
+        let image = 'https://via.placeholder.com/400x500?text=Sin+Imagen';
+        if (cloudinaryUrl && cloudinaryUrl.startsWith('https://res.cloudinary.com/')) {
+            image = cloudinaryUrl;
+        } else if (imagePreview.src && imagePreview.style.display !== 'none' && !imagePreview.src.includes('placeholder.com')) {
+            image = imagePreview.src;
+        }
 
         // Validation
         if (!name || !description || isNaN(price) || isNaN(stock) || !category) {
@@ -1443,16 +1536,22 @@
         document.getElementById('productStock').value = producto.stock;
         document.getElementById('productCategory').value = producto.category;
         document.getElementById('productImage').value = '';
+        document.getElementById('productCloudinaryUrl').value = '';
 
-        if (producto.image && !producto.image.includes('placeholder')) {
+        // Check if image is a Cloudinary URL
+        if (producto.image && producto.image.includes('res.cloudinary.com')) {
+            document.getElementById('productCloudinaryUrl').value = producto.image;
             document.getElementById('productImagePreview').src = producto.image;
-            document.getElementById('productImagePreview').style.display = 'block';
-            document.getElementById('imageHelperText').style.display = 'inline';
-            document.getElementById('uploadText').textContent = 'Cambiar imagen';
+            document.getElementById('productImagePreviewContainer').style.display = 'block';
+            switchImageTab('cloudinary');
+        } else if (producto.image && !producto.image.includes('placeholder')) {
+            // Local/uploaded image
+            document.getElementById('productImagePreview').src = producto.image;
+            document.getElementById('productImagePreviewContainer').style.display = 'block';
+            switchImageTab('upload');
         } else {
-            document.getElementById('productImagePreview').style.display = 'none';
-            document.getElementById('imageHelperText').style.display = 'none';
-            document.getElementById('uploadText').textContent = 'Selecciona una imagen';
+            document.getElementById('productImagePreviewContainer').style.display = 'none';
+            switchImageTab('cloudinary');
         }
 
         document.getElementById('productModal').classList.add('active');
@@ -1486,9 +1585,66 @@
         const reader = new FileReader();
         reader.onload = (event) => {
             document.getElementById('productImagePreview').src = event.target.result;
-            document.getElementById('productImagePreview').style.display = 'block';
+            document.getElementById('productImagePreviewContainer').style.display = 'block';
         };
         reader.readAsDataURL(file);
+    }
+
+    // ==================== CLOUDINARY URL HANDLING ====================
+    let currentImageSource = 'cloudinary'; // 'cloudinary' or 'upload'
+
+    function switchImageTab(tab) {
+        currentImageSource = tab;
+        const tabCloudinary = document.getElementById('tabCloudinary');
+        const tabUpload     = document.getElementById('tabUpload');
+        const cloudPanel    = document.getElementById('cloudinaryInputPanel');
+        const uploadPanel   = document.getElementById('uploadFilePanel');
+
+        if (tab === 'cloudinary') {
+            tabCloudinary.style.background    = 'var(--oro)';
+            tabCloudinary.style.color         = 'var(--negro-puro)';
+            tabCloudinary.style.borderColor   = 'var(--oro)';
+            tabUpload.style.background        = 'transparent';
+            tabUpload.style.color             = 'var(--gris-texto)';
+            tabUpload.style.borderColor       = '#333';
+            cloudPanel.style.display          = 'block';
+            uploadPanel.style.display         = 'none';
+        } else {
+            tabUpload.style.background        = 'var(--oro)';
+            tabUpload.style.color             = 'var(--negro-puro)';
+            tabUpload.style.borderColor       = 'var(--oro)';
+            tabCloudinary.style.background    = 'transparent';
+            tabCloudinary.style.color         = 'var(--gris-texto)';
+            tabCloudinary.style.borderColor   = '#333';
+            uploadPanel.style.display         = 'block';
+            cloudPanel.style.display          = 'none';
+        }
+    }
+
+    function previewCloudinaryUrl() {
+        const url = document.getElementById('productCloudinaryUrl').value.trim();
+        if (!url) {
+            showToast('⚠️ Pega un enlace de Cloudinary primero', 'warning');
+            return;
+        }
+
+        // Basic URL validation
+        if (!url.startsWith('https://res.cloudinary.com/')) {
+            showToast('❌ URL no válida. Debe ser de res.cloudinary.com', 'error');
+            return;
+        }
+
+        // Show preview
+        document.getElementById('productImagePreview').src = url;
+        document.getElementById('productImagePreviewContainer').style.display = 'block';
+        showToast('✅ Imagen cargada correctamente', 'success');
+    }
+
+    function removeProductPreview() {
+        document.getElementById('productImagePreview').src = '';
+        document.getElementById('productImagePreviewContainer').style.display = 'none';
+        document.getElementById('productCloudinaryUrl').value = '';
+        document.getElementById('productImage').value = '';
     }
 
     // ==================== PRICES ====================
@@ -1600,10 +1756,70 @@
         document.getElementById('imageProductSelect').value = '';
     }
 
+    // ==================== QUICK CLOUDINARY URL HANDLER ====================
+    function handleQuickCloudinaryUrl(e) {
+        e.preventDefault();
+
+        const productId = parseInt(document.getElementById('quickImageProductSelect').value);
+        const cloudinaryUrl = document.getElementById('quickCloudinaryUrl').value.trim();
+
+        if (!productId || !cloudinaryUrl) {
+            showToast('⚠️ Selecciona un producto y pega la URL', 'warning');
+            return;
+        }
+
+        if (!cloudinaryUrl.startsWith('https://res.cloudinary.com/')) {
+            showToast('❌ URL no válida. Debe ser de res.cloudinary.com', 'error');
+            return;
+        }
+
+        const producto = productos.find(p => p.id === productId);
+        if (!producto) {
+            showToast('❌ Producto no encontrado', 'error');
+            return;
+        }
+
+        producto.image = cloudinaryUrl;
+        saveProductos();
+        renderProducts();
+        renderPriceTable();
+        renderImageProductSelect();
+
+        showToast('✅ Imagen asignada correctamente', 'success');
+
+        // Reset form
+        document.getElementById('quickImageProductSelect').value = '';
+        document.getElementById('quickCloudinaryUrl').value = '';
+        document.getElementById('quickUrlPreviewContainer').style.display = 'none';
+    }
+
+    function previewQuickCloudinaryUrl() {
+        const url = document.getElementById('quickCloudinaryUrl').value.trim();
+        if (!url) {
+            showToast('⚠️ Pega un enlace de Cloudinary primero', 'warning');
+            return;
+        }
+
+        if (!url.startsWith('https://res.cloudinary.com/')) {
+            showToast('❌ URL no válida. Debe ser de res.cloudinary.com', 'error');
+            return;
+        }
+
+        document.getElementById('quickUrlPreview').src = url;
+        document.getElementById('quickUrlPreviewContainer').style.display = 'block';
+        showToast('✅ Imagen cargada correctamente', 'success');
+    }
+
+    // ==================== IMAGE PRODUCT SELECT ====================
     function renderImageProductSelect() {
         const select = document.getElementById('imageProductSelect');
-        select.innerHTML = '<option value="">-- Selecciona un producto --</option>' +
+        const quickSelect = document.getElementById('quickImageProductSelect');
+
+        const options = '<option value="">-- Selecciona un producto --</option>' +
             productos.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+
+        if (select) select.innerHTML = options;
+        if (quickSelect) quickSelect.innerHTML = options;
     }
 
     // ==================== SETTINGS ====================
