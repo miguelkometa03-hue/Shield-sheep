@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Shield Sheep - Ropa personalizada de fe. Camisetas, sudaderas y accesorios con símbolos hebreos de alta calidad.">
     <meta name="keywords" content="ropa personalizada, fe, hebreo, camisetas, sudaderas, Bogotá">
     <meta name="theme-color" content="#d4af37">
@@ -53,6 +53,51 @@
             color: var(--blanco);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--oro);
+            color: var(--negro-puro);
+            padding: 0.8rem 1.5rem;
+            border-radius: 0 0 8px 8px;
+            z-index: 9999;
+            font-weight: 700;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Focus-visible for keyboard navigation */
+        *:focus-visible {
+            outline: 3px solid var(--oro);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+
+        button:focus:not(:focus-visible),
+        a:focus:not(:focus-visible) {
+            outline: none;
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .hero-content { animation: none; }
+            .cart-badge { animation: none; }
         }
 
         /* ==================== HEADER ==================== */
@@ -65,6 +110,7 @@
             z-index: 1000;
             border-bottom: 3px solid var(--oro);
             box-shadow: 0 4px 20px rgba(212,175,55,0.1);
+            padding-top: max(1rem, env(safe-area-inset-top));
         }
 
         .header-wrapper {
@@ -89,9 +135,12 @@
             gap: 0.5rem;
             text-decoration: none;
             transition: var(--transition);
+            min-height: 44px;
+            padding: 0.25rem 0;
         }
 
         .logo:hover { transform: scale(1.05); text-shadow: 0 0 20px rgba(212,175,55,0.5); }
+        .logo:active { transform: scale(0.98); }
 
         nav { display: flex; align-items: center; gap: 3rem; }
 
@@ -142,17 +191,20 @@
 
         .hamburger {
             display: none;
-            background: none;
+            background: transparent;
             border: 2px solid var(--oro);
             color: var(--oro);
             font-size: 1.3rem;
-            padding: 0.4rem 0.7rem;
+            padding: 0.6rem 0.8rem;
             border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
+            min-width: 44px;
+            min-height: 44px;
         }
 
         .hamburger:hover { background: var(--oro); color: var(--negro-puro); }
+        .hamburger:active { transform: scale(0.95); }
 
         .mobile-nav {
             display: none;
@@ -195,6 +247,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            min-height: 44px;
         }
 
         .cart-btn:hover {
@@ -203,6 +256,8 @@
             box-shadow: 0 0 20px rgba(212,175,55,0.4);
             transform: translateY(-2px);
         }
+
+        .cart-btn:active { transform: translateY(0) scale(0.98); }
 
         .cart-badge {
             position: absolute;
@@ -227,9 +282,10 @@
 
         /* ==================== HERO ==================== */
         .hero {
-            height: 85vh;
+            min-height: 85vh;
+            min-height: 85dvh;
             background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(193,18,31,0.3)),
-                        url('https://images.unsplash.com/photo-1552062407-291826ad53f3?w=1600&q=80') center/cover;
+                        url('https://images.unsplash.com/photo-1552062407-291826ad53f3?w=1600&q=80') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -621,6 +677,7 @@
             height: 100%;
             object-fit: cover;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 3 / 4;
         }
 
         .gallery-item::after {
@@ -686,11 +743,13 @@
             cursor: pointer; font-size: 1.8rem; color: var(--oro);
             transition: var(--transition); font-weight: 700;
             background: none; border: none;
-            width: 40px; height: 40px;
+            width: 44px; height: 44px;
             display: flex; align-items: center; justify-content: center;
+            border-radius: 6px;
         }
 
         .close-cart:hover { color: var(--rojo); transform: rotate(90deg); }
+        .close-cart:active { transform: rotate(90deg) scale(0.95); }
 
         #cart-items-list { flex-grow: 1; overflow-y: auto; margin-bottom: 1.5rem; }
         #cart-items-list::-webkit-scrollbar { width: 8px; }
@@ -716,22 +775,27 @@
 
         .qty-btn {
             background: #333; border: 1px solid #555; color: var(--blanco);
-            width: 22px; height: 22px; border-radius: 4px;
-            cursor: pointer; font-size: 0.9rem;
+            width: 32px; height: 32px; border-radius: 6px;
+            cursor: pointer; font-size: 1rem;
             display: flex; align-items: center; justify-content: center;
             transition: var(--transition);
         }
 
         .qty-btn:hover { background: var(--oro); color: var(--negro-puro); border-color: var(--oro); }
+        .qty-btn:active { transform: scale(0.95); }
         .qty-num { font-size: 0.85rem; color: var(--blanco); min-width: 16px; text-align: center; }
 
         .remove-btn {
             background: none; border: none; color: var(--rojo);
-            cursor: pointer; font-size: 1.1rem;
-            transition: var(--transition); padding: 2px;
+            cursor: pointer; font-size: 1.2rem;
+            transition: var(--transition); padding: 6px;
+            min-width: 44px; min-height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 6px;
         }
 
-        .remove-btn:hover { color: #ff6b6b; transform: scale(1.2); }
+        .remove-btn:hover { color: #ff6b6b; transform: scale(1.1); }
+        .remove-btn:active { transform: scale(0.95); }
 
         #cart-total {
             padding: 1.5rem;
