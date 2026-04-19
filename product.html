@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title id="pageTitle">Producto | Shield Sheep</title>
+    <meta name="description" id="pageDesc" content="Descubre la historia cultural detrás de esta prenda Shield Sheep.">
+
+    <!-- OG dinámico — se llena con JS -->
+    <meta property="og:title"       id="ogTitle"  content="Shield Sheep">
+    <meta property="og:description" id="ogDesc"   content="">
+    <meta property="og:image"       id="ogImage"  content="">
+    <meta property="og:type"        content="product">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ============================================================
+         🎨 ZONA CSS — separar en product-style.css
+         ============================================================ -->
+    <style>
+        :root {
+            --oro:        #d4af37;
+            --oro-claro:  #e8c84a;
+            --rojo:       #C1121F;
+            --negro:      #000000;
+            --negro-soft: #0d0d0d;
+            --panel:      #111111;
+            --panel2:     #1a1a1a;
+            --borde:      #2a2a2a;
+            --texto:      #e0e0e0;
+            --muted:      #888888;
+            --blanco:     #ffffff;
+            --verde:      #2ecc71;
+            --tr:         all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--negro);
+            color: var(--texto);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: rgba(0,0,0,0.96);
+            border-bottom: 2px solid var(--oro);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-link {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--oro);
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-weight: 700;
+            transition: var(--tr);
+        }
+
+        .logo-link:hover { text-shadow: 0 0 20px rgba(212,175,55,0.6); }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--tr);
+        }
+
+        .back-btn:hover { color: var(--oro); }
+
+        .cart-btn-header {
+            position: relative;
+            background: var(--oro);
+            color: var(--negro);
+            border: 2px solid var(--oro);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cart-btn-header:hover { background: transparent; color: var(--oro); }
+
+        .cart-badge-hdr {
+            position: absolute;
+            top: -10px; right: -10px;
+            background: var(--rojo);
+            color: #fff;
+            border-radius: 50%;
+            width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: 2px solid var(--negro);
+        }
+
+        /* ── BREADCRUMB ── */
+        .breadcrumb {
+            padding: 1rem 2rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--borde);
+            background: var(--negro-soft);
+        }
+
+        .breadcrumb a { color: var(--oro); text-decoration: none; transition: var(--tr); }
+        .breadcrumb a:hover { color: var(--oro-claro); }
+        .breadcrumb .sep { color: #444; }
+
+        /* ── PRODUCT LAYOUT ── */
+        .product-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            align-items: start;
+        }
+
+        /* ── GALERÍA ── */
+        .gallery-col { position: sticky; top: 90px; }
+
+        .main-image-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--borde);
+            background: var(--panel);
+            aspect-ratio: 4/5;
+            cursor: zoom-in;
+        }
+
+        .main-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .main-image-wrap:hover img { transform: scale(1.05); }
+
+        .gallery-badge {
+            position: absolute;
+            top: 16px; left: 16px;
+            background: var(--rojo);
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .thumbs {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--borde);
+            cursor: pointer;
+            transition: var(--tr);
+            flex-shrink: 0;
+        }
+
+        .thumb:hover, .thumb.active { border-color: var(--oro); }
+
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ── INFO COL ── */
+        .info-col { padding-left: 3rem; }
+
+        .product-category-tag {
+            display: inline-block;
+            background: rgba(212,175,55,0.12);
+            color: var(--oro);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--blanco);
+            line-height: 1.15;
+            margin-bottom: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .product-rating-row {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .stars-display { color: var(--oro); letter-spacing: 2px; font-size: 1rem; }
+
+        .product-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--oro);
+            font-family: 'Cinzel', serif;
+        }
+
+        .price-note {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        /* ── SEPARADOR ── */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--borde);
+            margin: 1.8rem 0;
+        }
+
+        /* ── DESCRIPCIÓN CORTA ── */
+        .short-desc {
+            color: var(--texto);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── SELECTOR DE TALLA ── */
+        .selector-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--muted);
+            margin-bottom: 0.7rem;
+            display: block;
+        }
+
+        .talla-grid {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .talla-opt {
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent;
+            border: 2px solid var(--borde);
+            border-radius: 8px;
+            color: var(--texto);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .talla-opt:hover { border-color: var(--oro); color: var(--oro); }
+        .talla-opt.selected { border-color: var(--oro); background: rgba(212,175,55,0.15); color: var(--oro); }
+        .talla-opt.agotada { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+        /* ── CANTIDAD ── */
+        .qty-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 2px solid var(--borde);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            background: var(--panel);
+            border: none;
+            color: var(--texto);
+            width: 40px; height: 44px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .qty-btn:hover { background: var(--oro); color: var(--negro); }
+
+        .qty-num {
+            width: 50px; height: 44px;
+            text-align: center;
+            background: var(--panel2);
+            border: none;
+            color: var(--blanco);
+            font-size: 1rem;
+            font-weight: 700;
+            border-left: 1px solid var(--borde);
+            border-right: 1px solid var(--borde);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ── BOTONES CTA ── */
+        .cta-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-add-cart-main {
+            flex: 1;
+            padding: 1.1rem;
+            background: var(--oro);
+            color: var(--negro);
+            border: 2px solid var(--oro);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add-cart-main:hover {
+            background: transparent;
+            color: var(--oro);
+            box-shadow: 0 0 30px rgba(212,175,55,0.3);
+        }
+
+        .btn-custom-order {
+            padding: 1.1rem 1.5rem;
+            background: transparent;
+            color: var(--rojo);
+            border: 2px solid var(--rojo);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .btn-custom-order:hover { background: var(--rojo); color: #fff; }
+
+        /* ── FEATURES ── */
+        .features-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.84rem;
+            color: var(--muted);
+        }
+
+        .feature-item i { color: var(--oro); font-size: 0.9rem; }
+
+        /* ── TABS HISTORIA / SPECS ── */
+        .tabs-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 2px solid var(--borde);
+            margin-bottom: 0;
+            gap: 0;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .tab-btn:hover { color: var(--oro); }
+        .tab-btn.active { color: var(--oro); border-bottom-color: var(--oro); }
+
+        .tab-panel { display: none; padding: 3rem 0; }
+        .tab-panel.active { display: block; animation: fadeInTab 0.4s ease; }
+
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── TAB: HISTORIA CULTURAL ── */
+        .historia-hero {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 300px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--borde);
+        }
+
+        .historia-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        .historia-hero-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+        }
+
+        .historia-hero-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--oro);
+            margin-bottom: 0.5rem;
+        }
+
+        .historia-hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--blanco);
+            line-height: 1.2;
+        }
+
+        /* Cuerpo editorial de la historia */
+        .historia-body {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .historia-text {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.15rem;
+            line-height: 1.95;
+            color: var(--texto);
+        }
+
+        .historia-text p { margin-bottom: 1.4rem; }
+
+        .historia-text p:first-child::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--oro);
+            float: left;
+            line-height: 0.8;
+            margin-right: 0.15em;
+            margin-top: 0.1em;
+        }
+
+        .historia-text blockquote {
+            border-left: 4px solid var(--oro);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--oro);
+            font-size: 1.2rem;
+        }
+
+        .historia-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-card {
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .simbolo-hebreo {
+            font-size: 4rem;
+            text-align: center;
+            padding: 1rem 0;
+            color: var(--oro);
+            letter-spacing: 8px;
+        }
+
+        .simbolo-label {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .timeline {
+            list-style: none;
+        }
+
+        .timeline li {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1.2rem;
+            border-left: 2px solid var(--borde);
+            margin-left: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: -6px; top: 4px;
+            width: 10px; height: 10px;
+            background: var(--oro);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .timeline li:last-child { border-left-color: transparent; }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--oro);
+            font-size: 0.82rem;
+            white-space: nowrap;
+            min-width: 55px;
+        }
+
+        .timeline-text {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── TAB: ESPECIFICACIONES ── */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .spec-card {
+            background: var(--panel);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: var(--tr);
+        }
+
+        .spec-card:hover { border-color: var(--oro); }
+
+        .spec-card-title {
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--borde);
+            font-size: 0.87rem;
+        }
+
+        .spec-row:last-child { border-bottom: none; }
+        .spec-key   { color: var(--muted); }
+        .spec-value { color: var(--texto); font-weight: 500; }
+
+        /* ── PRODUCTOS RELACIONADOS ── */
+        .related-section {
+            background: var(--negro-soft);
+            border-top: 1px solid var(--borde);
+            padding: 4rem 2rem;
+        }
+
+        .related-section h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .related-card {
+            background: var(--panel);
+            border: 2px solid var(--borde);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--tr);
+            text-decoration: none;
+        }
+
+        .related-card:hover {
+            border-color: var(--rojo);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(193,18,31,0.2);
+        }
+
+        .related-card img {
+            width: 100%; height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: var(--tr);
+        }
+
+        .related-card:hover img { transform: scale(1.08); }
+
+        .related-info { padding: 1rem; }
+        .related-name  { color: var(--oro); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .related-price { color: var(--verde); font-weight: 700; font-size: 1rem; }
+
+        /* ── CARRITO SIDEBAR ── */
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1999;
+        }
+
+        .cart-overlay.active { display: block; }
+
+        #cart-sidebar {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+            z-index: 2000;
+            padding: 2rem;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.9);
+            transition: var(--tr);
+            display: flex;
+            flex-direction: column;
+            border-left: 3px solid var(--oro);
+            overflow-y: auto;
+        }
+
+        #cart-sidebar.active { right: 0; }
+
+        .cart-hdr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--oro);
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-hdr h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+
+        .close-cart-btn {
+            background: none;
+            border: none;
+            color: var(--oro);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: var(--tr);
+            line-height: 1;
+        }
+
+        .close-cart-btn:hover { color: var(--rojo); transform: rotate(90deg); }
+
+        .cart-items-list { flex: 1; overflow-y: auto; margin-bottom: 1rem; }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+            background: #1e1e1e;
+            padding: 0.9rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--rojo);
+            margin-bottom: 0.8rem;
+        }
+
+        .cart-item-info { flex: 1; }
+        .cart-item-name  { font-size: 0.88rem; color: var(--blanco); font-weight: 500; }
+        .cart-item-sub   { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+        .cart-item-price { color: var(--oro); font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+
+        .cart-qty-ctrl {
+            display: flex; align-items: center; gap: 4px; margin-top: 5px;
+        }
+
+        .cqb {
+            background: #333; border: none; color: #fff;
+            width: 20px; height: 20px; border-radius: 4px;
+            cursor: pointer; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--tr);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cqb:hover { background: var(--oro); color: var(--negro); }
+        .cqn { font-size: 0.82rem; min-width: 16px; text-align: center; color: #fff; }
+
+        .cart-remove {
+            background: none; border: none; color: var(--rojo);
+            cursor: pointer; font-size: 1rem; transition: var(--tr);
+        }
+
+        .cart-remove:hover { color: #ff6b6b; transform: scale(1.2); }
+
+        .cart-total {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 1rem 0;
+            border-top: 2px solid var(--oro);
+            border-bottom: 2px solid var(--oro);
+            margin-bottom: 0.8rem;
+        }
+
+        .cart-note {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 1rem;
+            background: var(--rojo);
+            color: #fff;
+            border: 2px solid var(--rojo);
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--tr);
+            margin-bottom: 0.6rem;
+        }
+
+        .btn-checkout:hover { background: transparent; color: var(--rojo); }
+
+        .btn-empty-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--tr);
+        }
+
+        .btn-empty-cart:hover { color: var(--rojo); border-color: var(--rojo); }
+
+        .empty-cart-msg {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            padding: 1rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 3000;
+            animation: slideInR 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        .toast.success { background: var(--verde); color: #fff; }
+        .toast.warning { background: #f39c12; color: #fff; }
+        .toast.error   { background: var(--rojo); color: #fff; }
+
+        @keyframes slideInR  { from { opacity:0; transform: translateX(80px); } to { opacity:1; transform: translateX(0); } }
+        @keyframes slideOutR { from { opacity:1; transform: translateX(0); }    to { opacity:0; transform: translateX(80px); } }
+
+        /* ── FOOTER ── */
+        .footer-mini {
+            background: #000;
+            border-top: 3px solid var(--oro);
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .footer-mini a {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--oro);
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        .footer-mini p {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .product-layout { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+            .gallery-col { position: static; }
+            .info-col { padding-left: 0; padding-top: 2rem; }
+            .historia-body { grid-template-columns: 1fr; }
+            .historia-sidebar { position: static; }
+        }
+
+        @media (max-width: 768px) {
+            .product-title { font-size: 1.8rem; }
+            .cta-row { flex-direction: column; }
+            .tabs-nav { overflow-x: auto; }
+            .tab-btn { padding: 0.8rem 1.2rem; font-size: 0.82rem; }
+            #cart-sidebar { width: 100%; right: -100%; }
+            .features-list { grid-template-columns: 1fr; }
+            .historia-hero-title { font-size: 1.4rem; }
+            header { padding: 0.8rem 1rem; }
+            .logo-link { font-size: 1.2rem; }
+        }
+    </style>
+    <!-- ============================================================
+         FIN ZONA CSS
+         ============================================================ -->
+</head>
+<body>
+
+<!-- ── OVERLAY CARRITO ── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- ============================================================
+     🏗️ ZONA HTML — separar en product.html
+     ============================================================ -->
+
+<!-- HEADER -->
+<header>
+    <a href="index.html" class="logo-link">🐑 Shield Sheep</a>
+    <div class="header-right">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Volver a la tienda
+        </a>
+        <button class="cart-btn-header" onclick="toggleCart()">
+            🛒 <span id="cartCount">0</span>
+            <span class="cart-badge-hdr" id="cartBadge" style="display:none;">0</span>
+        </button>
+    </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a href="index.html">Inicio</a>
+    <span class="sep">›</span>
+    <a href="index.html#productos">Tienda</a>
+    <span class="sep">›</span>
+    <span id="breadcrumbName">Producto</span>
+</div>
+
+<!-- LAYOUT PRINCIPAL -->
+<div class="product-layout">
+
+    <!-- GALERÍA -->
+    <div class="gallery-col">
+        <div class="main-image-wrap">
+            <img id="mainImage" src="https://via.placeholder.com/600x750/1a1a1a/d4af37?text=Shield+Sheep" alt="Producto">
+            <span class="gallery-badge" id="galleryBadge" style="display:none;"></span>
+        </div>
+        <div class="thumbs" id="thumbsRow"></div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-col">
+        <span class="product-category-tag" id="productCategory">Categoría</span>
+
+        <h1 class="product-title" id="productName">Nombre del producto</h1>
+
+        <div class="product-rating-row">
+            <span class="stars-display" id="starsDisplay">★★★★★</span>
+            <span id="ratingText">(5 / 5) — 28 reseñas</span>
+        </div>
+
+        <div class="product-price-row">
+            <span class="price-main" id="productPrice">$0</span>
+        </div>
+        <p class="price-note">IVA incluido · Envío calculado al finalizar</p>
+
+        <hr class="divider">
+
+        <p class="short-desc" id="shortDesc">Descripción del producto.</p>
+
+        <hr class="divider">
+
+        <!-- TALLAS -->
+        <span class="selector-label">Selecciona tu talla</span>
+        <div class="talla-grid" id="tallaGrid">
+            <button class="talla-opt" onclick="selectTalla(this)">XS</button>
+            <button class="talla-opt" onclick="selectTalla(this)">S</button>
+            <button class="talla-opt" onclick="selectTalla(this)">M</button>
+            <button class="talla-opt" onclick="selectTalla(this)">L</button>
+            <button class="talla-opt" onclick="selectTalla(this)">XL</button>
+            <button class="talla-opt" onclick="selectTalla(this)">2XL</button>
+            <button class="talla-opt" onclick="selectTalla(this)">3XL</button>
+        </div>
+
+        <!-- CANTIDAD -->
+        <span class="selector-label">Cantidad</span>
+        <div class="qty-row">
+            <div class="qty-ctrl">
+                <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                <input class="qty-num" type="number" id="qtyInput" value="1" min="1" max="99" readonly>
+                <button class="qty-btn" onclick="changeQty(1)">+</button>
+            </div>
+            <span style="font-size:0.82rem;color:var(--muted);" id="stockInfo">En stock</span>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-row">
+            <button class="btn-add-cart-main" onclick="addToCart()">
+                <i class="fas fa-shopping-bag"></i> Añadir al carrito
+            </button>
+            <a href="custom-order.html" class="btn-custom-order">
+                <i class="fas fa-paint-brush"></i> Personalizar
+            </a>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features-list">
+            <div class="feature-item"><i class="fas fa-check-circle"></i> 100% algodón premium</div>
+            <div class="feature-item"><i class="fas fa-check-circle"></i> Serigrafía de alta definición</div>
+            <div class="feature-item"><i class="fas fa-truck"></i> Envío a toda Colombia</div>
+            <div class="feature-item"><i class="fas fa-undo"></i> 30 días de garantía</div>
+            <div class="feature-item"><i class="fas fa-shield-alt"></i> Diseño exclusivo Shield Sheep</div>
+            <div class="feature-item"><i class="fas fa-star"></i> Símbolos hebreos auténticos</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABS: HISTORIA + ESPECIFICACIONES -->
+<div class="tabs-section">
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('historia', this)">
+            📜 Historia Cultural
+        </button>
+        <button class="tab-btn" onclick="switchTab('specs', this)">
+            📋 Especificaciones
+        </button>
+    </div>
+
+    <!-- ── TAB HISTORIA ── -->
+    <div class="tab-panel active" id="tab-historia">
+        <div class="historia-hero">
+            <img id="historiaHeroImg" src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=1200&q=80" alt="Historia">
+            <div class="historia-hero-overlay">
+                <div class="historia-hero-label">Trasfondo Histórico y Cultural</div>
+                <div class="historia-hero-title" id="historiaTitulo">El origen de esta prenda</div>
+            </div>
+        </div>
+
+        <div class="historia-body">
+            <!-- TEXTO LARGO EDITABLE DESDE EL ADMIN -->
+            <div class="historia-text" id="historiaTexto">
+                <!-- Texto placeholder — se reemplaza dinámicamente desde el catálogo -->
+                <p>La historia de este diseño nace en las antiguas escrituras hebreas, donde cada símbolo porta un significado que trasciende lo meramente decorativo para convertirse en una declaración de identidad, fe y pertenencia cultural. Shield Sheep nació precisamente de ese deseo: llevar sobre el cuerpo algo que signifique, que cuente, que recuerde.</p>
+                <blockquote>"Cada prenda es un pergamino vivo — una historia que camina contigo."</blockquote>
+                <p>Los símbolos hebreos que adornan esta prenda han sido seleccionados con rigor histórico, consultando fuentes primarias de la tradición semítica. No son simples adornos tipográficos: son portadores de una cosmovisión que durante milenios ha conectado a comunidades dispersas por el mundo a través del hilo invisible de la fe compartida.</p>
+                <p>En la cultura hebrea antigua, la vestimenta nunca fue trivial. Desde los tzitzit — flecos sagrados — hasta los mantos de los profetas, cada prenda comunicaba pertenencia, vocación y pacto. Shield Sheep retoma esa tradición y la proyecta al lenguaje contemporáneo del diseño urbano, creando prendas que son simultáneamente artefactos culturales y piezas de moda.</p>
+            </div>
+
+            <!-- SIDEBAR DE HISTORIA -->
+            <div class="historia-sidebar">
+                <div class="sidebar-card">
+                    <h4>Símbolo Principal</h4>
+                    <div class="simbolo-hebreo" id="simboloHebreo">שׁ</div>
+                    <div class="simbolo-label" id="simboloNombre">Shin — "Fuego eterno"</div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>Línea del Tiempo</h4>
+                    <ul class="timeline">
+                        <li>
+                            <span class="timeline-year">~1200 a.C.</span>
+                            <span class="timeline-text">Primeras inscripciones del símbolo en el alfabeto proto-sinaítico.</span>
+                        </li>
+                        <li>
+                            <span class="timeline-year">500 a.C.</span>
+                            <span class="timeline-text">Consolidación en los textos del Segundo Templo de Jerusalén.</span>
+                        </li>
+                        <li>
+                            <span class="timeline-year">S. I d.C.</span>
+                            <span class="timeline-text">Difusión por la diáspora judía hacia el Mediterráneo y más allá.</span>
+                        </li>
+                        <li>
+                            <span class="timeline-year">Hoy</span>
+                            <span class="timeline-text">Reinterpretado por Shield Sheep como símbolo de identidad viva.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>¿Quieres este diseño personalizado?</h4>
+                    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">
+                        Elige tu símbolo hebreo, color y estilo. Hacemos tu prenda a medida.
+                    </p>
+                    <a href="custom-order.html"
+                       style="display:block;text-align:center;padding:0.9rem;background:var(--rojo);color:#fff;border-radius:8px;font-weight:700;text-transform:uppercase;font-size:0.82rem;text-decoration:none;transition:var(--tr);"
+                       onmouseover="this.style.background='transparent';this.style.color='var(--rojo)';this.style.outline='2px solid var(--rojo)'"
+                       onmouseout="this.style.background='var(--rojo)';this.style.color='#fff';this.style.outline='none'">
+                        Hacer pedido personalizado
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── TAB ESPECIFICACIONES ── -->
+    <div class="tab-panel" id="tab-specs">
+        <div class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-card-title"><i class="fas fa-tshirt"></i> Material</div>
+                <div class="spec-row"><span class="spec-key">Composición</span>     <span class="spec-value" id="specMaterial">100% Algodón</span></div>
+                <div class="spec-row"><span class="spec-key">Gramaje</span>         <span class="spec-value" id="specGramaje">220 g/m²</span></div>
+                <div class="spec-row"><span class="spec-key">Tejido</span>          <span class="spec-value" id="specTejido">Jersey peinado</span></div>
+                <div class="spec-row"><span class="spec-key">Certificación</span>   <span class="spec-value">OEKO-TEX Standard</span></div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-card-title"><i class="fas fa-paint-brush"></i> Impresión</div>
+                <div class="spec-row"><span class="spec-key">Técnica</span>         <span class="spec-value" id="specTecnica">Serigrafía</span></div>
+                <div class="spec-row"><span class="spec-key">Colores</span>         <span class="spec-value" id="specColores">Hasta 4 tintas</span></div>
+                <div class="spec-row"><span class="spec-key">Durabilidad</span>     <span class="spec-value">50+ lavados</span></div>
+                <div class="spec-row"><span class="spec-key">Resistencia UV</span> <span class="spec-value">Alta</span></div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-card-title"><i class="fas fa-ruler"></i> Tallas disponibles</div>
+                <div class="spec-row"><span class="spec-key">Rango</span>           <span class="spec-value">XS — 3XL</span></div>
+                <div class="spec-row"><span class="spec-key">Corte</span>           <span class="spec-value" id="specCorte">Regular fit</span></div>
+                <div class="spec-row"><span class="spec-key">Cuello</span>          <span class="spec-value" id="specCuello">Redondo reforzado</span></div>
+                <div class="spec-row"><span class="spec-key">Origen</span>          <span class="spec-value">Colombia</span></div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-card-title"><i class="fas fa-hand-sparkles"></i> Cuidados</div>
+                <div class="spec-row"><span class="spec-key">Lavado</span>          <span class="spec-value">30°C, suave</span></div>
+                <div class="spec-row"><span class="spec-key">Secado</span>          <span class="spec-value">Tendido natural</span></div>
+                <div class="spec-row"><span class="spec-key">Plancha</span>         <span class="spec-value">Sin plancha directa en diseño</span></div>
+                <div class="spec-row"><span class="spec-key">Bleach</span>          <span class="spec-value">No usar</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCTOS RELACIONADOS -->
+<div class="related-section">
+    <h2>También te puede interesar</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-mini">
+    <a href="index.html">🐑 Shield Sheep</a>
+    <p>&copy; 2026 Shield Sheep · Bogotá, Colombia · Wear Your Faith</p>
+</div>
+
+<!-- CARRITO SIDEBAR -->
+<div id="cart-sidebar">
+    <div class="cart-hdr">
+        <h3>Tu Carrito</h3>
+        <button class="close-cart-btn" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items-list" id="cartItemsList"></div>
+    <div class="cart-total" id="cartTotal">Total: $0</div>
+    <p class="cart-note">Envío calculado al finalizar</p>
+    <button class="btn-checkout" onclick="checkout()">
+        <i class="fas fa-whatsapp"></i> Finalizar por WhatsApp
+    </button>
+    <button class="btn-empty-cart" onclick="clearCart()">Vaciar carrito</button>
+</div>
+
+<!-- FIN ZONA HTML -->
+
+<!-- ============================================================
+     ⚙️ ZONA JS — separar en product.js
+     ============================================================ -->
+<script>
+// ── CATÁLOGO (sincronizado con index.html) ──────────────────────────
+// Idealmente este array viviría en un archivo catalogo.js compartido
+const CATALOGO = [
+    {
+        id: 1,
+        name:        "Camiseta Classic White",
+        price:       35000,
+        category:    "Camisetas",
+        badge:       "Bestseller",
+        rating:      5,
+        stock:       10,
+        description: "100% algodón premium. Corte regular fit, cuello redondo reforzado. Diseño con símbolo hebreo impreso en serigrafía de alta definición.",
+        images: [
+            "images/shirt1.jpg",
+            "images/shirt1.jpg",
+            "images/shirt1.jpg"
+        ],
+        // ── HISTORIA CULTURAL (editable desde admin) ──
+        historiaTitle:  "El Shin — La Llama que nunca se apaga",
+        historiaTexto:  `<p>La letra Shin (שׁ) es una de las más sagradas del alefato hebreo. Grabada en las mezuzot de las puertas judías desde hace tres milenios, su forma —tres líneas que ascienden desde una base común— representa la llama trina de la fe: estudio, oración y buenas obras.</p>
+<blockquote>"Shema Israel — Escucha, Israel: el Señor es nuestro Dios, el Señor es Uno."</blockquote>
+<p>Shield Sheep recuperó este símbolo no como adorno tipográfico sino como declaración. Usarla sobre el pecho es recordar que la identidad no es accidental: es elegida, cultivada, transmitida. Cada persona que viste esta camiseta lleva consigo siglos de resistencia cultural y espiritual.</p>
+<p>En la tradición Cabalística, el Shin corresponde al elemento fuego y al número 300. Es la inicial de Shaddai (Todopoderoso) y de Shalom (Paz). Pocas letras concentran tanta densidad simbólica en una forma tan sencilla y poderosa.</p>`,
+        simbolo:       "שׁ",
+        simboloNombre: "Shin — Fuego eterno / 300",
+        timeline: [
+            { year: "~1200 a.C.", text: "Primeras inscripciones en el alfabeto proto-sinaítico." },
+            { year: "  900 a.C.", text: "Incorporación al hebreo antiguo del Primer Templo." },
+            { year: "  500 a.C.", text: "Fijación en los textos del Segundo Templo." },
+            { year: "     Hoy",   text: "Reinterpretado por Shield Sheep como símbolo de fe viva." }
+        ],
+        specs: { material: "100% Algodón peinado", gramaje: "220 g/m²", tejido: "Jersey peinado", tecnica: "Serigrafía 4 tintas", colores: "4 tintas plastisol", corte: "Regular fit", cuello: "Redondo reforzado" }
+    },
+    {
+        id: 2,
+        name:        "Camiseta Black Faith",
+        price:       35000,
+        category:    "Camisetas",
+        badge:       "Popular",
+        rating:      5,
+        stock:       8,
+        description: "Algodón negro premium. Diseño con símbolo hebreo Aleph en serigrafía dorada. La oscuridad como lienzo de la luz.",
+        images: [ "images/shirt2.jpg", "images/shirt2.jpg" ],
+        historiaTitle:  "El Aleph — El sonido del silencio",
+        historiaTexto:  `<p>El Aleph (א) es la primera letra del alfabeto hebreo y, paradójicamente, no produce sonido propio. Es el silencio que precede toda palabra, el punto cero desde donde emerge el lenguaje. Los maestros hasídicos enseñaron que Aleph es la letra con la cual Dios comenzó los Diez Mandamientos — y que ese sonido es tan sutil que sólo el corazón purificado puede escucharlo.</p>
+<blockquote>"El Aleph lo contiene todo — cada letra, cada palabra, cada mundo posible."</blockquote>
+<p>La decisión de imprimir el Aleph en oro sobre negro no es arbitraria. En la tradición cabalística, el oro representa lo divino inmutable y el negro representa el Ein Sof — lo infinito sin límite. La combinación evoca la chispa divina (nitzotz) encerrada en la materia.</p>
+<p>Shield Sheep diseñó esta prenda para quienes entienden que la fe más profunda no grita — susurra. Que el origen de toda cosa es silencio, y que ese silencio es sagrado.</p>`,
+        simbolo:       "א",
+        simboloNombre: "Aleph — El origen de todo / 1",
+        timeline: [
+            { year: "~1500 a.C.", text: "Aleph nace del jeroglífico egipcio del buey (alpu)." },
+            { year: "  800 a.C.", text: "Fijación en el alfabeto fenicio y luego hebreo." },
+            { year: "S. II d.C.", text: "Los maestros tanaítas desarrollan su teología mística." },
+            { year: "     Hoy",   text: "Shield Sheep lo lleva al streetwear contemporáneo." }
+        ],
+        specs: { material: "100% Algodón peinado", gramaje: "200 g/m²", tejido: "Jersey compact", tecnica: "Serigrafía dorada", colores: "1 tinta metálica", corte: "Regular fit", cuello: "Cuello en V reforzado" }
+    },
+    {
+        id: 3,
+        name:        "Hoodie Shield Premium",
+        price:       85000,
+        category:    "Sudaderas",
+        badge:       "Premium",
+        rating:      5,
+        stock:       5,
+        description: "French terry 320g. Logo bordado en hilo dorado. La calidez de la tradición hecha prenda de abrigo.",
+        images: [ "images/shirt3.jpg", "images/shirt3.jpg" ],
+        historiaTitle:  "El Magen David — Escudo y protección",
+        historiaTexto:  `<p>La Estrella de David (מגן דוד, Magen David, literalmente "Escudo de David") es el símbolo más reconocible de la identidad judía, pero su historia es sorprendentemente compleja y tardía. Aunque asociada al Rey David, su uso generalizado como símbolo comunal no se consolidó hasta el siglo XVII en Praga, donde fue adoptada por la comunidad judía de la ciudad.</p>
+<blockquote>"El escudo no es sólo protección — es identidad, es afirmación de que existimos y existiremos."</blockquote>
+<p>La geometría del Magen David — dos triángulos entrelazados — ha sido interpretada de múltiples maneras: la unión del cielo y la tierra, los seis días de la creación, los seis lados del mundo (norte, sur, este, oeste, arriba, abajo) convergiendo en el centro que es Dios.</p>
+<p>En esta hoodie, el Magen David está bordado en hilo metálico dorado sobre el pecho izquierdo — sobre el corazón. Un recordatorio de que la protección más verdadera viene de dentro.</p>`,
+        simbolo:       "✡",
+        simboloNombre: "Magen David — Escudo / Protección",
+        timeline: [
+            { year: "S. III d.C.", text: "Primeras apariciones decorativas en sinagogas." },
+            { year: "     1354",   text: "La comunidad judía de Praga lo adopta como símbolo oficial." },
+            { year: "     1897",   text: "El Congreso Sionista lo adopta como símbolo nacional." },
+            { year: "     Hoy",   text: "Shield Sheep lo borda en cada hoodie como escudo vivo." }
+        ],
+        specs: { material: "80% Algodón / 20% Poliéster", gramaje: "320 g/m²", tejido: "French terry", tecnica: "Bordado metálico", colores: "Hilo dorado 100% metálico", corte: "Oversized", cuello: "Capucha doble capa" }
+    },
+    {
+        id: 4,
+        name:        "Gorra Urban Sheep",
+        price:       25000,
+        category:    "Gorras",
+        badge:       "Nuevo",
+        rating:      4,
+        stock:       12,
+        description: "100% algodón estructurado. Bordado frontal con símbolo hebreo. Ajustable a cualquier talla.",
+        images: [ "images/shirt4.jpg", "images/shirt4.jpg" ],
+        historiaTitle:  "La Kippah urbana — Fe en el horizonte",
+        historiaTexto:  `<p>Cubrir la cabeza es uno de los actos más universales de reverencia religiosa. En la tradición hebrea, la kippah o yarmulke — la pequeña cubierta que llevan los hombres judíos — es un recordatorio constante de que hay algo más grande sobre nosotros. Shield Sheep reinterpreta ese gesto milenario en formato de gorra urbana.</p>
+<blockquote>"Lo que llevas sobre la cabeza dice lo que llevas en el corazón."</blockquote>
+<p>La gorra no es un accesorio neutro en nuestra cultura. Es declaración de pertenencia, de afiliación, de identidad. Al bordar el símbolo hebreo en el panel frontal, Shield Sheep transforma un artículo de streetwear en un acto de fe cotidiana — visible, orgullosa, sin disculpas.</p>`,
+        simbolo:       "י",
+        simboloNombre: "Yod — La mano de Dios / 10",
+        timeline: [
+            { year: "~800 a.C.", text: "Origen de la tradición de cubrir la cabeza en el Levítico." },
+            { year: "S. XVI",    text: "La kippah se establece como práctica rabínica formal." },
+            { year: "S. XXI",    text: "La gorra urbana como continuación secular de esa tradición." },
+            { year: "    Hoy",   text: "Shield Sheep fusiona ambas tradiciones en una pieza única." }
+        ],
+        specs: { material: "100% Algodón", gramaje: "Estructurada 6 paneles", tejido: "Twill liso", tecnica: "Bordado computarizado", colores: "1 color dorado", corte: "Ajustable", cuello: "Cierre metálico dorado" }
+    },
+    {
+        id: 5,
+        name:        "Pantalones Deportivos",
+        price:       60000,
+        category:    "Accesorios",
+        rating:      5,
+        stock:       7,
+        description: "Elastano y algodón para máxima movilidad. Símbolo hebreo bordado en el muslo. Comodidad y fe en movimiento.",
+        images: [ "images/shirt5.jpg", "images/shirt5.jpg" ],
+        historiaTitle:  "El Lamed — La enseñanza en movimiento",
+        historiaTexto:  `<p>El Lamed (ל) es la letra más alta del alfabeto hebreo — su trazo asciende por encima de todas las demás como una vara que señala al cielo. En hebreo, lomed significa "aprender" y melamed, "maestro". Es la letra de la enseñanza, del movimiento intelectual y espiritual hacia lo más elevado.</p>
+<blockquote>"En el movimiento del cuerpo también hay oración — cada paso puede ser una letra, cada carrera, una palabra."</blockquote>
+<p>Los pantalones deportivos de Shield Sheep llevan el Lamed bordado en el muslo derecho — no como adorno sino como recordatorio: incluso en el movimiento más físico, podemos elevar nuestra intención. El deporte como práctica espiritual es una idea con raíces profundas en la tradición hebrea, donde el cuerpo sano era considerado prerrequisito para el alma sana.</p>`,
+        simbolo:       "ל",
+        simboloNombre: "Lamed — Enseñanza / 30",
+        timeline: [
+            { year: "~1200 a.C.", text: "Lamed aparece en las inscripciones más tempranas del hebreo." },
+            { year: "S. I d.C.",  text: "Los rabinos lo asocian al aprendizaje y la sabiduría práctica." },
+            { year: "  1800s",    text: "El movimiento Mussar recupera el cuerpo como sede del alma." },
+            { year: "    Hoy",    text: "Shield Sheep lo lleva al deporte contemporáneo." }
+        ],
+        specs: { material: "65% Algodón / 35% Elastano", gramaje: "280 g/m²", tejido: "French terry stretch", tecnica: "Bordado computarizado", colores: "1 hilo dorado", corte: "Jogger fit", cuello: "Cinturilla elástica + cordón" }
+    },
+    {
+        id: 6,
+        name:        "Chaqueta Personalizada",
+        price:       95000,
+        category:    "Sudaderas",
+        badge:       "-20%",
+        rating:      5,
+        stock:       4,
+        description: "Exterior resistente al viento, interior forro polar. Diseño personalizable con tu símbolo hebreo elegido.",
+        images: [ "images/shirt6.jpeg", "images/shirt6.jpeg" ],
+        historiaTitle:  "El Coat of Many Colors — La chaqueta como narración",
+        historiaTexto:  `<p>En el libro del Génesis, la túnica de muchos colores de José (Ketonet Passim, כְּתֹנֶת פַּסִּים) no era solo una prenda — era una declaración de elección, distinción y destino. Fue a la vez el símbolo de su privilegio y la causa de su persecución, antes de convertirse en el signo de su redención.</p>
+<blockquote>"Cada prenda que elegimos lleva una historia que aún no conocemos — somos parte de una narrativa mayor."</blockquote>
+<p>La chaqueta personalizada de Shield Sheep es la apuesta más directa de la marca por esa tradición: cada cliente elige su símbolo, su combinación de colores, su talla. No hay dos iguales. Cada una es una ketonet passim contemporánea — única, personal, cargada de intención.</p>
+<p>El diseño personalizable no es un recurso comercial: es una invitación filosófica. Que cada persona elija qué símbolo quiere llevar consigo es una forma de preguntarse: ¿qué es lo que creo? ¿con qué quiero ser identificado? ¿qué historia quiero contar?</p>`,
+        simbolo:       "כ",
+        simboloNombre: "Kaf — La palma / La búsqueda / 20",
+        timeline: [
+            { year: "~1700 a.C.", text: "La historia de José y su túnica en el Génesis." },
+            { year: "S. XII",     text: "Las ropas de los sabios como símbolo de su rango espiritual." },
+            { year: "S. XIX",     text: "La personalización textil como expresión de identidad moderna." },
+            { year: "    Hoy",    text: "Shield Sheep la lleva al siglo XXI con cada encargo único." }
+        ],
+        specs: { material: "Exterior: 100% Poliéster técnico / Interior: Polar 200g", gramaje: "Exterior 120 g/m²", tejido: "Ripstop + polar", tecnica: "Bordado y serigrafía", colores: "Personalizable (hasta 5 colores)", corte: "Regular fit con capucha", cuello: "Cremallera YKK + capucha ajustable" }
+    }
+];
+
+// ── ESTADO ──────────────────────────────────────────────────────────
+let productoActual = null;
+let tallaSeleccionada = null;
+let carrito = JSON.parse(sessionStorage.getItem('carrito_ss')) || [];
+
+// ── INICIALIZACIÓN ───────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const id     = parseInt(params.get('id'));
+    const prod   = CATALOGO.find(p => p.id === id);
+
+    if (!prod) {
+        // Producto no encontrado — redirigir a la tienda
+        window.location.href = 'index.html#productos';
+        return;
+    }
+
+    productoActual = prod;
+    renderProduct(prod);
+    renderRelated(prod);
+    updateCartCounter();
+});
+
+function renderProduct(p) {
+    // Meta dinámicos
+    document.title = `${p.name} | Shield Sheep`;
+    document.getElementById('pageDesc').content  = p.description;
+    document.getElementById('ogTitle').content   = p.name;
+    document.getElementById('ogDesc').content    = p.description;
+    document.getElementById('ogImage').content   = p.images[0];
+    document.getElementById('breadcrumbName').textContent = p.name;
+
+    // Info básica
+    document.getElementById('productName').textContent     = p.name;
+    document.getElementById('productCategory').textContent = p.category;
+    document.getElementById('productPrice').textContent    = '$' + p.price.toLocaleString('es-CO');
+    document.getElementById('shortDesc').textContent       = p.description;
+    document.getElementById('stockInfo').textContent       = p.stock > 0
+        ? `${p.stock} unidades disponibles`
+        : 'Agotado temporalmente';
+
+    // Estrellas
+    const stars = '★'.repeat(p.rating) + '☆'.repeat(5 - p.rating);
+    document.getElementById('starsDisplay').textContent = stars;
+
+    // Badge
+    if (p.badge) {
+        const b = document.getElementById('galleryBadge');
+        b.textContent   = p.badge;
+        b.style.display = 'block';
+    }
+
+    // Imagen principal
+    document.getElementById('mainImage').src  = p.images[0];
+    document.getElementById('mainImage').alt  = p.name;
+
+    // Thumbnails
+    const thumbsRow = document.getElementById('thumbsRow');
+    thumbsRow.innerHTML = p.images.map((src, i) => `
+        <div class="thumb ${i === 0 ? 'active' : ''}" onclick="switchImage('${src}', this)">
+            <img src="${src}" alt="${p.name} vista ${i+1}"
+                 onerror="this.src='https://via.placeholder.com/72x72/1a1a1a/d4af37?text=?'">
+        </div>`).join('');
+
+    // Historia
+    document.getElementById('historiaTitulo').textContent = p.historiaTitle || p.name;
+    document.getElementById('historiaTexto').innerHTML    = p.historiaTexto || '<p>Historia próximamente.</p>';
+    document.getElementById('simboloHebreo').textContent  = p.simbolo       || '';
+    document.getElementById('simboloNombre').textContent  = p.simboloNombre || '';
+
+    // Timeline dinámico
+    if (p.timeline) {
+        const tl = document.querySelector('.timeline');
+        if (tl) {
+            tl.innerHTML = p.timeline.map(t => `
+                <li>
+                    <span class="timeline-year">${t.year}</span>
+                    <span class="timeline-text">${t.text}</span>
+                </li>`).join('');
+        }
+    }
+
+    // Imagen héroe de historia
+    if (p.images[0]) {
+        document.getElementById('historiaHeroImg').src = p.images[0];
+    }
+
+    // Specs
+    if (p.specs) {
+        const s = p.specs;
+        if (s.material) document.getElementById('specMaterial').textContent = s.material;
+        if (s.gramaje)  document.getElementById('specGramaje').textContent  = s.gramaje;
+        if (s.tejido)   document.getElementById('specTejido').textContent   = s.tejido;
+        if (s.tecnica)  document.getElementById('specTecnica').textContent  = s.tecnica;
+        if (s.colores)  document.getElementById('specColores').textContent  = s.colores;
+        if (s.corte)    document.getElementById('specCorte').textContent    = s.corte;
+        if (s.cuello)   document.getElementById('specCuello').textContent   = s.cuello;
+    }
+
+    // Tallas especiales para gorras/accesorios
+    if (['Gorras', 'Accesorios'].includes(p.category)) {
+        document.getElementById('tallaGrid').innerHTML =
+            `<button class="talla-opt" onclick="selectTalla(this)">Única</button>`;
+    }
+}
+
+function renderRelated(p) {
+    const grid    = document.getElementById('relatedGrid');
+    const related = CATALOGO.filter(x => x.id !== p.id && x.category === p.category).slice(0, 4);
+    const fill    = related.length < 3
+        ? [...related, ...CATALOGO.filter(x => x.id !== p.id && !related.includes(x))].slice(0, 4)
+        : related;
+
+    grid.innerHTML = fill.map(r => `
+        <a href="product.html?id=${r.id}" class="related-card">
+            <img src="${r.images[0]}" alt="${r.name}"
+                 onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/d4af37?text=${encodeURIComponent(r.name)}'">
+            <div class="related-info">
+                <div class="related-name">${r.name}</div>
+                <div class="related-price">$${r.price.toLocaleString('es-CO')}</div>
+            </div>
+        </a>`).join('');
+}
+
+// ── GALERÍA ──────────────────────────────────────────────────────────
+function switchImage(src, thumbEl) {
+    document.getElementById('mainImage').src = src;
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumbEl.classList.add('active');
+}
+
+// ── TALLA ────────────────────────────────────────────────────────────
+function selectTalla(btn) {
+    if (btn.classList.contains('agotada')) return;
+    document.querySelectorAll('.talla-opt').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    tallaSeleccionada = btn.textContent.trim();
+}
+
+// ── CANTIDAD ─────────────────────────────────────────────────────────
+function changeQty(delta) {
+    const input = document.getElementById('qtyInput');
+    const val   = parseInt(input.value) + delta;
+    const max   = productoActual ? productoActual.stock : 99;
+    if (val >= 1 && val <= max) input.value = val;
+}
+
+// ── CARRITO ──────────────────────────────────────────────────────────
+function addToCart() {
+    if (!tallaSeleccionada) {
+        showToast('Por favor selecciona una talla', 'warning');
+        document.getElementById('tallaGrid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+
+    const qty = parseInt(document.getElementById('qtyInput').value);
+    const key = `${productoActual.id}-${tallaSeleccionada}`;
+    const existing = carrito.find(i => i.key === key);
+
+    if (existing) {
+        existing.qty += qty;
+    } else {
+        carrito.push({
+            key,
+            id:    productoActual.id,
+            name:  productoActual.name,
+            price: productoActual.price,
+            talla: tallaSeleccionada,
+            qty
+        });
+    }
+
+    sessionStorage.setItem('carrito_ss', JSON.stringify(carrito));
+    updateCartCounter();
+    showToast(`✓ ${productoActual.name} (${tallaSeleccionada}) añadido`, 'success');
+}
+
+function toggleCart() {
+    document.getElementById('cart-sidebar').classList.toggle('active');
+    document.getElementById('cartOverlay').classList.toggle('active');
+    renderCart();
+}
+
+function updateCartCounter() {
+    const total = carrito.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('cartCount').textContent = total;
+    const badge = document.getElementById('cartBadge');
+    badge.textContent   = total;
+    badge.style.display = total > 0 ? 'flex' : 'none';
+}
+
+function renderCart() {
+    const list = document.getElementById('cartItemsList');
+    let total  = 0;
+
+    if (carrito.length === 0) {
+        list.innerHTML = `<div class="empty-cart-msg">
+            <div style="font-size:2.5rem;margin-bottom:0.8rem;">🛒</div>
+            <p>Tu carrito está vacío</p>
+        </div>`;
+        document.getElementById('cartTotal').textContent = 'Total: $0';
+        return;
+    }
+
+    list.innerHTML = carrito.map((item, i) => {
+        total += item.price * item.qty;
+        return `
+        <div class="cart-item-row">
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-sub">Talla: ${item.talla}</div>
+                <div class="cart-qty-ctrl">
+                    <button class="cqb" onclick="changeCartQty(${i}, -1)">−</button>
+                    <span class="cqn">${item.qty}</span>
+                    <button class="cqb" onclick="changeCartQty(${i}, 1)">+</button>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;">
+                <div class="cart-item-price">$${(item.price * item.qty).toLocaleString('es-CO')}</div>
+                <button class="cart-remove" onclick="removeFromCart(${i})">✕</button>
+            </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('cartTotal').textContent = `Total: $${total.toLocaleString('es-CO')}`;
+}
+
+function changeCartQty(i, delta) {
+    carrito[i].qty += delta;
+    if (carrito[i].qty <= 0) carrito.splice(i, 1);
+    sessionStorage.setItem('carrito_ss', JSON.stringify(carrito));
+    updateCartCounter();
+    renderCart();
+}
+
+function removeFromCart(i) {
+    carrito.splice(i, 1);
+    sessionStorage.setItem('carrito_ss', JSON.stringify(carrito));
+    updateCartCounter();
+    renderCart();
+}
+
+function clearCart() {
+    carrito = [];
+    sessionStorage.setItem('carrito_ss', JSON.stringify(carrito));
+    updateCartCounter();
+    renderCart();
+    showToast('Carrito vaciado', 'warning');
+}
+
+function checkout() {
+    if (carrito.length === 0) { showToast('El carrito está vacío', 'warning'); return; }
+    let total = 0;
+    const texto = carrito.map(item => {
+        const sub = item.price * item.qty;
+        total += sub;
+        return `• ${item.name} | Talla: ${item.talla} | x${item.qty} = $${sub.toLocaleString('es-CO')}`;
+    }).join('%0A');
+    const msg = `¡Hola Shield Sheep!%0A%0AQuiero comprar:%0A%0A${texto}%0A%0A💰 TOTAL: $${total.toLocaleString('es-CO')}%0A%0A¿Cuál es el siguiente paso?`;
+    const wa  = window.open(`https://wa.me/573505424345?text=${msg}`, '_blank', 'noopener,noreferrer');
+    if (wa) wa.opener = null;
+}
+
+// ── TABS ─────────────────────────────────────────────────────────────
+function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+    const t = document.createElement('div');
+    t.className   = `toast ${type}`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => {
+        t.style.animation = 'slideOutR 0.3s ease-in forwards';
+        setTimeout(() => t.remove(), 300);
+    }, 3000);
+}
+
+// ── ESC cierra carrito ────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('cart-sidebar').classList.contains('active')) {
+        toggleCart();
+    }
+});
+</script>
+<!-- ============================================================
+     FIN ZONA JS
+     ============================================================ -->
+
+</body>
+</html>

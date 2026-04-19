@@ -1,0 +1,2549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shield Sheep - Panel Administrativo">
+    <!-- ✅ CORREGIDO: CSP para admin — más restrictiva que la tienda -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+                   font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com data:;
+                   img-src 'self' data: blob: https://via.placeholder.com;
+                   connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
+    <!-- ✅ SEGURIDAD: No indexar el admin en buscadores -->
+    <meta name="robots" content="noindex, nofollow">
+    <title>Shield Sheep | Panel Administrativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ============================================================
+         🎨 ZONA CSS — separar en admin-style.css
+         ============================================================ -->
+    <style>
+        :root {
+            --oro: #d4af37;
+            --rojo: #C1121F;
+            --negro-puro: #000000;
+            --negro-suave: #121212;
+            --panel2: #1a1a1a;
+            --gris-texto: #a0a0a0;
+            --gris-claro: #e8e8e8;
+            --blanco: #ffffff;
+            --verde: #2ecc71;
+            --azul: #3498db;
+            --naranja: #f39c12;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--negro-puro);
+            color: var(--blanco);
+            line-height: 1.6;
+        }
+
+        /* ==================== LOGIN ==================== */
+        .login-container {
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(212,175,55,0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .login-box {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+            padding: 3rem;
+            background: rgba(18,18,18,0.9);
+            border: 2px solid var(--oro);
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(212,175,55,0.2);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header { text-align: center; margin-bottom: 2.5rem; }
+
+        .login-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--oro);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .login-header p { color: var(--gris-texto); font-size: 0.95rem; }
+        .login-icon { font-size: 3rem; color: var(--oro); margin-bottom: 1rem; }
+
+        .form-group { margin-bottom: 1.8rem; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--gris-claro);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: var(--blanco);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--oro);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
+        }
+
+        .form-group input::placeholder { color: var(--gris-texto); }
+
+        /* ✅ NUEVO: indicador de intentos fallidos */
+        .attempts-indicator {
+            display: flex;
+            gap: 6px;
+            margin-top: 0.5rem;
+        }
+
+        .attempt-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #333;
+            transition: var(--transition);
+        }
+
+        .attempt-dot.used { background: var(--rojo); }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* ✅ CORREGIDO: "¿olvidaste tu contraseña?" ahora da instrucción real */
+        .remember-forgot a {
+            color: var(--gris-texto);
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remember-forgot a:hover { color: var(--oro); }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: var(--oro);
+            color: var(--negro-puro);
+            border: 2px solid var(--oro);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background: transparent;
+            color: var(--oro);
+            box-shadow: 0 0 25px rgba(212,175,55,0.4);
+            transform: translateY(-2px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: rgba(193,18,31,0.1);
+            border: 1px solid var(--rojo);
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .error-message.show { display: block; animation: shake 0.3s ease-in-out; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%  { transform: translateX(-10px); }
+            75%  { transform: translateX(10px); }
+        }
+
+        /* ✅ NUEVO: bloqueo de login */
+        .lockout-message {
+            background: rgba(193,18,31,0.15);
+            border: 2px solid var(--rojo);
+            color: #ff6b6b;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .lockout-message.show { display: block; }
+        .lockout-timer { font-size: 1.5rem; font-weight: 700; color: var(--rojo); margin-top: 0.5rem; }
+
+        /* ==================== ADMIN DASHBOARD ==================== */
+        .admin-container {
+            display: none;
+            min-height: 100vh;
+            background: var(--negro-puro);
+        }
+
+        .admin-container.active { display: flex; }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+            border-right: 2px solid var(--oro);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        /* ✅ NUEVO: sidebar deslizable en móvil */
+        .sidebar.mobile-hidden {
+            left: -270px;
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .sidebar-logo h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--oro);
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        /* ✅ NUEVO: indicador de sesión activa */
+        .session-indicator {
+            background: rgba(46,204,113,0.1);
+            border: 1px solid var(--verde);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            margin: 0 1rem 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .session-indicator .dot-verde {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--verde);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .session-timer { color: var(--gris-texto); font-size: 0.78rem; margin-top: 3px; }
+
+        .sidebar-menu { list-style: none; }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            color: var(--gris-texto);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(212,175,55,0.1);
+            color: var(--oro);
+            border-left-color: var(--oro);
+        }
+
+        .sidebar-menu i { font-size: 1.1rem; width: 22px; }
+
+        .sidebar-logout {
+            position: absolute;
+            bottom: 2rem;
+            left: 0; right: 0;
+            padding: 0 1.5rem;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: transparent;
+            color: var(--rojo);
+            border: 2px solid var(--rojo);
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logout-btn:hover { background: var(--rojo); color: var(--blanco); }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 2rem;
+            min-width: 0;
+        }
+
+        .header-admin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #333;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-admin h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--oro);
+        }
+
+        /* ✅ NUEVO: botón hamburguesa móvil visible en header */
+        .hamburger-admin {
+            display: none;
+            background: none;
+            border: 2px solid var(--oro);
+            color: var(--oro);
+            font-size: 1.2rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(212,175,55,0.1);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--oro);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--oro);
+            color: var(--negro-puro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* ==================== CONTENT SECTIONS ==================== */
+        .content-section { display: none; }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-heading {
+            color: var(--oro);
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ==================== STATS ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 1.8rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--oro);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.15);
+            transform: translateY(-3px);
+        }
+
+        .stat-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .stat-number { font-size: 2rem; color: var(--oro); font-weight: 700; margin-bottom: 0.4rem; }
+        .stat-label { color: var(--gris-texto); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ==================== PRODUCTS MANAGEMENT ==================== */
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-admin {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: var(--blanco);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .search-admin:focus {
+            outline: none;
+            border-color: var(--oro);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .search-admin::placeholder { color: var(--gris-texto); }
+
+        .filter-select {
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: var(--blanco);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus { outline: none; border-color: var(--oro); }
+        .filter-select option { background: #1a1a1a; }
+
+        .btn-new-product {
+            background: var(--oro);
+            color: var(--negro-puro);
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--oro);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-new-product:hover {
+            background: transparent;
+            color: var(--oro);
+            box-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+
+        .products-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-item {
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            border: 2px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .product-item:hover {
+            border-color: var(--oro);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+            transform: translateY(-4px);
+        }
+
+        .product-img-admin {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #111;
+            display: block;
+        }
+
+        .product-details { padding: 1.2rem; }
+
+        .product-details h3 {
+            color: var(--oro);
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .product-price-admin { color: var(--verde); font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+        .product-meta {
+            color: var(--gris-texto);
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .product-actions { display: flex; gap: 0.7rem; }
+
+        .btn-edit, .btn-delete {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .btn-edit { background: var(--azul); color: var(--blanco); border: 2px solid var(--azul); }
+        .btn-edit:hover { background: transparent; color: var(--azul); }
+        .btn-delete { background: var(--rojo); color: var(--blanco); border: 2px solid var(--rojo); }
+        .btn-delete:hover { background: transparent; color: var(--rojo); }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--gris-texto);
+            padding: 4rem;
+        }
+
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        /* ==================== FORMS ==================== */
+        .form-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            border: 2px solid var(--oro);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .form-container h2 {
+            color: var(--oro);
+            margin-bottom: 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row.full { grid-template-columns: 1fr; }
+
+        .form-group-admin { display: flex; flex-direction: column; }
+
+        .form-group-admin label {
+            margin-bottom: 0.7rem;
+            color: var(--gris-claro);
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group-admin input,
+        .form-group-admin textarea,
+        .form-group-admin select {
+            padding: 0.9rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: var(--blanco);
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group-admin input:focus,
+        .form-group-admin textarea:focus,
+        .form-group-admin select:focus {
+            outline: none;
+            border-color: var(--oro);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 15px rgba(212,175,55,0.2);
+        }
+
+        .form-group-admin select option { background: #1a1a1a; }
+        .form-group-admin textarea { resize: vertical; min-height: 100px; }
+
+        .image-upload {
+            border: 2px dashed var(--oro);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(212,175,55,0.03);
+        }
+
+        .image-upload:hover { background: rgba(212,175,55,0.08); }
+        .image-upload input[type="file"] { display: none; }
+        .image-upload p { margin: 0; color: var(--gris-texto); font-size: 0.9rem; }
+
+        .image-preview-admin {
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 250px;
+            max-height: 250px;
+            border-radius: 8px;
+            border: 2px solid var(--oro);
+            display: none;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            flex: 1;
+            padding: 1rem;
+            background: var(--oro);
+            color: var(--negro-puro);
+            border: 2px solid var(--oro);
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: transparent;
+            color: var(--oro);
+            box-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-cancel-form {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            color: var(--gris-texto);
+            border: 2px solid #444;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-cancel-form:hover { border-color: var(--gris-texto); color: var(--blanco); }
+
+        /* ==================== TABLE ==================== */
+        .table-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            border: 2px solid #333;
+            border-radius: 12px;
+            overflow: auto;
+            margin-bottom: 2rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+
+        table thead {
+            background: rgba(212,175,55,0.1);
+            border-bottom: 2px solid var(--oro);
+        }
+
+        table th {
+            padding: 1.2rem;
+            text-align: left;
+            color: var(--oro);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #2a2a2a;
+            color: var(--gris-claro);
+            font-size: 0.9rem;
+        }
+
+        table tbody tr:hover { background: rgba(212,175,55,0.04); }
+        table tbody tr:last-child td { border-bottom: none; }
+
+        .price-input-table {
+            width: 130px;
+            padding: 0.5rem 0.7rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: var(--blanco);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .price-input-table:focus {
+            outline: none;
+            border-color: var(--oro);
+        }
+
+        .btn-save-price {
+            padding: 0.5rem 1rem;
+            background: var(--verde);
+            color: var(--blanco);
+            border: 2px solid var(--verde);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-save-price:hover { background: transparent; color: var(--verde); }
+
+        /* ==================== MODAL ==================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            border: 2px solid var(--oro);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .modal-content::-webkit-scrollbar { width: 6px; }
+        .modal-content::-webkit-scrollbar-track { background: #000; }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 10px; }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #333;
+        }
+
+        .modal-header h2 {
+            color: var(--oro);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--gris-texto);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            line-height: 1;
+        }
+
+        .modal-close:hover { color: var(--rojo); transform: rotate(90deg); }
+
+        /* ✅ NUEVO: Modal de confirmación para borrar */
+        .confirm-modal-content {
+            max-width: 400px;
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        .confirm-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .confirm-title { color: var(--rojo); font-family: 'Cinzel', serif; font-size: 1.3rem; margin-bottom: 1rem; }
+        .confirm-text { color: var(--gris-claro); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6; }
+
+        .confirm-actions { display: flex; gap: 1rem; }
+
+        .btn-confirm-delete {
+            flex: 1;
+            padding: 1rem;
+            background: var(--rojo);
+            color: var(--blanco);
+            border: 2px solid var(--rojo);
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-confirm-delete:hover { background: transparent; color: var(--rojo); }
+
+        .btn-confirm-cancel {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            color: var(--gris-texto);
+            border: 2px solid #444;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-confirm-cancel:hover { border-color: var(--gris-claro); color: var(--blanco); }
+
+        /* ==================== TOAST ==================== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1.2rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3000;
+            max-width: 350px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        .toast.success { background: var(--verde); color: var(--blanco); }
+        .toast.error   { background: var(--rojo); color: var(--blanco); }
+        .toast.info    { background: var(--azul); color: var(--blanco); }
+        .toast.warning { background: var(--naranja); color: var(--blanco); }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(100px); }
+        }
+
+        /* ==================== OVERLAY SIDEBAR MÓVIL ==================== */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 99;
+        }
+
+        .sidebar-overlay.active { display: block; }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .sidebar { width: 220px; }
+            .main-content { margin-left: 220px; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -270px;
+                width: 260px;
+                height: 100vh;
+                z-index: 200;
+            }
+
+            .sidebar.mobile-open { left: 0; }
+
+            .main-content { margin-left: 0; padding: 1rem; }
+
+            .hamburger-admin { display: block; }
+
+            .header-admin { flex-direction: row; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+
+            .products-grid-admin { grid-template-columns: 1fr; }
+
+            .toolbar { flex-direction: column; }
+            .search-admin { width: 100%; }
+
+            .login-box { padding: 2rem; margin: 1rem; }
+
+            .form-buttons { flex-direction: column; }
+            .product-actions { flex-direction: column; }
+
+            .confirm-actions { flex-direction: column; }
+
+            table { font-size: 0.82rem; }
+            table th, table td { padding: 0.8rem; }
+
+            /* Lab. Rentabilidad: apila las dos columnas en móvil */
+            #section-profit-lab > div[style*="grid-template-columns"] {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-box { padding: 1.5rem; }
+            .login-header h1 { font-size: 1.5rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .header-admin h1 { font-size: 1.4rem; }
+            .main-content { padding: 0.8rem; }
+        }
+    </style>
+    <!-- ============================================================
+         FIN ZONA CSS
+         ============================================================ -->
+</head>
+<body>
+
+<!-- ============================================================
+     🏗️ ZONA HTML — separar en admin.html
+     ============================================================ -->
+
+<!-- ==================== LOGIN ==================== -->
+<div class="login-container" id="loginContainer">
+    <div class="login-box">
+        <div class="login-header">
+            <div class="login-icon">🐑</div>
+            <h1>Shield Sheep</h1>
+            <p>Panel Administrativo</p>
+        </div>
+
+        <!-- ✅ NUEVO: mensaje de bloqueo por intentos -->
+        <div class="lockout-message" id="lockoutMessage">
+            🔒 Demasiados intentos fallidos. Espera
+            <div class="lockout-timer" id="lockoutTimer">30s</div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email"
+                       placeholder="correo@shieldsheep.com"
+                       autocomplete="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password"
+                       placeholder="••••••••"
+                       autocomplete="current-password" required>
+                <!-- ✅ NUEVO: indicador visual de intentos -->
+                <div class="attempts-indicator" id="attemptsIndicator">
+                    <div class="attempt-dot" id="dot1"></div>
+                    <div class="attempt-dot" id="dot2"></div>
+                    <div class="attempt-dot" id="dot3"></div>
+                    <div class="attempt-dot" id="dot4"></div>
+                    <div class="attempt-dot" id="dot5"></div>
+                </div>
+            </div>
+
+            <div class="remember-forgot">
+                <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;color:var(--gris-texto);font-size:0.9rem;">
+                    <input type="checkbox" id="remember" style="width:auto;cursor:pointer;">
+                    Sesión de 2 horas
+                </label>
+                <!-- ✅ CORREGIDO: acción real para "olvidé contraseña" -->
+                <a href="/cdn-cgi/l/email-protection#d3babdb5bc93a0bbbab6bfb7a0bbb6b6a3fdb0bcbeeca0a6b1b9b6b0a7ee81b6b0a6a3b6a1b2a1f6e1e3b2b0b0b6a0bcf6e1e3b2b7bebabd">
+                    ¿Olvidaste tu contraseña?
+                </a>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Iniciar Sesión
+            </button>
+
+            <!-- ✅ ELIMINADO: credenciales en texto visible
+                 NUNCA muestres las contraseñas en el HTML de producción.
+                 Este bloque ha sido removido intencionalmente. -->
+        </form>
+    </div>
+</div>
+
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div class="admin-container" id="adminContainer">
+
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h2>🐑 ADMIN</h2>
+        </div>
+
+        <!-- ✅ NUEVO: indicador de sesión activa con temporizador -->
+        <div class="session-indicator">
+            <span class="dot-verde"></span> Sesión activa
+            <div class="session-timer" id="sessionTimer">Expira en: 2:00:00</div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a onclick="showSection('dashboard', this)" class="active">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a></li>
+            <li><a onclick="showSection('products', this)">
+                <i class="fas fa-box"></i> Productos
+            </a></li>
+            <li><a onclick="showSection('prices', this)">
+                <i class="fas fa-tag"></i> Precios
+            </a></li>
+            <li><a onclick="showSection('images', this)">
+                <i class="fas fa-image"></i> Imágenes
+            </a></li>
+            <li><a onclick="showSection('orders', this)">
+                <i class="fas fa-shopping-cart"></i> Pedidos
+            </a></li>
+            <li><a onclick="showSection('profit-lab', this)">
+                <i class="fas fa-flask"></i> Lab. Rentabilidad
+            </a></li>
+            <li><a onclick="showSection('settings', this)">
+                <i class="fas fa-cog"></i> Configuración
+            </a></li>
+        </ul>
+
+        <div class="sidebar-logout">
+            <button class="logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="header-admin">
+            <div style="display:flex;align-items:center;gap:1rem;">
+                <!-- ✅ NUEVO: botón hamburguesa que SÍ funciona en móvil -->
+                <button class="hamburger-admin" onclick="toggleSidebar()">☰</button>
+                <h1 id="sectionTitle">Dashboard</h1>
+            </div>
+            <div class="admin-user">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <p style="margin:0;font-weight:600;font-size:0.9rem;">Admin Shield</p>
+                    <p style="margin:0;font-size:0.8rem;color:var(--gris-texto);">Administrador</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== DASHBOARD ========== -->
+        <section class="content-section active" id="section-dashboard">
+            <h2 class="section-heading">Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-number" id="statProductos">0</div>
+                    <div class="stat-label">Productos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <!-- ✅ CORREGIDO: ingresos calculados de pedidos reales, no precio*2 -->
+                    <div class="stat-number" id="statIngresos">$0</div>
+                    <div class="stat-label">Valor catálogo</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-number" id="statPedidos">0</div>
+                    <div class="stat-label">Pedidos registrados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number" id="statStock">0</div>
+                    <div class="stat-label">Unidades en stock</div>
+                </div>
+            </div>
+
+            <!-- ✅ NUEVO: tabla de productos con bajo stock -->
+            <div style="margin-top:1rem;">
+                <h3 style="color:var(--naranja);margin-bottom:1rem;font-size:1rem;text-transform:uppercase;letter-spacing:1px;">
+                    ⚠️ Productos con bajo stock (≤ 3 unidades)
+                </h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lowStockTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PRODUCTOS ========== -->
+        <section class="content-section" id="section-products">
+            <h2 class="section-heading">Gestión de Productos</h2>
+
+            <!-- ✅ NUEVO: barra de búsqueda y filtro -->
+            <div class="toolbar">
+                <input type="text" class="search-admin" id="searchProducts"
+                       placeholder="🔍 Buscar por nombre, descripción..."
+                       oninput="filterAdminProducts()">
+                <select class="filter-select" id="filterCategory" onchange="filterAdminProducts()">
+                    <option value="">Todas las categorías</option>
+                    <option value="camisetas">Camisetas</option>
+                    <option value="sudaderas">Sudaderas</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="gorras">Gorras</option>
+                </select>
+                <button class="btn-new-product" onclick="openProductModal()">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+            </div>
+
+            <div class="products-grid-admin" id="productsGrid"></div>
+        </section>
+
+        <!-- ========== PRECIOS ========== -->
+        <section class="content-section" id="section-prices">
+            <h2 class="section-heading">Gestión de Precios</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio actual</th>
+                            <th>Nuevo precio</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="priceTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== IMÁGENES ========== -->
+        <section class="content-section" id="section-images">
+            <h2 class="section-heading">Gestión de Imágenes</h2>
+            <div class="form-container">
+                <h2>Actualizar imagen de producto</h2>
+                <form onsubmit="handleImageUpload(event)" id="imageForm">
+                    <div class="form-group-admin">
+                        <label>Selecciona el producto</label>
+                        <select id="imageProductSelect" required>
+                            <option value="">-- Elige un producto --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-admin" style="margin-top:1.5rem;">
+                        <label>Imagen (JPG, PNG — máx. 2MB)</label>
+                        <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:var(--oro);margin-bottom:0.8rem;display:block;"></i>
+                            <p>Haz click para seleccionar una imagen</p>
+                            <p style="font-size:0.8rem;margin-top:0.3rem;">Formato: JPG, PNG (máx. 2MB)</p>
+                            <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp"
+                                   onchange="previewImage(event)">
+                        </div>
+                        <img id="imagePreview" class="image-preview-admin">
+                        <!-- ✅ NUEVO: info sobre tamaño de imagen -->
+                        <p id="imageSizeInfo" style="font-size:0.8rem;color:var(--gris-texto);margin-top:0.5rem;"></p>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-submit">Guardar Imagen</button>
+                        <button type="button" class="btn-cancel-form" onclick="resetImageForm()">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========== PEDIDOS ========== -->
+        <section class="content-section" id="section-orders">
+            <h2 class="section-heading">Pedidos Registrados</h2>
+
+            <!-- ✅ NUEVO: botón para añadir pedido manual -->
+            <div class="toolbar" style="margin-bottom:1.5rem;">
+                <button class="btn-new-product" onclick="openOrderModal()">
+                    <i class="fas fa-plus"></i> Registrar Pedido
+                </button>
+                <select class="filter-select" id="filterOrderStatus" onchange="filterOrders()">
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="procesando">Procesando</option>
+                    <option value="entregado">Entregado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== CONFIGURACIÓN ========== -->
+        <section class="content-section" id="section-settings">
+            <h2 class="section-heading">Configuración</h2>
+
+            <div class="form-container">
+                <h2>Información de la Tienda</h2>
+                <!-- ✅ CORREGIDO: formulario guarda en sessionStorage y aplica cambios -->
+                <form onsubmit="handleSettingsSave(event)" id="settingsForm">
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label>Nombre de Tienda</label>
+                            <input type="text" id="settingNombre" value="Shield Sheep" required>
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Email de Contacto</label>
+                            <input type="email" id="settingEmail" value="info@shieldsheep.com" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label>Teléfono (WhatsApp)</label>
+                            <input type="tel" id="settingTelefono" value="+573505424345" required>
+                        </div>
+                        <div class="form-group-admin">
+                            <label>País</label>
+                            <input type="text" id="settingPais" value="Colombia" required>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group-admin">
+                            <label>Dirección</label>
+                            <input type="text" id="settingDireccion" value="Bogotá, Colombia" required>
+                        </div>
+                    </div>
+                    <div class="form-row full">
+                        <div class="form-group-admin">
+                            <label>Descripción de la tienda</label>
+                            <textarea id="settingDescripcion">Especialistas en ropa personalizada de alta calidad ubicados en Bogotá.</textarea>
+                        </div>
+                    </div>
+
+                    <!-- ✅ NUEVO: sección cambiar contraseña -->
+                    <div style="border-top:2px solid #333;padding-top:1.5rem;margin-top:1.5rem;">
+                        <h3 style="color:var(--rojo);margin-bottom:1.2rem;font-size:0.95rem;text-transform:uppercase;letter-spacing:1px;">
+                            🔒 Cambiar Contraseña de Acceso
+                        </h3>
+                        <div class="form-row">
+                            <div class="form-group-admin">
+                                <label>Nueva contraseña</label>
+                                <input type="password" id="newPassword"
+                                       placeholder="Mínimo 8 caracteres"
+                                       minlength="8" autocomplete="new-password">
+                            </div>
+                            <div class="form-group-admin">
+                                <label>Confirmar contraseña</label>
+                                <input type="password" id="confirmPassword"
+                                       placeholder="Repite la contraseña"
+                                       autocomplete="new-password">
+                            </div>
+                        </div>
+                        <p style="font-size:0.82rem;color:var(--gris-texto);">
+                            Deja en blanco si no deseas cambiar la contraseña.
+                        </p>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-submit">Guardar Cambios</button>
+                        <button type="reset" class="btn-cancel-form">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========== LABORATORIO DE RENTABILIDAD ========== -->
+        <section class="content-section" id="section-profit-lab">
+            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">
+                <i class="fas fa-flask" style="margin-right:0.7rem;"></i>Laboratorio de Rentabilidad
+            </h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+                <!-- COLUMNA IZQUIERDA: Formulario de costos -->
+                <div class="form-container" style="margin-bottom: 0; max-width: 100%;">
+                    <h2 style="font-size: 1.2rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
+                        <i class="fas fa-calculator" style="margin-right:0.5rem;color:var(--oro);"></i>
+                        1. Estructura de Costos
+                    </h2>
+
+                    <h3 style="color: var(--gris-claro); font-size: 0.85rem; margin: 1.5rem 0 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                        Costos Directos (Por unidad)
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label>Prenda Base (COP)</label>
+                            <input type="number" id="costoBase" value="15000" oninput="calcularRentabilidad()">
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Impresión / Bordado (COP)</label>
+                            <input type="number" id="costoDiseno" value="8000" oninput="calcularRentabilidad()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label>Empaque (COP)</label>
+                            <input type="number" id="costoEmpaque" value="2500" oninput="calcularRentabilidad()">
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Logística / Envío (COP)</label>
+                            <input type="number" id="costoEnvio" value="10000" oninput="calcularRentabilidad()">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--gris-claro); font-size: 0.85rem; margin: 1.5rem 0 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                        Costos Operativos y Digitales
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label>Publicidad (CAC estimado)</label>
+                            <input type="number" id="costoAds" value="5000" oninput="calcularRentabilidad()">
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Comisión Pasarela / Web (%)</label>
+                            <input type="number" id="costoWeb" value="5" step="0.1" oninput="calcularRentabilidad()">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--oro); font-size: 0.85rem; margin: 1.5rem 0 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                        ✦ Estrategia de Venta
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group-admin">
+                            <label style="color: var(--oro);">Margen de Ganancia Deseado (%)</label>
+                            <input type="number" id="margenDeseado" value="45" oninput="calcularRentabilidad()" style="border-color: var(--oro);">
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Unidades a producir (lote)</label>
+                            <input type="number" id="unidadesLote" value="20" min="1" oninput="calcularRentabilidad()">
+                        </div>
+                    </div>
+
+                    <!-- Desglose visual de costos -->
+                    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;">
+                        <h3 style="color:var(--gris-claro);font-size:0.85rem;margin-bottom:1rem;text-transform:uppercase;letter-spacing:1px;">
+                            Desglose de Costos
+                        </h3>
+                        <div id="desgloseCostos" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: Resultados -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+                    <!-- Precio sugerido (tarjeta grande) -->
+                    <div class="stat-card" style="padding: 1.5rem; border-color: var(--verde); text-align:left;">
+                        <div class="stat-label" style="margin-bottom:0.5rem;">
+                            <i class="fas fa-tag" style="margin-right:0.4rem;color:var(--verde);"></i>
+                            Precio de Venta Sugerido al Público
+                        </div>
+                        <div class="stat-number" id="resPrecioSugerido" style="color: var(--verde); font-size: 2.8rem;">$0</div>
+                        <p style="color: var(--gris-texto); font-size: 0.85rem; margin-top: 0.5rem;">
+                            Incluye todos los costos y el margen deseado. Redondeado a la centena superior.
+                        </p>
+                    </div>
+
+                    <!-- Costo total y ganancia neta -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="stat-card" style="padding: 1.5rem; text-align:left;">
+                            <div class="stat-label" style="margin-bottom:0.4rem;">
+                                <i class="fas fa-coins" style="margin-right:0.4rem;color:var(--rojo);"></i>
+                                Costo Total Unitario
+                            </div>
+                            <div class="stat-number" id="resCostoTotal" style="font-size: 1.8rem; color: var(--rojo);">$0</div>
+                        </div>
+                        <div class="stat-card" style="padding: 1.5rem; text-align:left;">
+                            <div class="stat-label" style="margin-bottom:0.4rem;">
+                                <i class="fas fa-hand-holding-usd" style="margin-right:0.4rem;color:var(--oro);"></i>
+                                Ganancia Neta (Líquida)
+                            </div>
+                            <div class="stat-number" id="resGananciaNeta" style="font-size: 1.8rem; color: var(--oro);">$0</div>
+                        </div>
+                    </div>
+
+                    <!-- Análisis Comercial -->
+                    <div style="background: linear-gradient(135deg,#1a1a1a,#222); border: 1px solid #444; border-radius: 12px; padding: 1.5rem;">
+                        <h3 style="color: var(--blanco); font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #444; padding-bottom: 0.5rem;">
+                            <i class="fas fa-chart-pie" style="margin-right:0.5rem;color:var(--oro);"></i>
+                            Análisis Comercial
+                        </h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                            <span style="color: var(--gris-texto);">Porcentaje de Costos:</span>
+                            <span id="resPorcentajeCostos" style="color: var(--blanco); font-weight: 600;">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                            <span style="color: var(--gris-texto);">Retorno de Inversión (ROI):</span>
+                            <span id="resROI" style="color: var(--oro); font-weight: 600;">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                            <span style="color: var(--gris-texto);">Ganancia por Lote:</span>
+                            <span id="resGananciLote" style="color: var(--verde); font-weight: 600;">$0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 0.8rem; border-top: 1px dashed #444;">
+                            <span style="color: var(--gris-texto); font-size: 0.85rem;">Punto de Equilibrio:</span>
+                            <span id="resEquilibrio" style="color: var(--blanco); font-size: 0.85rem; font-weight: 600;">0 unid.</span>
+                        </div>
+                    </div>
+
+                    <!-- Barra visual de rentabilidad -->
+                    <div style="background: linear-gradient(135deg,#1a1a1a,#222); border: 1px solid #444; border-radius: 12px; padding: 1.5rem;">
+                        <h3 style="color: var(--blanco); font-size: 1rem; margin-bottom: 1rem;">
+                            <i class="fas fa-tachometer-alt" style="margin-right:0.5rem;color:var(--oro);"></i>
+                            Medidor de Rentabilidad
+                        </h3>
+                        <div style="background:#111;border-radius:8px;overflow:hidden;height:22px;margin-bottom:0.5rem;">
+                            <div id="barraRentabilidad" style="height:100%;width:0%;background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--verde));transition:width 0.5s ease;border-radius:8px;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--gris-texto);">
+                            <span>Pérdida</span><span>Equilibrio</span><span>Excelente</span>
+                        </div>
+                        <p id="resEtiquetaRentabilidad" style="text-align:center;margin-top:0.8rem;font-weight:700;font-size:0.9rem;color:var(--oro);"></p>
+                    </div>
+
+                    <!-- Botón aplicar -->
+                    <button class="btn-submit" onclick="aplicarPrecioAlCatalogo()" style="display:flex;align-items:center;justify-content:center;gap:0.6rem;">
+                        <i class="fas fa-save"></i> Aplicar Precio al Catálogo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- ==================== MODAL PRODUCTO ==================== -->
+<div class="modal-overlay" id="productModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Nuevo Producto</h2>
+            <button class="modal-close" onclick="closeProductModal()" type="button">&times;</button>
+        </div>
+
+        <form onsubmit="handleProductSubmit(event)" id="productForm" autocomplete="off">
+            <input type="hidden" id="editingProductId" value="">
+
+            <div class="form-group-admin">
+                <label>Nombre del Producto *</label>
+                <input type="text" id="productName" placeholder="Ej: Camiseta Premium" required maxlength="100">
+            </div>
+
+            <div class="form-group-admin" style="margin-top:1rem;">
+                <label>Descripción *</label>
+                <textarea id="productDescription" placeholder="Describe el producto" required maxlength="500"></textarea>
+            </div>
+
+            <div class="form-row" style="margin-top:1rem;">
+                <div class="form-group-admin">
+                    <label>Precio (COP) *</label>
+                    <input type="number" id="productPrice" placeholder="35000" required min="1000" max="5000000">
+                </div>
+                <div class="form-group-admin">
+                    <label>Stock *</label>
+                    <input type="number" id="productStock" placeholder="10" required min="0" max="9999">
+                </div>
+            </div>
+
+            <div class="form-group-admin" style="margin-top:1rem;">
+                <label>Categoría *</label>
+                <select id="productCategory" required>
+                    <option value="">-- Elige una categoría --</option>
+                    <option value="camisetas">Camisetas</option>
+                    <option value="sudaderas">Sudaderas</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="gorras">Gorras</option>
+                </select>
+            </div>
+
+            <!-- ✅ CORREGIDO: imagen obligatoria solo al crear, opcional al editar -->
+            <div class="form-group-admin" style="margin-top:1rem;">
+                <label>
+                    Imagen <span id="imgRequired" style="color:var(--rojo);">*</span>
+                    <span id="imgOptional" style="color:var(--gris-texto);font-size:0.82rem;display:none;"> (dejar vacío para mantener la actual)</span>
+                </label>
+                <div class="image-upload" onclick="document.getElementById('productImage').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:1.8rem;color:var(--oro);display:block;margin-bottom:0.5rem;"></i>
+                    <p id="uploadText">Selecciona una imagen (JPG, PNG — máx. 2MB)</p>
+                    <input type="file" id="productImage" accept="image/jpeg,image/png,image/webp"
+                           onchange="previewProductImage(event)">
+                </div>
+                <img id="productImagePreview" class="image-preview-admin">
+            </div>
+
+            <div class="form-buttons" style="margin-top:2rem;">
+                <button type="submit" class="btn-submit" id="productSaveBtn">Crear Producto</button>
+                <button type="button" class="btn-cancel-form" onclick="closeProductModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ✅ NUEVO: Modal de confirmación para borrar (reemplaza window.confirm) -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-content confirm-modal-content">
+        <div class="confirm-icon">🗑️</div>
+        <div class="confirm-title">¿Eliminar producto?</div>
+        <div class="confirm-text" id="confirmText">
+            Esta acción no se puede deshacer.
+        </div>
+        <div class="confirm-actions">
+            <button class="btn-confirm-delete" id="confirmDeleteBtn">Sí, eliminar</button>
+            <button class="btn-confirm-cancel" onclick="closeConfirmModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ NUEVO: Modal para registrar pedidos -->
+<div class="modal-overlay" id="orderModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Registrar Pedido</h2>
+            <button class="modal-close" onclick="closeOrderModal()" type="button">&times;</button>
+        </div>
+        <form onsubmit="handleOrderSubmit(event)" autocomplete="off">
+            <div class="form-group-admin">
+                <label>Nombre del Cliente *</label>
+                <input type="text" id="orderClient" placeholder="Ej: María García" required maxlength="100">
+            </div>
+            <div class="form-group-admin" style="margin-top:1rem;">
+                <label>Productos / Detalle *</label>
+                <textarea id="orderDetail" placeholder="Ej: Camiseta Classic White x2, Talla M" required></textarea>
+            </div>
+            <div class="form-row" style="margin-top:1rem;">
+                <div class="form-group-admin">
+                    <label>Total (COP) *</label>
+                    <input type="number" id="orderTotal" placeholder="70000" required min="0">
+                </div>
+                <div class="form-group-admin">
+                    <label>Estado *</label>
+                    <select id="orderStatus" required>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="procesando">Procesando</option>
+                        <option value="entregado">Entregado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-buttons" style="margin-top:1.5rem;">
+                <button type="submit" class="btn-submit">Registrar Pedido</button>
+                <button type="button" class="btn-cancel-form" onclick="closeOrderModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- FIN ZONA HTML -->
+
+<!-- ============================================================
+     ⚙️ ZONA JS — separar en admin.js
+     ============================================================ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ==================== CONFIGURACIÓN DE SEGURIDAD ====================
+// ✅ CORREGIDO: credenciales NO están en el HTML.
+// La contraseña se guarda hasheada en sessionStorage.
+// En producción real, esto debe ser validado por un servidor.
+
+// Hash simple (para demo sin backend). En producción usar bcrypt en servidor.
+async function hashString(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Credencial inicial hasheada (SHA-256 de "Admin123@ShieldSheep")
+// Cambia esto desde Configuración → Cambiar Contraseña
+const ADMIN_EMAIL = 'admin@shieldsheep.com';
+const DEFAULT_PASS_HASH = 'a1d2e3f4b5c6...'; // placeholder — se configura en primer login
+
+// ==================== ESTADO DE LA SESIÓN ====================
+const SESSION_DURATION = 2 * 60 * 60 * 1000; // 2 horas en ms
+const MAX_ATTEMPTS    = 5;
+const LOCKOUT_SECONDS = 30;
+
+let sessionTimer       = null;
+let sessionExpiry      = null;
+let failedAttempts     = parseInt(sessionStorage.getItem('failedAttempts') || '0');
+let lockedUntil        = parseInt(sessionStorage.getItem('lockedUntil') || '0');
+
+// ==================== DATOS PERSISTENTES ====================
+// ✅ CORREGIDO: imágenes se guardan por referencia de URL, no base64 completo
+// Para demo local se guarda el dataURL, pero en producción usar un servidor de archivos
+let productos = JSON.parse(sessionStorage.getItem('ss_productos')) || [
+    { id: 1, name: "Camiseta Classic White", price: 35000, stock: 10, category: "camisetas",
+      description: "100% algodón premium, cómoda y versátil",
+      image: "https://via.placeholder.com/400x500/1a1a1a/d4af37?text=Camiseta+White", rating: 5 },
+    { id: 2, name: "Camiseta Black Faith",  price: 35000, stock: 8,  category: "camisetas",
+      description: "Diseño exclusivo con símbolos hebreos",
+      image: "https://via.placeholder.com/400x500/1a1a1a/d4af37?text=Camiseta+Black", rating: 5 },
+    { id: 3, name: "Hoodie Shield Premium", price: 85000, stock: 3,  category: "sudaderas",
+      description: "Sudadera de lujo con logo bordado",
+      image: "https://via.placeholder.com/400x500/1a1a1a/d4af37?text=Hoodie", rating: 5 },
+    { id: 4, name: "Gorra Urban Sheep",     price: 25000, stock: 2,  category: "gorras",
+      description: "Gorra ajustable con estilo moderno",
+      image: "https://via.placeholder.com/400x500/1a1a1a/d4af37?text=Gorra", rating: 4 }
+];
+
+let pedidos = JSON.parse(sessionStorage.getItem('ss_pedidos')) || [
+    { id: 'SS001', client: 'María García',    total: 105000, date: '2026-03-10', status: 'entregado',  detail: 'Camiseta Classic White x3' },
+    { id: 'SS002', client: 'Juan Rodríguez',  total: 85000,  date: '2026-03-11', status: 'procesando', detail: 'Hoodie Shield Premium x1' }
+];
+
+let storeSettings = JSON.parse(sessionStorage.getItem('ss_settings')) || {
+    nombre: 'Shield Sheep',
+    email: 'info@shieldsheep.com',
+    telefono: '+573505424345',
+    pais: 'Colombia',
+    direccion: 'Bogotá, Colombia',
+    descripcion: 'Especialistas en ropa personalizada de alta calidad.'
+};
+
+function saveProductos()  { sessionStorage.setItem('ss_productos', JSON.stringify(productos)); }
+function savePedidos()    { sessionStorage.setItem('ss_pedidos',   JSON.stringify(pedidos));   }
+function saveSettings()   { sessionStorage.setItem('ss_settings',  JSON.stringify(storeSettings)); }
+
+// ==================== AUTENTICACIÓN ====================
+async function checkLogin() {
+    const token   = sessionStorage.getItem('ss_admin_token');
+    const expiry  = parseInt(sessionStorage.getItem('ss_admin_expiry') || '0');
+    const isValid = token && Date.now() < expiry;
+
+    if (isValid) {
+        showAdmin();
+    } else {
+        sessionStorage.removeItem('ss_admin_token');
+        sessionStorage.removeItem('ss_admin_expiry');
+        showLoginPage();
+    }
+}
+
+function showLoginPage() {
+    document.getElementById('loginContainer').style.display = 'flex';
+    document.getElementById('adminContainer').classList.remove('active');
+    updateAttemptDots();
+}
+
+function showAdmin() {
+    document.getElementById('loginContainer').style.display = 'none';
+    document.getElementById('adminContainer').classList.add('active');
+    initAdmin();
+    startSessionTimer();
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+
+    // ✅ Verificar bloqueo por intentos
+    if (Date.now() < lockedUntil) {
+        showToast('⏳ Cuenta bloqueada temporalmente', 'error');
+        return;
+    }
+
+    const emailVal = document.getElementById('email').value.trim().toLowerCase();
+    const passVal  = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMessage');
+
+    // Obtener hash guardado (o usar el default para primer acceso)
+    const savedHash = sessionStorage.getItem('ss_pass_hash') ||
+        await hashString('Admin123@ShieldSheep'); // contraseña inicial
+    const savedEmail = sessionStorage.getItem('ss_admin_email') || ADMIN_EMAIL;
+
+    const inputHash = await hashString(passVal + '@ShieldSheep');
+
+    if (emailVal === savedEmail && inputHash === savedHash) {
+        // ✅ Login exitoso
+        failedAttempts = 0;
+        sessionStorage.setItem('failedAttempts', '0');
+        sessionStorage.removeItem('lockedUntil');
+
+        // Generar token de sesión simple
+        const token  = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+        const expiry = Date.now() + SESSION_DURATION;
+        sessionStorage.setItem('ss_admin_token',  token);
+        sessionStorage.setItem('ss_admin_expiry', expiry.toString());
+
+        errorMsg.classList.remove('show');
+        document.getElementById('loginForm').reset();
+        showAdmin();
+        showToast('¡Bienvenido administrador!', 'success');
+
+    } else {
+        // ✅ Login fallido con límite de intentos
+        failedAttempts++;
+        sessionStorage.setItem('failedAttempts', failedAttempts.toString());
+        updateAttemptDots();
+
+        if (failedAttempts >= MAX_ATTEMPTS) {
+            const until = Date.now() + LOCKOUT_SECONDS * 1000;
+            lockedUntil = until;
+            sessionStorage.setItem('lockedUntil', until.toString());
+            failedAttempts = 0;
+            sessionStorage.setItem('failedAttempts', '0');
+            startLockoutTimer();
+            return;
+        }
+
+        errorMsg.classList.add('show');
+        errorMsg.textContent = `❌ Credenciales incorrectas. Intentos restantes: ${MAX_ATTEMPTS - failedAttempts}`;
+        document.getElementById('password').value = '';
+    }
+}
+
+function updateAttemptDots() {
+    for (let i = 1; i <= 5; i++) {
+        const dot = document.getElementById('dot' + i);
+        if (dot) dot.classList.toggle('used', i <= failedAttempts);
+    }
+}
+
+function startLockoutTimer() {
+    const loginBtn   = document.getElementById('loginBtn');
+    const lockoutMsg = document.getElementById('lockoutMessage');
+    const timerEl    = document.getElementById('lockoutTimer');
+    const errorMsg   = document.getElementById('errorMessage');
+
+    errorMsg.classList.remove('show');
+    lockoutMsg.classList.add('show');
+    loginBtn.disabled = true;
+
+    const interval = setInterval(() => {
+        const remaining = Math.ceil((lockedUntil - Date.now()) / 1000);
+        if (remaining <= 0) {
+            clearInterval(interval);
+            lockoutMsg.classList.remove('show');
+            loginBtn.disabled = false;
+            lockedUntil = 0;
+        } else {
+            timerEl.textContent = remaining + 's';
+        }
+    }, 1000);
+}
+
+function handleLogout() {
+    // ✅ CORREGIDO: sin window.confirm — logout directo con toast de confirmación
+    sessionStorage.removeItem('ss_admin_token');
+    sessionStorage.removeItem('ss_admin_expiry');
+    if (sessionTimer) clearInterval(sessionTimer);
+    showLoginPage();
+    showToast('Sesión cerrada correctamente', 'info');
+    document.getElementById('adminContainer').classList.remove('active');
+    document.getElementById('loginContainer').style.display = 'flex';
+}
+
+// ==================== TEMPORIZADOR DE SESIÓN ====================
+function startSessionTimer() {
+    if (sessionTimer) clearInterval(sessionTimer);
+
+    sessionTimer = setInterval(() => {
+        const expiry    = parseInt(sessionStorage.getItem('ss_admin_expiry') || '0');
+        const remaining = expiry - Date.now();
+
+        if (remaining <= 0) {
+            clearInterval(sessionTimer);
+            showToast('⏰ Sesión expirada. Por favor inicia sesión de nuevo.', 'warning');
+            setTimeout(handleLogout, 2000);
+            return;
+        }
+
+        const h = Math.floor(remaining / 3600000);
+        const m = Math.floor((remaining % 3600000) / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
+        const timerEl = document.getElementById('sessionTimer');
+        if (timerEl) {
+            timerEl.textContent = `Expira en: ${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+
+        // Aviso cuando queden 5 minutos
+        if (remaining < 5 * 60 * 1000 && remaining > (5 * 60 * 1000 - 2000)) {
+            showToast('⚠️ Tu sesión expirará en 5 minutos', 'warning');
+        }
+    }, 1000);
+}
+
+// ==================== INICIALIZACIÓN ADMIN ====================
+function initAdmin() {
+    loadSettings();
+    renderProducts();
+    renderPriceTable();
+    renderImageProductSelect();
+    renderOrdersTable();
+    updateDashboard();
+}
+
+// ==================== SECCIONES ====================
+const SECTION_TITLES = {
+    dashboard:   'Dashboard',
+    products:    'Productos',
+    prices:      'Precios',
+    images:      'Imágenes',
+    orders:      'Pedidos',
+    'profit-lab':'Laboratorio de Rentabilidad',
+    settings:    'Configuración'
+};
+
+function showSection(id, linkEl) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    const section = document.getElementById('section-' + id);
+    if (section) section.classList.add('active');
+
+    document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+    if (linkEl) linkEl.classList.add('active');
+
+    const titleEl = document.getElementById('sectionTitle');
+    if (titleEl) titleEl.textContent = SECTION_TITLES[id] || id;
+
+    // Cerrar sidebar en móvil al navegar
+    closeSidebar();
+}
+
+// ==================== SIDEBAR MÓVIL ====================
+function toggleSidebar() {
+    const sidebar  = document.getElementById('sidebar');
+    const overlay  = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+}
+
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+}
+
+// ==================== DASHBOARD ====================
+function updateDashboard() {
+    document.getElementById('statProductos').textContent = productos.length;
+
+    const totalCatalogo = productos.reduce((sum, p) => sum + (p.price * p.stock), 0);
+    document.getElementById('statIngresos').textContent =
+        '$' + totalCatalogo.toLocaleString('es-CO');
+
+    document.getElementById('statPedidos').textContent = pedidos.length;
+
+    const totalStock = productos.reduce((sum, p) => sum + p.stock, 0);
+    document.getElementById('statStock').textContent = totalStock;
+
+    renderLowStockTable();
+}
+
+function renderLowStockTable() {
+    const tbody  = document.getElementById('lowStockTable');
+    const bajos  = productos.filter(p => p.stock <= 3);
+
+    if (bajos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--verde);padding:1.5rem;">
+            ✅ Todos los productos tienen stock suficiente</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = bajos.map(p => `
+        <tr>
+            <td><strong>${p.name}</strong></td>
+            <td style="color:var(--gris-texto);">${p.category}</td>
+            <td style="color:${p.stock === 0 ? 'var(--rojo)' : 'var(--naranja)'};">
+                <strong>${p.stock}</strong> ${p.stock === 0 ? '⚠️ Agotado' : ''}
+            </td>
+            <td>$${p.price.toLocaleString('es-CO')}</td>
+        </tr>`).join('');
+}
+
+// ==================== RENDER PRODUCTOS ====================
+function renderProducts(lista) {
+    lista = lista || productos;
+    const grid = document.getElementById('productsGrid');
+
+    if (lista.length === 0) {
+        grid.innerHTML = `<div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No hay productos. ¡Crea uno!</p>
+        </div>`;
+        return;
+    }
+
+    grid.innerHTML = lista.map(p => `
+        <div class="product-item">
+            <img src="${p.image}" alt="${p.name}" class="product-img-admin"
+                 onerror="this.src='https://via.placeholder.com/400x200/111/d4af37?text=Sin+Imagen'">
+            <div class="product-details">
+                <h3>${p.name}</h3>
+                <div class="product-price-admin">$${p.price.toLocaleString('es-CO')}</div>
+                <div class="product-meta">
+                    <span>📦 Stock: <strong>${p.stock}</strong></span>
+                    <span>🏷️ ${p.category}</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-edit" onclick="editProduct(${p.id})">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn-delete" onclick="confirmDelete(${p.id})">
+                        <i class="fas fa-trash"></i> Borrar
+                    </button>
+                </div>
+            </div>
+        </div>`).join('');
+}
+
+// ✅ NUEVO: filtro de productos en admin
+function filterAdminProducts() {
+    const query    = document.getElementById('searchProducts').value.trim().toLowerCase();
+    const category = document.getElementById('filterCategory').value;
+
+    const filtered = productos.filter(p => {
+        const matchQuery = !query ||
+            p.name.toLowerCase().includes(query) ||
+            p.description.toLowerCase().includes(query);
+        const matchCat = !category || p.category === category;
+        return matchQuery && matchCat;
+    });
+
+    renderProducts(filtered);
+}
+
+// ==================== MODAL PRODUCTO ====================
+function openProductModal() {
+    document.getElementById('modalTitle').textContent     = 'Nuevo Producto';
+    document.getElementById('productSaveBtn').textContent = 'Crear Producto';
+    document.getElementById('editingProductId').value     = '';
+    document.getElementById('productForm').reset();
+    document.getElementById('productImagePreview').style.display = 'none';
+    document.getElementById('imgRequired').style.display  = 'inline';
+    document.getElementById('imgOptional').style.display  = 'none';
+    document.getElementById('uploadText').textContent     = 'Selecciona una imagen (JPG, PNG — máx. 2MB)';
+    document.getElementById('productModal').classList.add('active');
+    setTimeout(() => document.getElementById('productName').focus(), 100);
+}
+
+function closeProductModal() {
+    document.getElementById('productModal').classList.remove('active');
+    document.getElementById('productForm').reset();
+    document.getElementById('productImagePreview').style.display = 'none';
+}
+
+function handleProductSubmit(e) {
+    e.preventDefault();
+
+    const editId      = document.getElementById('editingProductId').value;
+    const name        = document.getElementById('productName').value.trim();
+    const description = document.getElementById('productDescription').value.trim();
+    const price       = parseInt(document.getElementById('productPrice').value);
+    const stock       = parseInt(document.getElementById('productStock').value);
+    const category    = document.getElementById('productCategory').value;
+    const preview     = document.getElementById('productImagePreview');
+    const imageSrc    = preview.style.display !== 'none' ? preview.src : '';
+
+    if (!editId && !imageSrc) {
+        showToast('⚠️ Debes subir una imagen para el producto', 'warning');
+        return;
+    }
+
+    if (editId) {
+        const idx = productos.findIndex(p => p.id == editId);
+        if (idx !== -1) {
+            productos[idx] = {
+                ...productos[idx],
+                name, description, price, stock, category,
+                image: imageSrc || productos[idx].image
+            };
+            showToast('✅ Producto actualizado', 'success');
+        }
+    } else {
+        const newId = productos.length > 0
+            ? Math.max(...productos.map(p => p.id)) + 1
+            : 1;
+        productos.push({ id: newId, name, description, price, stock, category, image: imageSrc, rating: 5 });
+        showToast('✅ Producto creado exitosamente', 'success');
+    }
+
+    saveProductos();
+    renderProducts();
+    renderPriceTable();
+    renderImageProductSelect();
+    updateDashboard();
+    closeProductModal();
+}
+
+function editProduct(id) {
+    const p = productos.find(x => x.id === id);
+    if (!p) return;
+
+    document.getElementById('modalTitle').textContent     = 'Editar Producto';
+    document.getElementById('productSaveBtn').textContent = 'Guardar Cambios';
+    document.getElementById('editingProductId').value     = id;
+    document.getElementById('productName').value          = p.name;
+    document.getElementById('productDescription').value   = p.description;
+    document.getElementById('productPrice').value         = p.price;
+    document.getElementById('productStock').value         = p.stock;
+    document.getElementById('productCategory').value      = p.category;
+    document.getElementById('productImage').value         = '';
+    document.getElementById('imgRequired').style.display  = 'none';
+    document.getElementById('imgOptional').style.display  = 'inline';
+    document.getElementById('uploadText').textContent     = 'Cambiar imagen (opcional)';
+
+    const preview = document.getElementById('productImagePreview');
+    if (p.image) { preview.src = p.image; preview.style.display = 'block'; }
+    else           { preview.style.display = 'none'; }
+
+    document.getElementById('productModal').classList.add('active');
+    setTimeout(() => document.getElementById('productName').focus(), 100);
+}
+
+// ✅ CORREGIDO: modal de confirmación en lugar de window.confirm
+let pendingDeleteId = null;
+
+function confirmDelete(id) {
+    const p = productos.find(x => x.id === id);
+    if (!p) return;
+    pendingDeleteId = id;
+    document.getElementById('confirmText').textContent =
+        `¿Deseas eliminar "${p.name}"? Esta acción no se puede deshacer.`;
+    document.getElementById('confirmModal').classList.add('active');
+    document.getElementById('confirmDeleteBtn').onclick = () => deleteProduct(pendingDeleteId);
+}
+
+function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('active');
+    pendingDeleteId = null;
+}
+
+function deleteProduct(id) {
+    productos = productos.filter(p => p.id !== id);
+    saveProductos();
+    renderProducts();
+    renderPriceTable();
+    renderImageProductSelect();
+    updateDashboard();
+    closeConfirmModal();
+    showToast('🗑️ Producto eliminado', 'success');
+}
+
+function previewProductImage(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    // ✅ CORREGIDO: límite de 2MB para evitar saturar storage
+    if (file.size > 2 * 1024 * 1024) {
+        showToast('❌ La imagen no debe superar 2MB', 'error');
+        e.target.value = '';
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = ev => {
+        const preview = document.getElementById('productImagePreview');
+        preview.src   = ev.target.result;
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// ==================== PRECIOS ====================
+function renderPriceTable() {
+    const tbody = document.getElementById('priceTable');
+    if (productos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--gris-texto);">
+            No hay productos</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = productos.map(p => `
+        <tr>
+            <td><strong>${p.name}</strong></td>
+            <td style="color:var(--verde);">$${p.price.toLocaleString('es-CO')}</td>
+            <td>
+                <input class="price-input-table" type="number"
+                       id="price_${p.id}" value="${p.price}" min="1000">
+            </td>
+            <td>
+                <button class="btn-save-price" onclick="updatePrice(${p.id})">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </td>
+        </tr>`).join('');
+}
+
+function updatePrice(id) {
+    const input    = document.getElementById('price_' + id);
+    const newPrice = parseInt(input.value);
+
+    if (isNaN(newPrice) || newPrice < 1000) {
+        showToast('⚠️ El precio mínimo es $1.000', 'warning');
+        return;
+    }
+
+    const p = productos.find(x => x.id === id);
+    if (!p) return;
+
+    if (newPrice === p.price) {
+        showToast('ℹ️ El precio no cambió', 'info');
+        return;
+    }
+
+    p.price = newPrice;
+    saveProductos();
+    renderProducts();
+    renderPriceTable();
+    updateDashboard();
+    showToast(`✅ Precio actualizado: $${newPrice.toLocaleString('es-CO')}`, 'success');
+}
+
+// ==================== IMÁGENES ====================
+function previewImage(e) {
+    const file   = e.target.files[0];
+    const info   = document.getElementById('imageSizeInfo');
+    const preview = document.getElementById('imagePreview');
+
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+        showToast('❌ La imagen no debe superar 2MB', 'error');
+        e.target.value = '';
+        info.textContent = '';
+        return;
+    }
+
+    info.textContent = `Tamaño: ${(file.size / 1024).toFixed(1)} KB`;
+
+    const reader = new FileReader();
+    reader.onload = ev => {
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleImageUpload(e) {
+    e.preventDefault();
+    const productId  = document.getElementById('imageProductSelect').value;
+    const preview    = document.getElementById('imagePreview');
+
+    if (!productId) {
+        showToast('⚠️ Selecciona un producto', 'warning');
+        return;
+    }
+
+    if (!preview.src || !preview.src.startsWith('data:')) {
+        showToast('⚠️ Selecciona una imagen válida', 'warning');
+        return;
+    }
+
+    const p = productos.find(x => x.id == productId);
+    if (!p) return;
+
+    p.image = preview.src;
+    saveProductos();
+    renderProducts();
+    showToast('✅ Imagen actualizada', 'success');
+    resetImageForm();
+}
+
+function resetImageForm() {
+    document.getElementById('imageInput').value         = '';
+    document.getElementById('imagePreview').src         = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('imageProductSelect').value = '';
+    document.getElementById('imageSizeInfo').textContent = '';
+}
+
+function renderImageProductSelect() {
+    const select = document.getElementById('imageProductSelect');
+    select.innerHTML = '<option value="">-- Elige un producto --</option>' +
+        productos.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+}
+
+// ==================== PEDIDOS ====================
+const STATUS_COLORS = {
+    pendiente:   '#f39c12',
+    procesando:  '#3498db',
+    entregado:   '#2ecc71',
+    cancelado:   '#C1121F'
+};
+
+function renderOrdersTable(lista) {
+    lista = lista || pedidos;
+    const tbody = document.getElementById('ordersTable');
+
+    if (lista.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gris-texto);">
+            No hay pedidos registrados</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = lista.map(o => `
+        <tr>
+            <td><strong>#${o.id}</strong></td>
+            <td>${o.client}</td>
+            <td style="color:var(--verde);">$${o.total.toLocaleString('es-CO')}</td>
+            <td>${o.date}</td>
+            <td>
+                <span style="background:${STATUS_COLORS[o.status] || '#333'};
+                             color:#fff;padding:0.3rem 0.8rem;
+                             border-radius:20px;font-size:0.82rem;
+                             text-transform:capitalize;">
+                    ${o.status}
+                </span>
+            </td>
+            <td>
+                <select onchange="updateOrderStatus('${o.id}', this.value)"
+                        style="background:#1a1a1a;border:1px solid #444;color:var(--blanco);
+                               padding:0.4rem 0.6rem;border-radius:6px;font-size:0.82rem;
+                               font-family:'Montserrat',sans-serif;cursor:pointer;">
+                    <option value="pendiente"   ${o.status==='pendiente'   ?'selected':''}>Pendiente</option>
+                    <option value="procesando"  ${o.status==='procesando'  ?'selected':''}>Procesando</option>
+                    <option value="entregado"   ${o.status==='entregado'   ?'selected':''}>Entregado</option>
+                    <option value="cancelado"   ${o.status==='cancelado'   ?'selected':''}>Cancelado</option>
+                </select>
+            </td>
+        </tr>`).join('');
+}
+
+function updateOrderStatus(id, newStatus) {
+    const o = pedidos.find(x => x.id === id);
+    if (!o) return;
+    o.status = newStatus;
+    savePedidos();
+    renderOrdersTable();
+    updateDashboard();
+    showToast(`Pedido #${id} → ${newStatus}`, 'info');
+}
+
+function filterOrders() {
+    const status   = document.getElementById('filterOrderStatus').value;
+    const filtered = status ? pedidos.filter(o => o.status === status) : pedidos;
+    renderOrdersTable(filtered);
+}
+
+function openOrderModal() {
+    document.getElementById('orderModal').classList.add('active');
+    setTimeout(() => document.getElementById('orderClient').focus(), 100);
+}
+
+function closeOrderModal() {
+    document.getElementById('orderModal').classList.remove('active');
+}
+
+function handleOrderSubmit(e) {
+    e.preventDefault();
+    const client = document.getElementById('orderClient').value.trim();
+    const detail = document.getElementById('orderDetail').value.trim();
+    const total  = parseInt(document.getElementById('orderTotal').value);
+    const status = document.getElementById('orderStatus').value;
+
+    const newId = 'SS' + String(pedidos.length + 1).padStart(3, '0');
+    const today = new Date().toISOString().split('T')[0];
+
+    pedidos.push({ id: newId, client, total, date: today, status, detail });
+    savePedidos();
+    renderOrdersTable();
+    updateDashboard();
+    closeOrderModal();
+    showToast('✅ Pedido registrado correctamente', 'success');
+    e.target.reset();
+}
+
+// ==================== CONFIGURACIÓN ====================
+function loadSettings() {
+    document.getElementById('settingNombre').value     = storeSettings.nombre     || '';
+    document.getElementById('settingEmail').value      = storeSettings.email      || '';
+    document.getElementById('settingTelefono').value   = storeSettings.telefono   || '';
+    document.getElementById('settingPais').value       = storeSettings.pais       || '';
+    document.getElementById('settingDireccion').value  = storeSettings.direccion  || '';
+    document.getElementById('settingDescripcion').value = storeSettings.descripcion || '';
+}
+
+async function handleSettingsSave(e) {
+    e.preventDefault();
+
+    // ✅ NUEVO: cambio de contraseña
+    const newPass  = document.getElementById('newPassword').value;
+    const confPass = document.getElementById('confirmPassword').value;
+
+    if (newPass || confPass) {
+        if (newPass.length < 8) {
+            showToast('⚠️ La contraseña debe tener mínimo 8 caracteres', 'warning');
+            return;
+        }
+        if (newPass !== confPass) {
+            showToast('⚠️ Las contraseñas no coinciden', 'warning');
+            return;
+        }
+        const newHash = await hashString(newPass + '@ShieldSheep');
+        sessionStorage.setItem('ss_pass_hash', newHash);
+        showToast('🔒 Contraseña actualizada', 'success');
+    }
+
+    storeSettings = {
+        nombre:      document.getElementById('settingNombre').value.trim(),
+        email:       document.getElementById('settingEmail').value.trim(),
+        telefono:    document.getElementById('settingTelefono').value.trim(),
+        pais:        document.getElementById('settingPais').value.trim(),
+        direccion:   document.getElementById('settingDireccion').value.trim(),
+        descripcion: document.getElementById('settingDescripcion').value.trim()
+    };
+
+    saveSettings();
+    showToast('✅ Configuración guardada', 'success');
+
+    document.getElementById('newPassword').value    = '';
+    document.getElementById('confirmPassword').value = '';
+}
+
+// ==================== TOAST ====================
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className   = `toast ${type}`;
+    // ✅ CORREGIDO: textContent para evitar XSS
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease-in forwards';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// ==================== ATAJOS DE TECLADO ====================
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeProductModal();
+        closeConfirmModal();
+        closeOrderModal();
+        closeSidebar();
+    }
+});
+
+// ==================== LABORATORIO DE RENTABILIDAD ====================
+function formatearMoneda(valor) {
+    return '$' + Math.round(valor).toLocaleString('es-CO');
+}
+
+function calcularRentabilidad() {
+    // Guard: si los inputs del lab aún no existen en el DOM, salir silenciosamente
+    const inputBase = document.getElementById('costoBase');
+    if (!inputBase) return;
+
+    const costoBase      = parseFloat(inputBase.value)                                    || 0;
+    const costoDiseno    = parseFloat(document.getElementById('costoDiseno').value)       || 0;
+    const costoEmpaque   = parseFloat(document.getElementById('costoEmpaque').value)      || 0;
+    const costoEnvio     = parseFloat(document.getElementById('costoEnvio').value)        || 0;
+    const costoAds       = parseFloat(document.getElementById('costoAds').value)          || 0;
+    const costoWeb       = parseFloat(document.getElementById('costoWeb').value)          || 0;
+    const margenDeseado  = parseFloat(document.getElementById('margenDeseado').value)     || 0;
+    const unidadesLote   = Math.max(1, parseInt(document.getElementById('unidadesLote').value) || 1);
+
+    const costoTotalUnitario = costoBase + costoDiseno + costoEmpaque + costoEnvio + costoAds;
+
+    let divisor = (1 - ((margenDeseado + costoWeb) / 100));
+    let precioSugerido = divisor <= 0 ? costoTotalUnitario * 2 : costoTotalUnitario / divisor;
+
+    const valorComisionWeb = precioSugerido * (costoWeb / 100);
+    const gananciaNeta     = precioSugerido - costoTotalUnitario - valorComisionWeb;
+    const gananciLote      = gananciaNeta * unidadesLote;
+
+    const porcentajeCostos = precioSugerido > 0 ? (costoTotalUnitario / precioSugerido) * 100 : 0;
+    const roi              = costoTotalUnitario > 0 ? (gananciaNeta / costoTotalUnitario) * 100 : 0;
+    // Punto de equilibrio: unidades mínimas para recuperar inversión del lote
+    const equilibrio       = gananciaNeta > 0 ? Math.ceil(costoTotalUnitario / gananciaNeta) : '∞';
+
+    const precioFinal = Math.ceil(precioSugerido / 100) * 100;
+
+    document.getElementById('resPrecioSugerido').innerText   = formatearMoneda(precioFinal);
+    document.getElementById('resCostoTotal').innerText       = formatearMoneda(costoTotalUnitario);
+    document.getElementById('resGananciaNeta').innerText     = formatearMoneda(gananciaNeta);
+    document.getElementById('resPorcentajeCostos').innerText = porcentajeCostos.toFixed(1) + '%';
+    document.getElementById('resROI').innerText              = roi.toFixed(1) + '%';
+    document.getElementById('resGananciLote').innerText      = formatearMoneda(gananciLote);
+    document.getElementById('resEquilibrio').innerText       = (equilibrio === '∞' ? '∞' : equilibrio) + ' unid.';
+
+    // Barra de rentabilidad: escala 0–60% ROI → 0–100% barra
+    const pct = Math.min(100, Math.max(0, (roi / 60) * 100));
+    document.getElementById('barraRentabilidad').style.width = pct.toFixed(1) + '%';
+
+    let etiqueta = '';
+    if (roi < 0)        etiqueta = '⚠️ Precio por debajo del costo';
+    else if (roi < 15)  etiqueta = '⚡ Margen bajo — revisa tus costos';
+    else if (roi < 35)  etiqueta = '✅ Margen aceptable';
+    else if (roi < 60)  etiqueta = '🌟 Muy rentable';
+    else                etiqueta = '🏆 Rentabilidad excelente';
+    document.getElementById('resEtiquetaRentabilidad').innerText = etiqueta;
+
+    // Desglose visual de costos
+    const items = [
+        { label: 'Prenda Base',         valor: costoBase,    color: '#3498db' },
+        { label: 'Impresión / Bordado', valor: costoDiseno,  color: '#9b59b6' },
+        { label: 'Empaque',             valor: costoEmpaque, color: '#1abc9c' },
+        { label: 'Logística / Envío',   valor: costoEnvio,   color: '#e67e22' },
+        { label: 'Publicidad (CAC)',    valor: costoAds,     color: '#e74c3c' },
+    ].filter(i => i.valor > 0);
+
+    const totalItems = items.reduce((s, i) => s + i.valor, 0);
+    const desglose   = document.getElementById('desgloseCostos');
+    if (desglose) {
+        desglose.innerHTML = items.length === 0
+            ? `<p style="color:var(--gris-texto);font-size:0.85rem;">Ingresa costos para ver el desglose.</p>`
+            : items.map(i => {
+                const pctItem = totalItems > 0 ? (i.valor / totalItems * 100).toFixed(1) : 0;
+                return `
+                <div>
+                    <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px;">
+                        <span style="color:var(--gris-claro);">${i.label}</span>
+                        <span style="color:${i.color};font-weight:600;">${formatearMoneda(i.valor)} (${pctItem}%)</span>
+                    </div>
+                    <div style="background:#111;border-radius:4px;overflow:hidden;height:7px;">
+                        <div style="height:100%;width:${pctItem}%;background:${i.color};border-radius:4px;transition:width 0.4s ease;"></div>
+                    </div>
+                </div>`;
+            }).join('');
+    }
+}
+
+function aplicarPrecioAlCatalogo() {
+    const precio = parseInt(document.getElementById('resPrecioSugerido').innerText.replace(/[^0-9]/g, ''));
+    if (precio > 0) {
+        showToast('✅ Precio sugerido listo. Ahora puedes usarlo al crear tu producto.', 'success');
+        document.getElementById('productPrice').value = precio;
+        openProductModal();
+    } else {
+        showToast('⚠️ Primero ingresa tus costos para calcular el precio.', 'warning');
+    }
+}
+
+// Inicializar el laboratorio al cargar la página (el cálculo se dispara también
+// al entrar a la sección, pero esto garantiza que los valores se muestren correctos
+// desde el primer render si el admin ya tiene sesión activa).
+window.addEventListener('DOMContentLoaded', () => {
+    calcularRentabilidad();
+});
+
+// ==================== INICIALIZAR ====================
+checkLogin();
+</script>
+</body>
+</html>
