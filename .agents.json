@@ -1,0 +1,399 @@
+{
+  "version": "2.0.0",
+  "projectName": "Shield-Sheep",
+  "description": "AI-powered web platform with professional multimedia & autonomous agents",
+  "lastUpdated": "2026-04-20",
+  
+  "agents": {
+    "ui-ux-pro-max": {
+      "enabled": true,
+      "type": "design-reviewer",
+      "description": "UI/UX design intelligence with 50+ styles, 161 color palettes, 57 font pairings",
+      "triggers": [
+        "review my design",
+        "optimize UI/UX",
+        "check accessibility",
+        "validate Cloudinary",
+        "improve animations"
+      ],
+      "applyTo": ["**/*.html", "**/*.css"],
+      "rules": {
+        "minAccessibilityScore": 85,
+        "wcagLevel": "AA",
+        "maxAnimationDuration": 300,
+        "mobileFirstRequired": true,
+        "responsiveBreakpoints": [375, 768, 1024, 1280, 1920]
+      },
+      "output": {
+        "format": "markdown",
+        "location": "reports/ui-ux-review.md",
+        "createPR": true,
+        "requiresApproval": true
+      }
+    },
+    
+    "code-analyzer": {
+      "enabled": true,
+      "type": "code-quality",
+      "description": "Static code analysis, complexity metrics, refactoring suggestions",
+      "triggers": [
+        "analyze my code",
+        "code quality check",
+        "audit performance",
+        "refactor this",
+        "find dead code"
+      ],
+      "applyTo": ["**/*.js", "**/*.html", "**/*.css"],
+      "rules": {
+        "maxComplexity": 10,
+        "maxLOC": 50,
+        "duplicateThreshold": 5,
+        "unusedCodeThreshold": 0
+      },
+      "output": {
+        "format": "json+markdown",
+        "location": "reports/code-analysis.json",
+        "createPR": false,
+        "requiresApproval": false
+      }
+    },
+    
+    "performance-optimizer": {
+      "enabled": true,
+      "type": "performance",
+      "description": "Core Web Vitals analysis, image optimization, bundle size reduction",
+      "triggers": [
+        "optimize performance",
+        "improve page speed",
+        "reduce bundle size",
+        "optimize images",
+        "improve load time"
+      ],
+      "applyTo": ["**/*.html", "**/*.js", "**/*.css"],
+      "targets": {
+        "lcp": "< 2.5s",
+        "fid": "< 100ms",
+        "cls": "< 0.1",
+        "fcp": "< 1.8s",
+        "ttfb": "< 600ms",
+        "lighthouseScore": 90
+      },
+      "output": {
+        "format": "markdown",
+        "location": "reports/performance-metrics.md",
+        "createPR": false,
+        "requiresApproval": false
+      }
+    },
+    
+    "media-manager": {
+      "enabled": true,
+      "type": "cloudinary",
+      "description": "Image/video optimization, responsive generation, CDN management",
+      "triggers": [
+        "optimize media",
+        "setup Cloudinary",
+        "generate responsive",
+        "compress media"
+      ],
+      "applyTo": ["**/*.html"],
+      "cloudinary": {
+        "cloudName": "${CLOUDINARY_CLOUD_NAME}",
+        "folder": "shield-sheep",
+        "transformation": {
+          "images": {
+            "quality": "auto:best",
+            "format": "auto",
+            "responsiveWidth": true
+          },
+          "videos": {
+            "quality": "auto:best",
+            "codec": "h264",
+            "bitrate": "auto"
+          }
+        }
+      },
+      "output": {
+        "format": "markdown",
+        "location": "reports/cloudinary-optimization.md",
+        "createPR": true,
+        "requiresApproval": false
+      }
+    },
+    
+    "security-auditor": {
+      "enabled": true,
+      "type": "security",
+      "description": "Vulnerability scanning, secrets detection, security validation",
+      "triggers": [
+        "security audit",
+        "check vulnerabilities",
+        "validate API keys",
+        "audit CORS"
+      ],
+      "applyTo": ["**/*"],
+      "checks": {
+        "secretsExposed": true,
+        "httpsRequired": true,
+        "corsValidation": true,
+        "dependencyVulnerabilities": true,
+        "cspHeaders": true,
+        "xssProtection": true
+      },
+      "output": {
+        "format": "json+markdown",
+        "location": "reports/security-audit.json",
+        "createPR": false,
+        "requiresApproval": true
+      }
+    },
+    
+    "test-generator": {
+      "enabled": true,
+      "type": "testing",
+      "description": "Automated test generation (unit, E2E, a11y)",
+      "triggers": [
+        "generate tests",
+        "create test suite",
+        "add a11y tests",
+        "improve coverage"
+      ],
+      "framework": "jest-playwright",
+      "coverageTarget": 85,
+      "output": {
+        "format": "javascript",
+        "location": "tests/",
+        "createPR": true,
+        "requiresApproval": false
+      }
+    },
+    
+    "documentation-generator": {
+      "enabled": true,
+      "type": "documentation",
+      "description": "Auto-generate JSDoc, README, API documentation",
+      "triggers": [
+        "generate documentation",
+        "create API docs",
+        "generate JSDoc"
+      ],
+      "applyTo": ["**/*.js", "**/*.html"],
+      "output": {
+        "format": "markdown",
+        "location": "docs/",
+        "createPR": true,
+        "requiresApproval": false
+      }
+    }
+  },
+  
+  "integrations": {
+    "jules": {
+      "enabled": true,
+      "provider": "jules.ia",
+      "apiKeyVar": "JULES_API_KEY",
+      "model": "jules-large",
+      "endpoint": "https://api.jules.ia/v1",
+      "capabilities": [
+        "code-analysis",
+        "performance-optimization",
+        "documentation-generation"
+      ]
+    },
+    
+    "qwen": {
+      "enabled": true,
+      "provider": "qwen-code",
+      "apiKeyVar": "QWEN_API_KEY",
+      "model": "qwen-coder-latest",
+      "repository": "miguelkometa03-hue/Shield-sheep",
+      "capabilities": [
+        "code-generation",
+        "refactoring",
+        "test-generation"
+      ]
+    },
+    
+    "cloudinary": {
+      "enabled": true,
+      "cloudName": "${CLOUDINARY_CLOUD_NAME}",
+      "apiKeyVar": "CLOUDINARY_API_KEY",
+      "apiSecretVar": "CLOUDINARY_API_SECRET",
+      "capabilities": [
+        "image-optimization",
+        "video-processing",
+        "responsive-generation"
+      ]
+    },
+    
+    "github": {
+      "enabled": true,
+      "tokenVar": "GITHUB_TOKEN",
+      "capabilities": [
+        "pr-creation",
+        "issue-management",
+        "workflow-triggering"
+      ]
+    }
+  },
+  
+  "phases": {
+    "phase0": {
+      "name": "Infrastructure Setup",
+      "status": "in-progress",
+      "duration": "2 weeks",
+      "tasks": [
+        "Configure agent integrations",
+        "Setup GitHub workflows",
+        "Validate APIs",
+        "Test agent sandbox"
+      ]
+    },
+    
+    "phase1": {
+      "name": "Intelligent Analysis",
+      "status": "pending",
+      "duration": "1 week",
+      "tasks": [
+        "Code-Analyzer audit",
+        "UI-UX review",
+        "Performance baseline",
+        "Security scan",
+        "Generate reports"
+      ]
+    },
+    
+    "phase2": {
+      "name": "AI-Assisted Development",
+      "status": "pending",
+      "duration": "2 weeks",
+      "tasks": [
+        "Auto-generate components",
+        "Responsive improvements",
+        "Animation engineering",
+        "Auto-documentation",
+        "Automated code review"
+      ]
+    },
+    
+    "phase3": {
+      "name": "Cloudinary Integration",
+      "status": "pending",
+      "duration": "2 weeks",
+      "tasks": [
+        "Media optimization",
+        "Template creation",
+        "CDN configuration",
+        "Performance validation",
+        "Lazy loading setup"
+      ]
+    },
+    
+    "phase4": {
+      "name": "Test Automation",
+      "status": "pending",
+      "duration": "2 weeks",
+      "tasks": [
+        "E2E test suite",
+        "A11y validation",
+        "Visual regression",
+        "Performance monitoring",
+        "CI/CD pipeline"
+      ]
+    },
+    
+    "phase5": {
+      "name": "Continuous Monitoring",
+      "status": "pending",
+      "duration": "ongoing",
+      "tasks": [
+        "Real-time monitoring",
+        "Error tracking",
+        "Analytics observation",
+        "Dependency updates",
+        "Health dashboard"
+      ]
+    }
+  },
+  
+  "metrics": {
+    "codeQuality": {
+      "target": 85,
+      "current": null,
+      "lastUpdated": null
+    },
+    "performance": {
+      "lighthouseScore": {
+        "target": 90,
+        "current": null
+      },
+      "lcp": {
+        "target": "< 2.5s",
+        "current": null
+      },
+      "cls": {
+        "target": "< 0.1",
+        "current": null
+      }
+    },
+    "accessibility": {
+      "wcagLevel": "AA",
+      "target": 95,
+      "current": null
+    },
+    "security": {
+      "vulnerabilities": {
+        "target": 0,
+        "current": null
+      },
+      "secretsExposed": {
+        "target": 0,
+        "current": null
+      }
+    },
+    "testing": {
+      "coverage": {
+        "target": 85,
+        "current": null
+      },
+      "passingTests": {
+        "target": 100,
+        "current": null
+      }
+    }
+  },
+  
+  "schedule": {
+    "dailyChecks": [
+      "security-auditor",
+      "performance-optimizer"
+    ],
+    "hourlyChecks": [
+      "code-analyzer"
+    ],
+    "weeklyChecks": [
+      "media-manager",
+      "test-generator"
+    ],
+    "onDemand": [
+      "ui-ux-pro-max",
+      "documentation-generator"
+    ]
+  },
+  
+  "environment": {
+    "required": [
+      "JULES_API_KEY",
+      "QWEN_API_KEY",
+      "CLOUDINARY_CLOUD_NAME",
+      "CLOUDINARY_API_KEY",
+      "CLOUDINARY_API_SECRET",
+      "GITHUB_TOKEN"
+    ],
+    "optional": [
+      "SECURITY_EMAIL",
+      "SENTRY_DSN",
+      "ANALYTICS_KEY"
+    ]
+  }
+}

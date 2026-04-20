@@ -1,0 +1,85 @@
+{
+  "project": "Shield-sheep",
+  "description": "E-commerce de ropa personalizada con símbolos hebreos y de fe",
+  "version": "1.0.0",
+  "owner": "miguelkometa03-hue",
+  "repository": "https://github.com/miguelkometa03-hue/Shield-sheep",
+  
+  "services": {
+    "jules": {
+      "enabled": true,
+      "apiVersion": "v1",
+      "features": [
+        "code-analysis",
+        "performance-optimization",
+        "ai-suggestions",
+        "automated-testing"
+      ],
+      "models": [
+        "gpt-4-turbo",
+        "gpt-4",
+        "gpt-3.5-turbo"
+      ]
+    },
+    "qwenCode": {
+      "enabled": true,
+      "repository": "miguelkometa03-hue/Shield-sheep",
+      "branch": "main",
+      "features": [
+        "intelligent-code-search",
+        "refactoring-assistance",
+        "bug-detection",
+        "performance-analysis"
+      ]
+    }
+  },
+  
+  "stack": {
+    "frontend": {
+      "language": "HTML5",
+      "styling": "CSS3",
+      "scripting": "JavaScript (Vanilla)",
+      "frameworks": ["No framework"]
+    },
+    "backend": {
+      "firebase": {
+        "authentication": "Firebase Auth",
+        "database": "Firestore",
+        "storage": "Firebase Storage"
+      }
+    },
+    "cdn": {
+      "cloudinary": "Image and video management",
+      "cdnjs": "Fonts and Font Awesome"
+    }
+  },
+  
+  "files": {
+    "main": [
+      "index.html",
+      "admin.html",
+      "product.html",
+      "custom-order.html"
+    ],
+    "structure": {
+      "pages": "HTML files at root",
+      "styles": "Inline CSS in HTML",
+      "scripts": "Inline JavaScript in HTML"
+    }
+  },
+  
+  "configuration": {
+    "environment": ".env",
+    "qwenConfig": ".qwen/settings.json",
+    "git": ".git/"
+  },
+  
+  "priorities": [
+    "Performance optimization",
+    "Firebase integration validation",
+    "Cloudinary implementation",
+    "Responsive design verification",
+    "Accessibility compliance",
+    "Security and CSP policies"
+  ]
+}

@@ -3,7 +3,25 @@
     "allow": [
       "Bash(file *)",
       "Bash(rm *)",
-      "Bash(mv *)"
+      "Bash(mv *)",
+      "Bash(git *)",
+      "Bash(npm *)",
+      "Bash(node *)"
+    ]
+  },
+  "repository": {
+    "owner": "miguelkometa03-hue",
+    "name": "Shield-sheep",
+    "branch": "main"
+  },
+  "ai": {
+    "provider": "qwen",
+    "model": "qwen-max",
+    "features": [
+      "code-analysis",
+      "optimization",
+      "documentation",
+      "refactoring"
     ]
   },
   "$version": 3

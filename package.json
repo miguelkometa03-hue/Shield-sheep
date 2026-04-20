@@ -1,0 +1,118 @@
+{
+  "name": "shield-sheep",
+  "version": "2.0.0",
+  "description": "AI-powered web platform with professional multimedia & autonomous agents",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "build": "npm run build:minify",
+    "build:minify": "echo 'Minifying assets...' && npm run validate",
+    "validate": "npm run agents:validate",
+    
+    "agents:validate": "node scripts/validate-agents.js",
+    "agents:status": "node scripts/agent-status.js",
+    "agents:logs": "tail -f logs/agents.log",
+    "agents:phase1": "node scripts/run-phase.js 1",
+    "agents:phase2": "node scripts/run-phase.js 2",
+    "agents:all": "npm run agents:ui-review && npm run agents:code-analysis && npm run agents:performance && npm run agents:security",
+    
+    "agents:ui-review": "node scripts/trigger-agent.js ui-ux-pro-max",
+    "agents:code-analysis": "node scripts/trigger-agent.js code-analyzer",
+    "agents:performance": "node scripts/trigger-agent.js performance-optimizer",
+    "agents:security": "node scripts/trigger-agent.js security-auditor",
+    "agents:cloudinary": "node scripts/trigger-agent.js media-manager",
+    "agents:tests": "node scripts/trigger-agent.js test-generator",
+    "agents:docs": "node scripts/trigger-agent.js documentation-generator",
+    
+    "cloudinary:validate": "node scripts/validate-cloudinary.js",
+    "cloudinary:report": "node scripts/cloudinary-report.js",
+    "cloudinary:watch": "nodemon --watch . --ext html,css scripts/cloudinary-report.js",
+    
+    "security:audit": "npm audit && npm run agents:security",
+    "security:secrets": "node scripts/detect-secrets.js",
+    "security:dependencies": "npm audit",
+    "security:headers": "node scripts/check-headers.js",
+    "security:cors": "node scripts/check-cors.js",
+    "security:code": "node scripts/check-code-security.js",
+    "security:report": "node scripts/generate-security-report.js",
+    "security:watch": "nodemon --watch . --ext js,html scripts/generate-security-report.js",
+    
+    "performance:audit": "npm run performance:lighthouse",
+    "performance:lighthouse": "node scripts/run-lighthouse.js",
+    "performance:images": "node scripts/analyze-images.js",
+    "performance:js": "node scripts/analyze-js.js",
+    "performance:css": "node scripts/analyze-css.js",
+    "performance:report": "node scripts/generate-performance-report.js",
+    "performance:watch": "nodemon --watch . --ext html,js,css scripts/generate-performance-report.js",
+    
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:a11y": "jest --testPathPattern=a11y",
+    
+    "code:fix-eslint": "eslint --fix **/*.js",
+    "code:extract-duplicates": "node scripts/extract-duplicates.js",
+    "code:refactor-complexity": "node scripts/suggest-refactors.js",
+    
+    "docs:generate": "node scripts/generate-docs.js",
+    "docs:build": "typedoc --out docs",
+    "docs:serve": "http-server ./docs -c-1 -o",
+    
+    "lint": "eslint . && stylelint **/*.css",
+    "format": "prettier --write \"**/*.{js,html,css,md,json}\"",
+    "format:check": "prettier --check \"**/*.{js,html,css,md,json}\"",
+    
+    "pre-commit": "npm run format && npm run lint && npm run agents:validate",
+    "pre-push": "npm run build && npm test && npm run agents:phase1",
+    "pre-deploy": "npm run build && npm test && npm run agents:all",
+    
+    "setup": "node scripts/setup.js",
+    "setup:env": "cp .env.template .env && echo '✓ Created .env - Please add your API keys'",
+    "setup:dependencies": "npm install && npm audit fix",
+    
+    "integrations:setup": "node scripts/setup-integrations.js",
+    "integrations:test": "node scripts/test-integrations.js",
+    "integrations:status": "node scripts/check-integrations.js",
+    
+    "reports:view": "ls -lah reports/",
+    "reports:clean": "rm -rf reports/ && mkdir reports/",
+    "reports:generate-all": "npm run performance:report && npm run security:report && npm run agents:status",
+    
+    "debug": "DEBUG=* npm start",
+    "debug:agents": "DEBUG=agent* npm run agents:status"
+  },
+  
+  "keywords": [
+    "ai-agents",
+    "cloudinary",
+    "ui-ux",
+    "web-platform",
+    "automation"
+  ],
+  
+  "author": "miguelkometa03-hue",
+  "license": "MIT",
+  
+  "devDependencies": {
+    "@testing-library/html": "^9.1.3",
+    "@testing-library/jest-dom": "^6.1.4",
+    "axe-core": "^4.8.1",
+    "chromatic": "^11.0.5",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "jest-axe": "^8.0.0",
+    "lighthouse": "^11.4.0",
+    "nodemon": "^3.0.2",
+    "playwright": "^1.42.1",
+    "prettier": "^3.1.1",
+    "stylelint": "^16.3.1",
+    "typescript": "^5.3.3"
+  },
+  
+  "dependencies": {
+    "cloudinary": "^1.40.0",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.5"
+  }
+}
