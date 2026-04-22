@@ -2,37 +2,31 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+<<<<<<< Shield-sheep
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Shield Sheep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+=======
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Shield Sheep - Panel Administrativo PRO">
     <title>Shield Sheep | Panel Administrativo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+>>>>>>> main
     <style>
         :root {
-            --oro: #d4af37;
-            --rojo: #C1121F;
-            --negro-puro: #000000;
-            --negro-suave: #121212;
-            --gris-texto: #a0a0a0;
-            --gris-claro: #e8e8e8;
-            --blanco: #ffffff;
-            --verde: #2ecc71;
-            --azul: #3498db;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --admin-bg: #f4f7f6;
+            --admin-sidebar: #2c3e50;
+            --admin-accent: #3498db;
         }
 
         body {
+<<<<<<< Shield-sheep
+            background-color: var(--admin-bg);
+            color: var(--negro);
+=======
             font-family: 'Montserrat', sans-serif;
             background-color: var(--negro-puro);
             color: var(--blanco);
@@ -87,877 +81,319 @@
 
         /* ==================== LOGIN PAGE ==================== */
         .login-container {
+>>>>>>> main
             display: flex;
-            height: 100vh;
-            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1), transparent 50%);
-            pointer-events: none;
-        }
-
-        .login-box {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 450px;
-            margin: auto;
-            padding: 3rem;
-            background: rgba(18, 18, 18, 0.9);
-            border: 2px solid var(--oro);
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
-            animation: slideInUp 0.6s ease-out;
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .login-header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            color: var(--oro);
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-        }
-
-        .login-header p {
-            color: var(--gris-texto);
-            font-size: 0.95rem;
-        }
-
-        .login-icon {
-            font-size: 3rem;
-            color: var(--oro);
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            color: var(--gris-claro);
-            font-weight: 600;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #333;
-            border-radius: 8px;
-            color: var(--blanco);
-            font-size: 1rem;
-            transition: var(--transition);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--oro);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .form-group input::placeholder {
-            color: var(--gris-texto);
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
-
-        .remember-forgot a {
-            color: var(--oro);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .remember-forgot a:hover {
-            color: var(--rojo);
-            text-shadow: 0 0 10px rgba(193, 18, 31, 0.5);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 1.1rem;
-            background: var(--oro);
-            color: var(--negro-puro);
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 1rem;
-        }
-
-        .login-btn:hover {
-            background: transparent;
-            color: var(--oro);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .login-btn:active {
-            transform: translateY(0);
-        }
-
-        .error-message {
-            background: rgba(193, 18, 31, 0.1);
-            border: 1px solid var(--rojo);
-            color: #ff6b6b;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: none;
-            animation: shake 0.3s ease-in-out;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        /* ==================== ADMIN DASHBOARD ==================== */
-        .admin-container {
-            display: none;
             min-height: 100vh;
-            background: var(--negro-puro);
         }
 
-        .admin-container.active {
-            display: flex;
-        }
-
+        /* Sidebar */
         .sidebar {
             width: 260px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
-            border-right: 2px solid var(--oro);
+            background: var(--admin-sidebar);
+            color: var(--blanco);
             padding: 2rem 0;
             position: fixed;
             height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
+            transition: all 0.3s;
         }
 
-        .sidebar-logo {
+        .sidebar-header {
+            padding: 0 2rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
             text-align: center;
-            margin-bottom: 2rem;
-            padding: 0 1rem;
         }
 
-        .sidebar-logo h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--oro);
-            font-size: 1.3rem;
-            letter-spacing: 1px;
+        .sidebar-header img {
+            width: 60px;
+            filter: invert(1);
         }
 
-        .sidebar-menu {
+        .nav-links {
             list-style: none;
         }
 
-        .sidebar-menu li {
-            margin-bottom: 0;
-        }
-
-        .sidebar-menu a {
+        .nav-links li a {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 1.5rem;
-            color: var(--gris-texto);
+            padding: 1rem 2rem;
+            color: #bdc3c7;
             text-decoration: none;
-            transition: var(--transition);
-            border-left: 3px solid transparent;
-            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--oro);
-            border-left-color: var(--oro);
-        }
-
-        .sidebar-menu i {
-            font-size: 1.2rem;
-            width: 25px;
-        }
-
-        .sidebar-logout {
-            position: absolute;
-            bottom: 2rem;
-            left: 0;
-            right: 0;
-            padding: 0 1.5rem;
-        }
-
-        .logout-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: var(--rojo);
+        .nav-links li a:hover, .nav-links li a.active {
+            background: rgba(255,255,255,0.1);
             color: var(--blanco);
-            border: 2px solid var(--rojo);
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            text-transform: uppercase;
-            font-size: 0.85rem;
+            border-left: 4px solid var(--dorado);
         }
 
-        .logout-btn:hover {
-            background: transparent;
-            color: var(--rojo);
+        .nav-links i {
+            margin-right: 15px;
+            width: 20px;
         }
 
+        /* Main Content */
         .main-content {
             margin-left: 260px;
             flex: 1;
             padding: 2rem;
         }
 
-        .header-admin {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid #333;
-        }
-
-        .header-admin h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            color: var(--oro);
-        }
-
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            border: 1px solid var(--oro);
-        }
-
-        .admin-user span {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--oro);
-            color: var(--negro-puro);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        /* ==================== CONTENT SECTIONS ==================== */
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ==================== PRODUCTS MANAGEMENT ==================== */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .product-item {
-            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-            border: 2px solid #333;
+            background: var(--blanco);
+            padding: 1rem 2rem;
             border-radius: 12px;
-            overflow: hidden;
-            transition: var(--transition);
-            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .product-item:hover {
-            border-color: var(--oro);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            background: #000;
-        }
-
-        .product-details {
-            padding: 1.5rem;
-        }
-
-        .product-details h3 {
-            color: var(--oro);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .product-price {
-            color: var(--verde);
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .btn-edit,
-        .btn-delete {
-            flex: 1;
-            padding: 0.7rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .btn-edit {
-            background: var(--azul);
-            color: var(--blanco);
-        }
-
-        .btn-edit:hover {
-            background: transparent;
-            border: 2px solid var(--azul);
-            color: var(--azul);
-        }
-
-        .btn-delete {
-            background: var(--rojo);
-            color: var(--blanco);
-        }
-
-        .btn-delete:hover {
-            background: transparent;
-            border: 2px solid var(--rojo);
-            color: var(--rojo);
-        }
-
-        /* ==================== FORMS ==================== */
-        .form-container {
-            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-            border: 2px solid var(--oro);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 700px;
-            margin-bottom: 2rem;
-        }
-
-        .form-container h2 {
-            color: var(--oro);
-            margin-bottom: 1.5rem;
-            font-family: 'Cinzel', serif;
-        }
-
-        .form-row {
+        /* Dashboard Cards */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-row.full {
-            grid-template-columns: 1fr;
-        }
-
-        .form-group-admin {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group-admin label {
-            margin-bottom: 0.7rem;
-            color: var(--gris-claro);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group-admin input,
-        .form-group-admin textarea,
-        .form-group-admin select {
-            padding: 0.9rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #333;
-            border-radius: 8px;
-            color: var(--blanco);
-            font-size: 1rem;
-            font-family: 'Montserrat', sans-serif;
-            transition: var(--transition);
-        }
-
-        .form-group-admin input:focus,
-        .form-group-admin textarea:focus,
-        .form-group-admin select:focus {
-            outline: none;
-            border-color: var(--oro);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
-
-        .form-group-admin textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .image-upload {
-            position: relative;
-            border: 2px dashed var(--oro);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .image-upload:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .image-upload input[type="file"] {
-            display: none;
-        }
-
-        .image-upload p {
-            margin: 0;
-            color: var(--gris-texto);
-        }
-
-        .image-preview {
-            margin-top: 1rem;
-            width: 100%;
-            max-width: 300px;
-            max-height: 300px;
-            border-radius: 8px;
-            border: 2px solid var(--oro);
-        }
-
-        .form-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn-submit,
-        .btn-cancel {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid var(--oro);
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .btn-submit {
-            background: var(--oro);
-            color: var(--negro-puro);
-        }
-
-        .btn-submit:hover:not(:disabled) {
-            background: transparent;
-            color: var(--oro);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-cancel {
-            background: transparent;
-            color: var(--gris-texto);
-            border-color: #333;
-        }
-
-        .btn-cancel:hover {
-            background: rgba(160, 160, 160, 0.1);
-            border-color: var(--gris-texto);
-        }
-
-        /* ==================== TABLE ==================== */
-        .table-container {
-            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-            border: 2px solid #333;
-            border-radius: 12px;
-            overflow: auto;
-            margin-bottom: 2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table thead {
-            background: rgba(212, 175, 55, 0.1);
-            border-bottom: 2px solid var(--oro);
-        }
-
-        table th {
-            padding: 1.2rem;
-            text-align: left;
-            color: var(--oro);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        table td {
-            padding: 1rem 1.2rem;
-            border-bottom: 1px solid #333;
-            color: var(--gris-claro);
-        }
-
-        table tbody tr:hover {
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        table input {
-            width: 100%;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            border-radius: 5px;
-            color: var(--blanco);
-        }
-
-        table button {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        table button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        /* ==================== STATS ==================== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-            border: 2px solid #333;
+            background: var(--blanco);
+            padding: 1.5rem;
             border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
         }
 
-        .stat-card:hover {
-            border-color: var(--oro);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
-        }
-
-        .stat-icon {
+        .stat-card i {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            margin-right: 1.5rem;
+            color: var(--dorado);
         }
 
-        .stat-number {
-            font-size: 2.2rem;
-            color: var(--oro);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
+        .stat-info h4 {
             color: var(--gris-texto);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
         }
 
-        /* ==================== MODAL ==================== */
-        .modal {
+        .stat-info span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Sections */
+        .section {
+            background: var(--blanco);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
             display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--admin-bg);
+            padding-bottom: 1rem;
+        }
+
+        /* Product Grid Admin */
+        .admin-product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .admin-card {
+            background: var(--admin-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--gris-borde);
+        }
+
+        .admin-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .admin-card-content {
+            padding: 1rem;
+        }
+
+        .admin-card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .admin-card-actions button {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-edit { background: var(--dorado); color: var(--negro); }
+        .btn-delete { background: #e74c3c; color: var(--blanco); }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gris-borde);
+        }
+
+        th { background: var(--admin-bg); }
+
+        /* Form Controls */
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--gris-borde);
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background: var(--dorado);
+            color: var(--negro);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Login Overlay */
+        #loginOverlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            background: var(--negro);
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            z-index: 2000;
         }
 
-        .modal.active {
-            display: flex;
+        .login-box {
+            background: var(--blanco);
+            padding: 3rem;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active { display: flex; }
 
         .modal-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-            border: 2px solid var(--oro);
-            border-radius: 12px;
+            background: var(--blanco);
             padding: 2rem;
-            max-width: 600px;
+            border-radius: 12px;
             width: 100%;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideInUp 0.3s ease-out;
         }
 
-        .modal-header {
+        .image-preview-container {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed var(--gris-borde);
+            border-radius: 10px;
+            margin-bottom: 1rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #333;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            background: #f9f9f9;
         }
 
-        .modal-header h2 {
-            color: var(--oro);
-            font-family: 'Cinzel', serif;
+        .image-preview-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--gris-texto);
-            font-size: 1.8rem;
+        .upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: var(--transition);
         }
 
-        .modal-close:hover {
-            color: var(--rojo);
-            transform: rotate(90deg);
-        }
-
-        /* ==================== TOAST ==================== */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1.2rem 2rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: slideInRight 0.3s ease-out;
-            z-index: 3000;
-            max-width: 350px;
-            font-weight: 600;
-        }
-
-        .toast.success {
-            background: var(--verde);
-            color: var(--blanco);
-        }
-
-        .toast.error {
-            background: var(--rojo);
-            color: var(--blanco);
-        }
-
-        .toast.info {
-            background: var(--azul);
-            color: var(--blanco);
-        }
-
-        .toast.warning {
-            background: #f39c12;
-            color: var(--blanco);
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideOutRight {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-        }
-
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 220px;
-            }
-
-            .main-content {
-                margin-left: 220px;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                left: -260px;
-                width: 260px;
-                height: 100vh;
-                transition: var(--transition);
-                z-index: 200;
-            }
-
-            .sidebar.active {
-                left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-
-            .header-admin {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .login-box {
-                padding: 2rem;
-                margin: 1rem;
-            }
-
-            .modal-content {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-box {
-                padding: 1.5rem;
-                border-radius: 10px;
-            }
-
-            .login-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .form-buttons {
-                flex-direction: column;
-            }
-
-            .product-actions {
-                flex-direction: column;
-            }
-
-            .btn-edit, .btn-delete {
-                width: 100%;
-            }
+        .image-preview-container:hover .upload-overlay {
+            display: flex;
         }
     </style>
 </head>
 <body>
 
+<<<<<<< Shield-sheep
+    <!-- Login Section -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <img src="https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&q=80&w=100" alt="Shield Sheep Logo" style="width: 80px; border-radius: 50%; margin-bottom: 1rem;">
+            <h2>Admin Login</h2>
+            <p style="color: var(--gris-texto); margin-bottom: 2rem;">Acceso restringido para personal de Shield Sheep</p>
+            <input type="password" id="adminPassword" placeholder="Contraseña de administrador">
+            <button class="btn-primary" onclick="attemptLogin()" style="width: 100%;">Entrar al Sistema</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&q=80&w=100" alt="Shield Sheep">
+            <h3 style="margin-top: 10px;">Shield Sheep</h3>
+            <p style="font-size: 0.7rem; color: var(--dorado);">SISTEMA DE GESTIÓN v2.0</p>
+=======
 <!-- Skip link for accessibility -->
 <a href="#main-admin" class="skip-link">Ir al contenido principal</a>
 
@@ -1024,9 +460,27 @@
             <button class="logout-btn" onclick="handleLogout()" aria-label="Cerrar sesión">
                 <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Cerrar Sesión
             </button>
+>>>>>>> main
         </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="switchTab('dashboard', this)"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#" onclick="switchTab('productos', this)"><i class="fas fa-box"></i> Productos</a></li>
+            <li><a href="#" onclick="switchTab('precios', this)"><i class="fas fa-tag"></i> Precios</a></li>
+            <li><a href="#" onclick="switchTab('imagenes', this)"><i class="fas fa-image"></i> Imágenes</a></li>
+            <li><a href="#" onclick="switchTab('config', this)"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li style="margin-top: 2rem;"><a href="#" onclick="logout()" style="color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+        </ul>
     </aside>
 
+<<<<<<< Shield-sheep
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="header">
+            <h2 id="pageTitle">Resumen del Sistema</h2>
+            <div class="user-info">
+                <span>Bienvenido, <strong>Admin</strong></span>
+                <i class="fas fa-user-circle" style="margin-left: 10px; font-size: 1.5rem; color: var(--admin-sidebar);"></i>
+=======
     <!-- MAIN CONTENT -->
     <main class="main-content" id="main-admin">
         <!-- HEADER -->
@@ -1038,15 +492,42 @@
                     <p style="margin: 0; font-weight: 600;">Admin Shield</p>
                     <p style="margin: 0; font-size: 0.85rem; color: var(--gris-texto);">Administrador</p>
                 </div>
+>>>>>>> main
             </div>
         </div>
 
-        <!-- ========== DASHBOARD SECTION ========== -->
-        <section class="content-section active" id="dashboard">
-            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Dashboard</h2>
-
-            <div class="stats-grid">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-grid">
                 <div class="stat-card">
+<<<<<<< Shield-sheep
+                    <i class="fas fa-boxes"></i>
+                    <div class="stat-info">
+                        <h4>Total Productos</h4>
+                        <span id="statTotalProducts">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-warehouse"></i>
+                    <div class="stat-info">
+                        <h4>Stock Total</h4>
+                        <span id="statTotalStock">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-exclamation-triangle" style="color: #e67e22;"></i>
+                    <div class="stat-info">
+                        <h4>Stock Bajo (< 5)</h4>
+                        <span id="statLowStock">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign" style="color: #27ae60;"></i>
+                    <div class="stat-info">
+                        <h4>Precio Promedio</h4>
+                        <span id="statAvgPrice">$0</span>
+                    </div>
+=======
                     <div class="stat-icon">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 16 12 21.01 20.73 16"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     </div>
@@ -1073,42 +554,69 @@
                     </div>
                     <div class="stat-number">2.4K</div>
                     <div class="stat-label">Clientes</div>
+>>>>>>> main
+                </div>
+            </div>
+
+            <div style="background: var(--blanco); padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <h3>Acciones Rápidas</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <button onclick="switchTab('productos', document.querySelector('.nav-links li:nth-child(2) a')); openProductModal();" class="btn-primary" style="background: var(--negro); color: var(--blanco);">+ Nuevo Producto</button>
+                    <button onclick="window.open('index.html', '_blank')" class="btn-primary" style="background: var(--gris-texto); color: var(--blanco);">Ver Sitio Web</button>
                 </div>
             </div>
         </section>
 
-        <!-- ========== PRODUCTS SECTION ========== -->
-        <section class="content-section" id="products">
-            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Gestión de Productos</h2>
-
-            <button style="background: var(--oro); color: var(--negro-puro); padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; margin-bottom: 2rem; text-transform: uppercase; transition: var(--transition);" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="openProductModal()">
-                <i class="fas fa-plus"></i> Nuevo Producto
-            </button>
-
-            <div class="products-grid" id="productsGrid"></div>
-        </section>
-
-        <!-- ========== PRICES SECTION ========== -->
-        <section class="content-section" id="prices">
-            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Gestión de Precios</h2>
-
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio Actual</th>
-                            <th>Nuevo Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="priceTable">
-                        <!-- Se llena dinámicamente -->
-                    </tbody>
-                </table>
+        <!-- Product Management Section -->
+        <section id="productos" class="section">
+            <div class="section-header">
+                <h3>Inventario de Productos</h3>
+                <button class="btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
+            </div>
+            <div id="productList" class="admin-product-grid">
+                <!-- Products will be rendered here -->
             </div>
         </section>
 
+<<<<<<< Shield-sheep
+        <!-- Price Management Section -->
+        <section id="precios" class="section">
+            <div class="section-header">
+                <h3>Actualización Masiva de Precios</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Actual</th>
+                        <th>Nuevo Precio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTable">
+                    <!-- Price rows will be rendered here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Image Management Section -->
+        <section id="imagenes" class="section">
+            <div class="section-header">
+                <h3>Gestor de Multimedia</h3>
+            </div>
+            <div style="max-width: 600px; margin: 0 auto; background: var(--admin-bg); padding: 2rem; border-radius: 12px;">
+                <form id="imageUploadForm" onsubmit="handleImageUpload(event)">
+                    <label>1. Selecciona el Producto</label>
+                    <select id="imageProductSelect" required></select>
+
+                    <label>2. Carga la nueva imagen</label>
+                    <div class="image-preview-container">
+                        <img id="imagePreview" src="" alt="Preview">
+                        <label for="imageInput" class="upload-overlay">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem;"></i>
+                            <span>Haz clic para subir</span>
+                        </label>
+=======
         <!-- ========== IMAGES SECTION ========== -->
         <section class="content-section" id="images">
             <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Gestión de Imágenes</h2>
@@ -1177,105 +685,34 @@
                             <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)" style="display:none;">
                         </div>
                         <img id="imagePreview" class="image-preview" style="display: none;">
+>>>>>>> main
                     </div>
+                    <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="previewImage(event)">
 
-                    <div class="form-buttons">
-                        <button type="submit" class="btn-submit">Subir Imagen</button>
-                        <button type="button" class="btn-cancel" onclick="resetImageForm()">Limpiar</button>
-                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Actualizar Imagen del Producto</button>
                 </form>
             </div>
         </section>
 
-        <!-- ========== ORDERS SECTION ========== -->
-        <section class="content-section" id="orders">
-            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Pedidos Recientes</h2>
-
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID Pedido</th>
-                            <th>Cliente</th>
-                            <th>Total</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#SS001</td>
-                            <td>María García</td>
-                            <td>$105,000</td>
-                            <td>2026-03-10</td>
-                            <td><span style="background: var(--verde); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem;">Entregado</span></td>
-                            <td><button style="background: var(--azul); color: var(--blanco);">Ver</button></td>
-                        </tr>
-                        <tr>
-                            <td>#SS002</td>
-                            <td>Juan Rodríguez</td>
-                            <td>$85,000</td>
-                            <td>2026-03-11</td>
-                            <td><span style="background: #f39c12; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; color: var(--blanco);">Procesando</span></td>
-                            <td><button style="background: var(--azul); color: var(--blanco);">Ver</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Configuration Section -->
+        <section id="config" class="section">
+            <div class="section-header">
+                <h3>Configuración General</h3>
             </div>
-        </section>
-
-        <!-- ========== SETTINGS SECTION ========== -->
-        <section class="content-section" id="settings">
-            <h2 style="color: var(--oro); font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 2rem;">Configuración</h2>
-
-            <div class="form-container">
-                <h2>Información de la Tienda</h2>
+            <div style="max-width: 600px;">
                 <form onsubmit="handleSettingsSave(event)">
-                    <div class="form-row">
-                        <div class="form-group-admin">
-                            <label>Nombre de Tienda</label>
-                            <input type="text" value="Shield Sheep" required>
-                        </div>
-                        <div class="form-group-admin">
-                            <label>Email de Contacto</label>
-                            <input type="email" value="info@shieldsheep.com" required>
-                        </div>
-                    </div>
+                    <h4 style="margin-bottom: 1rem;">Información para Inversores</h4>
+                    <p style="font-size: 0.85rem; color: var(--gris-texto); margin-bottom: 1rem;">Esta información se mostrará a los usuarios que ingresen con la clave de inversor en la web principal.</p>
+                    <label>Texto de Contacto / Info Privada</label>
+                    <textarea id="investorContactInput" rows="4" placeholder="Ej: Contactar a inversion@shieldsheep.com para el pitch deck..."></textarea>
 
-                    <div class="form-row">
-                        <div class="form-group-admin">
-                            <label>Teléfono</label>
-                            <input type="tel" value="+573505424345" required>
-                        </div>
-                        <div class="form-group-admin">
-                            <label>País</label>
-                            <input type="text" value="Colombia" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row full">
-                        <div class="form-group-admin">
-                            <label>Dirección</label>
-                            <input type="text" value="Bogotá, Colombia" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row full">
-                        <div class="form-group-admin">
-                            <label>Descripción</label>
-                            <textarea required>Especialistas en ropa personalizada de alta calidad ubicados en Bogotá. Creamos prendas únicas que reflejan tu fe y personalidad.</textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-buttons">
-                        <button type="submit" class="btn-submit">Guardar Cambios</button>
-                        <button type="reset" class="btn-cancel">Cancelar</button>
-                    </div>
+                    <button type="submit" class="btn-primary">Guardar Configuración</button>
                 </form>
             </div>
         </section>
     </main>
+<<<<<<< Shield-sheep
+=======
 </div>
 
 <!-- ==================== PRODUCT MODAL ==================== -->
@@ -1287,42 +724,53 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
         </div>
+>>>>>>> main
 
-        <form onsubmit="handleProductSubmit(event)" id="productForm" autocomplete="off">
-            <input type="hidden" id="editingProductId" value="">
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" style="margin-bottom: 1.5rem;">Nuevo Producto</h2>
+            <form id="productForm" onsubmit="handleProductSubmit(event)">
+                <input type="hidden" id="editingProductId">
 
-            <div class="form-group-admin">
                 <label>Nombre del Producto *</label>
-                <input type="text" id="productName" placeholder="Ej: Camiseta Premium" required>
-            </div>
+                <input type="text" id="productName" required>
 
-            <div class="form-group-admin" style="margin-top: 1rem;">
-                <label>Descripción *</label>
-                <textarea id="productDescription" placeholder="Describe el producto" required></textarea>
-            </div>
-
-            <div class="form-row" style="margin-top: 1rem;">
-                <div class="form-group-admin">
-                    <label>Precio (COP) *</label>
-                    <input type="number" id="productPrice" placeholder="35000" required min="0">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label>Precio (COP) *</label>
+                        <input type="number" id="productPrice" required min="0">
+                    </div>
+                    <div>
+                        <label>Stock Inicial *</label>
+                        <input type="number" id="productStock" required min="0">
+                    </div>
                 </div>
-                <div class="form-group-admin">
-                    <label>Stock *</label>
-                    <input type="number" id="productStock" placeholder="10" required min="0">
-                </div>
-            </div>
 
-            <div class="form-group-admin" style="margin-top: 1rem;">
                 <label>Categoría *</label>
                 <select id="productCategory" required>
-                    <option value="">-- Elige una categoría --</option>
-                    <option value="camisetas">Camisetas</option>
-                    <option value="sudaderas">Sudaderas</option>
-                    <option value="accesorios">Accesorios</option>
-                    <option value="gorras">Gorras</option>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Protección Espiritual">Protección Espiritual</option>
+                    <option value="Textiles Místicos">Textiles Místicos</option>
+                    <option value="Alquimia">Alquimia</option>
+                    <option value="Otros">Otros</option>
                 </select>
-            </div>
 
+<<<<<<< Shield-sheep
+                <label>Descripción *</label>
+                <textarea id="productDescription" rows="3" required></textarea>
+
+                <label>Imagen del Producto</label>
+                <div class="image-preview-container" style="height: 150px;">
+                    <img id="productImagePreview" src="" alt="">
+                    <label for="productImage" class="upload-overlay">
+                        <i class="fas fa-camera"></i>
+                        <span id="uploadText">Subir foto</span>
+                    </label>
+                </div>
+                <p id="imageHelperText" style="font-size: 0.7rem; color: var(--gris-texto); margin-top: -0.5rem; margin-bottom: 1rem; display: none;">Mantendrás la imagen actual si no seleccionas una nueva.</p>
+                <input type="file" id="productImage" accept="image/*" style="display:none;" onchange="previewProductImage(event)">
+=======
             <div class="form-group-admin" style="margin-top: 1rem;">
                 <label>Imagen del Producto</label>
 
@@ -1372,130 +820,17 @@
                     </button>
                 </div>
             </div>
+>>>>>>> main
 
-            <div class="form-buttons" style="margin-top: 2rem;">
-                <button type="submit" class="btn-submit" id="productSaveBtn">Crear Producto</button>
-                <button type="button" class="btn-cancel" onclick="closeProductModal()">Cancelar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    // ==================== CONFIGURATION ====================
-    const ADMIN_CREDENTIALS = {
-        email: 'admin@shieldsheep.com',
-        password: 'Admin123'
-    };
-
-    let isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
-    let productos = JSON.parse(localStorage.getItem('productosShield')) || [
-        { id: 1, name: "Camiseta Classic White", price: 35000, stock: 10, category: "camisetas", description: "100% algodón premium, cómoda y versátil", image: "https://via.placeholder.com/400x500?text=Camiseta+White" },
-        { id: 2, name: "Camiseta Black Faith", price: 35000, stock: 8, category: "camisetas", description: "Diseño exclusivo con símbolos hebreos", image: "https://via.placeholder.com/400x500?text=Camiseta+Black" },
-        { id: 3, name: "Hoodie Shield Premium", price: 85000, stock: 5, category: "sudaderas", description: "Sudadera de lujo con logo bordado", image: "https://via.placeholder.com/400x500?text=Hoodie" }
-    ];
-
-    // ==================== STORAGE ====================
-    function saveProductos() {
-        localStorage.setItem('productosShield', JSON.stringify(productos));
-    }
-
-    // ==================== AUTHENTICATION ====================
-    function checkLogin() {
-        if (!isLoggedIn) {
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('adminContainer').classList.remove('active');
-        } else {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('adminContainer').classList.add('active');
-            initializeAdmin();
-        }
-    }
-
-    function handleLogin(e) {
-        e.preventDefault();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const errorMsg = document.getElementById('errorMessage');
-
-        if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
-            isLoggedIn = true;
-            localStorage.setItem('adminLoggedIn', 'true');
-            errorMsg.classList.remove('show');
-            document.getElementById('loginForm').reset();
-            checkLogin();
-            showToast('¡Bienvenido administrador!', 'success');
-        } else {
-            errorMsg.classList.add('show');
-            errorMsg.textContent = '❌ Email o contraseña incorrectos. Intenta nuevamente.';
-        }
-    }
-
-    function handleLogout() {
-        if (confirm('¿Deseas cerrar sesión?')) {
-            isLoggedIn = false;
-            localStorage.removeItem('adminLoggedIn');
-            checkLogin();
-            showToast('Sesión cerrada', 'info');
-        }
-    }
-
-    // ==================== INITIALIZATION ====================
-    function initializeAdmin() {
-        renderProducts();
-        renderPriceTable();
-        renderImageProductSelect();
-        updateDashboard();
-    }
-
-    // ==================== SECTIONS ====================
-    function showSection(sectionId, event) {
-        if (event) event.preventDefault();
-        
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-
-        document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
-        event.target.closest('a').classList.add('active');
-    }
-
-    // ==================== DASHBOARD ====================
-    function updateDashboard() {
-        document.getElementById('productCount').textContent = productos.length;
-        let totalIngresos = 0;
-        productos.forEach(p => {
-            totalIngresos += (p.price * 2); // Multiplicar por 2 para simular ventas
-        });
-        document.getElementById('totalRevenue').textContent = '$' + totalIngresos.toLocaleString('es-CO');
-    }
-
-    // ==================== PRODUCTS MANAGEMENT ====================
-    function renderProducts() {
-        const grid = document.getElementById('productsGrid');
-        if (productos.length === 0) {
-            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--gris-texto); padding: 3rem;"><i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem;"></i><p>No hay productos aún. ¡Crea uno!</p></div>';
-            return;
-        }
-        
-        grid.innerHTML = productos.map(p => `
-            <div class="product-item">
-                <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x500?text=Sin+Imagen'">
-                <div class="product-details">
-                    <h3>${p.name}</h3>
-                    <p class="product-price">$${p.price.toLocaleString('es-CO')}</p>
-                    <p style="color: var(--gris-texto); font-size: 0.9rem; margin-bottom: 1rem;">
-                        <i class="fas fa-boxes"></i> Stock: <strong>${p.stock}</strong> | 
-                        <i class="fas fa-tag"></i> <strong>${p.category}</strong>
-                    </p>
-                    <div class="product-actions">
-                        <button class="btn-edit" onclick="editProduct(${p.id})">
-                            <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="btn-delete" onclick="deleteProduct(${p.id})">
-                            <i class="fas fa-trash"></i> Borrar
-                        </button>
-                    </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" class="btn-primary" style="background: var(--gris-borde); flex: 1;" onclick="closeProductModal()">Cancelar</button>
+                    <button type="submit" id="productSaveBtn" class="btn-primary" style="flex: 2;">Guardar Producto</button>
                 </div>
+<<<<<<< Shield-sheep
+            </form>
+        </div>
+    </div>
+=======
             </div>
         `).join('');
     }
@@ -1547,36 +882,56 @@
             showToast('⚠️ El precio y stock no pueden ser negativos', 'warning');
             return;
         }
+>>>>>>> main
 
-        if (id) {
-            // EDIT
-            const index = productos.findIndex(p => p.id == id);
-            if (index !== -1) {
-                productos[index] = {
-                    ...productos[index],
-                    name,
-                    description,
-                    price,
-                    stock,
-                    category,
-                    image: image && image !== 'https://via.placeholder.com/400x500?text=Sin+Imagen' ? image : productos[index].image
-                };
-                showToast('✅ Producto editado correctamente', 'success');
-            }
-        } else {
-            // CREATE
-            productos.push({
-                id: Math.max(...productos.map(p => p.id), 0) + 1,
-                name,
-                description,
-                price,
-                stock,
-                category,
-                image
-            });
-            showToast('✅ Producto creado exitosamente', 'success');
+    <!-- Scripts -->
+    <script src="js/ui.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Tab Management
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            element.classList.add('active');
+
+            const titles = {
+                'dashboard': 'Resumen del Sistema',
+                'productos': 'Gestión de Inventario',
+                'precios': 'Control de Precios',
+                'imagenes': 'Gestión Multimedia',
+                'config': 'Configuración'
+            };
+            document.getElementById('pageTitle').textContent = titles[tabId];
         }
 
+        // Authentication UI Logic
+        function attemptLogin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === 'SHIELD2026') {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('loginOverlay').style.display = 'none';
+                initAdmin();
+                showToast('🚀 Bienvenid@ al sistema', 'success');
+            } else {
+                showToast('❌ Contraseña incorrecta', 'error');
+            }
+        }
+
+<<<<<<< Shield-sheep
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            location.reload();
+        }
+
+        // Check login on load
+        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+            document.getElementById('loginOverlay').style.display = 'none';
+        } else {
+            document.getElementById('loginOverlay').style.display = 'flex';
+=======
         saveProductos();
         renderProducts();
         renderPriceTable();
@@ -1909,12 +1264,8 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeProductModal();
+>>>>>>> main
         }
-    });
-
-    // ==================== INITIALIZE ====================
-    checkLogin();
-</script>
-
+    </script>
 </body>
 </html>
