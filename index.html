@@ -1007,41 +1007,34 @@
 </head>
 <body>
 
-<<<<<<< Shield-sheep
 <div class="overlay" id="overlay" onclick="toggleCart()"></div>
-=======
 <div class="overlay" id="overlay" onclick="toggleCart()" role="presentation"></div>
 
 <!-- Skip link for accessibility -->
 <a href="#main-content" class="skip-link">Ir al contenido principal</a>
->>>>>>> main
+
 
 <header>
     <div class="header-wrapper">
         <!-- ✅ CONECTADO: nombre de tienda desde admin -->
         <a href="#" class="logo" id="store-logo">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M18 10a6 6 0 0 1-12 0"/><path d="M12 18v4"/><path d="M8 22h8"/></svg>
-            Shield Sheep
+            Sheep Shield
         </a>
 
         <nav id="desktop-nav" aria-label="Navegación principal">
             <a href="#categorias">Categorías</a>
             <a href="#productos">Tienda</a>
-<<<<<<< Shield-sheep
             <a href="#pedido-personalizado">Personalizados</a>
             <a href="#inversores">Inversores</a>
-=======
             <a href="#galeria">Galería</a>
             <a href="#testimonios">Testimonios</a>
->>>>>>> main
             <a href="#contacto">Contacto</a>
         </nav>
 
         <div class="header-actions">
-<<<<<<< Shield-sheep
             <button class="cart-btn" onclick="toggleCart()">
                 🛒 <span id="cart-count">0</span>
-=======
             <input type="text" class="search-bar" id="search-input"
                    placeholder="Buscar productos..."
                    oninput="filtrarProductos(this.value)"
@@ -1052,7 +1045,6 @@
             <button class="cart-btn" onclick="toggleCart()" aria-label="Abrir carrito de compras">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
                 <span id="cart-count">0</span>
->>>>>>> main
             </button>
         </div>
     </div>
@@ -1065,13 +1057,10 @@
     </nav>
 </header>
 
-<<<<<<< Shield-sheep
-=======
 <!-- MAIN CONTENT WRAPPER -->
 <div id="main-content">
 
 <!-- HERO -->
->>>>>>> main
 <section class="hero">
     <div class="hero-content">
         <h1 id="hero-nombre">SHIELD SHEEP</h1>
@@ -1090,7 +1079,6 @@
         <h2 class="section-title">Nuestras Categorías</h2>
         <p class="section-subtitle">Explora nuestra selección de productos diseñados con fe y calidad</p>
         <div class="categories-grid">
-<<<<<<< Shield-sheep
             <div class="category-card">
                 <img src="images/shirt7.jpg" alt="Camisetas">
                 <div class="category-info"><h3>Camisetas</h3><p>Comodidad y estilo en cada prenda</p></div>
@@ -1105,7 +1093,6 @@
             </div>
             <div class="category-card">
                 <img src="images/shirt12.jpg" alt="Gorras">
-=======
             <div class="category-card" onclick="filtrarPorCategoria('camisetas')">
                 <img src="https://res.cloudinary.com/dkfqhyxqo/image/upload/f_auto,q_auto/shirt7_loqbjg.jpg" alt="Camisetas Shield Sheep" loading="lazy"
                      onerror="this.src='https://via.placeholder.com/400x220/1a1a1a/d4af37?text=Camisetas'">
@@ -1124,7 +1111,6 @@
             <div class="category-card" onclick="filtrarPorCategoria('gorras')">
                 <img src="https://res.cloudinary.com/dkfqhyxqo/image/upload/f_auto,q_auto/Cap_hxwqyv.jpg" alt="Gorras Shield Sheep" loading="lazy"
                      onerror="this.src='https://via.placeholder.com/400x220/1a1a1a/d4af37?text=Gorras'">
->>>>>>> main
                 <div class="category-info"><h3>Gorras</h3><p>Estilo urbano y personalizado</p></div>
             </div>
         </div>
@@ -1149,7 +1135,6 @@
 
 <section id="pedido-personalizado" class="cta-section" style="background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); border-top: 1px solid #333;">
     <div class="container">
-<<<<<<< Shield-sheep
         <h2 class="section-title">Tu Propio Diseño</h2>
         <p class="section-subtitle">¿Tienes un símbolo o mensaje especial? Creamos tu prenda personalizada con la misma calidad premium de Shield Sheep.</p>
         <div style="max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; border: 1px solid var(--oro);">
@@ -1184,7 +1169,6 @@
                 <input type="password" id="investorKey" placeholder="Código de Acceso" style="width:100%; padding:0.8rem; background:#222; color:#fff; border:1px solid #444; border-radius:6px; margin-bottom: 1rem;">
                 <button class="btn" onclick="authInvestor()" style="width:100%;">Ingresar</button>
                 <p style="font-size: 0.8rem; color: var(--gris-texto); margin-top: 1rem;">Código por defecto: SHIELD2026</p>
-=======
         <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
         <p class="section-subtitle">Miles de clientes satisfechos en toda Colombia</p>
         <div class="testimonials-grid">
@@ -1199,7 +1183,6 @@
                 <p class="testimonial-text">"El proceso fue súper fácil y la atención al cliente excepcional. Mis camisetas llegaron en tiempo récord."</p>
                 <p class="testimonial-author">Juan Rodríguez</p>
                 <p class="testimonial-location">Medellín, Colombia</p>
->>>>>>> main
             </div>
             <div id="investor-content" style="display: none;">
                 <i class="fas fa-handshake" style="font-size: 2rem; color: var(--verde-acento); margin-bottom: 1rem;"></i>
@@ -1211,9 +1194,8 @@
     </div>
 </section>
 
-<<<<<<< Shield-sheep
 <section class="testimonials-section" id="testimonios">
-=======
+
 <!-- GALERÍA LOOKBOOK -->
 <section class="gallery-section" id="galeria">
     <div class="container">
@@ -1250,7 +1232,6 @@
 
 <!-- CTA -->
 <section class="cta-section">
->>>>>>> main
     <div class="container">
         <h2 class="section-title">Lo Que Dicen</h2>
         <div class="testimonials-grid">
@@ -1258,17 +1239,6 @@
             <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"El proceso fue súper fácil y la atención al cliente excepcional."</p><p class="testimonial-author">Juan Rodríguez</p></div>
         </div>
     </div>
-</section>
-
-<<<<<<< Shield-sheep
-<footer id="contacto">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section"><h4>Sobre Shield Sheep</h4><p>Especialistas en ropa personalizada de alta calidad en Bogotá. Reflejamos tu fe con símbolos hebreos.</p></div>
-            <div class="footer-section"><h4>Contacto</h4><a href="tel:+573505424345">📱 +57 (350) 5424345</a><a href="mailto:info@shieldsheep.com">📧 info@shieldsheep.com</a></div>
-=======
-</div>
-<!-- END MAIN CONTENT -->
 
 <!-- FOOTER — ✅ CONECTADO: datos de contacto desde admin -->
 <footer id="contacto">
@@ -1311,35 +1281,29 @@
                     <button onclick="subscribeNewsletter()">Enviar</button>
                 </div>
             </div>
->>>>>>> main
-        </div>
         <div class="footer-bottom">
             <div class="social-links">
-<<<<<<< Shield-sheep
                 <a href="#">f</a><a href="#">📷</a><a href="#">💬</a>
             </div>
-            <p>&copy; 2026 Shield Sheep | Bogotá, Colombia</p>
-=======
-                <a href="https://facebook.com/shieldsheep"  title="Facebook"  target="_blank" rel="noopener noreferrer" aria-label="Visítanos en Facebook">
+            <p>&copy; 2026 Sheep Shield | Bogotá, Colombia</p>
+                <a href="https://facebook.com/sheepshield"  title="Facebook"  target="_blank" rel="noopener noreferrer" aria-label="Visítanos en Facebook">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 </a>
-                <a href="https://instagram.com/shieldsheep" title="Instagram" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
+                <a href="https://instagram.com/sheepshield" title="Instagram" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 </a>
                 <a id="whatsapp-link" href="https://wa.me/573505424345" title="WhatsApp" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 </a>
-                <a href="https://tiktok.com/@shieldsheep"   title="TikTok"    target="_blank" rel="noopener noreferrer" aria-label="Mira nuestros videos en TikTok">
+                <a href="https://tiktok.com/@sheepshield"   title="TikTok"    target="_blank" rel="noopener noreferrer" aria-label="Mira nuestros videos en TikTok">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.82-.31-4.02-1.07-1.38-.87-2.39-2.28-2.83-3.89-.49-1.79-.26-3.71.57-5.36.83-1.63 2.34-2.83 4.1-3.27 1.13-.28 2.32-.29 3.46-.03v4.13c-.47-.17-.98-.24-1.49-.18-.74.09-1.41.48-1.86 1.07-.46.6-.66 1.37-.57 2.12.09.76.47 1.46 1.07 1.94.59.48 1.35.7 2.1.61.81-.09 1.54-.54 2.02-1.2.48-.66.71-1.47.66-2.29.02-5.16.01-10.33.01-15.49z"/></svg>
                 </a>
             </div>
-            <p id="footer-copy">&copy; 2026 Shield Sheep | Todos los derechos reservados | Bogotá, Colombia</p>
->>>>>>> main
+            <p id="footer-copy">&copy; 2026 Sheep Shield | Todos los derechos reservados | Bogotá, Colombia</p>
         </div>
     </div>
 </footer>
 
-<<<<<<< Shield-sheep
 <div id="cart-sidebar">
     <div class="cart-header"><h3>Tu Carrito</h3><button class="close-cart" onclick="toggleCart()">✕</button></div>
     <div id="cart-items-list"></div>
@@ -1364,7 +1328,7 @@
         <div style="display:flex; gap:1rem; margin-top: 2rem;">
             <button type="button" class="btn" id="detailsAddBtn" style="flex:1;">Añadir</button>
             <button type="button" class="btn btn-secondary" onclick="closeDetailsModal()" style="flex:1;">Cerrar</button>
-=======
+
 <!-- CARRITO SIDEBAR -->
 <div id="cart-sidebar" role="dialog" aria-label="Carrito de compras" aria-modal="true">
     <div class="cart-header">
@@ -1404,12 +1368,10 @@
         <div class="modal-actions">
             <button class="btn-confirm" onclick="confirmarTalla()">Añadir al Carrito</button>
             <button class="btn-cancel"  onclick="cerrarModal()">Cancelar</button>
->>>>>>> main
         </div>
     </div>
 </div>
 
-<<<<<<< Shield-sheep
 <script src="js/products.js"></script>
 <script src="js/ui.js"></script>
 <script>
@@ -1522,9 +1484,9 @@
     function logoutInvestor() {
         document.getElementById('investor-login').style.display = 'block';
         document.getElementById('investor-content').style.display = 'none';
-=======
+
 <!-- ============================================================
-     ⚙️ JAVASCRIPT — conectado con admin vía localStorage
+    ⚙️ //JAVASCRIPT — conectado con admin vía localStorage
      ============================================================ -->
 <script>
 // ==================== CONEXIÓN CON ADMIN (localStorage) ====================
@@ -1879,10 +1841,10 @@ function checkout() {
     const tel = s && s.telefono ? s.telefono.replace(/\D/g, '') : '573505424345';
 
     const mensaje =
-        `¡Hola Shield Sheep!%0A%0A` +
+        `¡Hola Sheep Shield!%0A%0A` +
         `Quiero comprar los siguientes productos:%0A%0A${lineas}%0A%0A` +
         `💰 TOTAL: $${total.toLocaleString('es-CO')}%0A%0A` +
-        `¿Cuál es el proceso siguiente?`;
+        `¿Cuál es el proceso siguiente para el envío del pedido? ¿esta incluido el IVA? ¿donde son las instalaciones? 
 
     const wa = window.open(`https://wa.me/${tel}?text=${mensaje}`, '_blank', 'noopener,noreferrer');
     if (wa) wa.opener = null;
@@ -1961,16 +1923,14 @@ window.addEventListener('storage', e => {
     }
     if (e.key === 'ss_settings' || e.key === 'ss_public_settings') {
         aplicarSettings();
->>>>>>> main
     }
 });
 
-<<<<<<< Shield-sheep
     function subscribeNewsletter() { mostrarToast("¡Suscrito!"); }
 
     renderProductos();
     actualizarContador();
-=======
+
 // Cerrar con ESC
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
@@ -1978,7 +1938,6 @@ document.addEventListener('keydown', e => {
         if (document.getElementById('modal-talla').classList.contains('active')) cerrarModal();
     }
 });
->>>>>>> main
 </script>
 </body>
 </html>
