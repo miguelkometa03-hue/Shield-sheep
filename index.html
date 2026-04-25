@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="css/main.css">
     
     <style>
-        body { overflow-x: hidden; }
         .product-image-container:hover .view-details-hover { transform: translateY(0) !important; }
         .product-image-container { cursor: pointer; }
         .view-details-hover {
@@ -317,7 +316,7 @@
         if (document.getElementById('investorKey').value === INVESTOR_KEY) {
             document.getElementById('investor-login').style.display = 'none';
             document.getElementById('investor-content').style.display = 'block';
-            document.getElementById('investorInfoBox').innerText = localStorage.getItem('investorContactShield') || "WhatsApp: +57 350 5424345 | Email: inversores@shieldsheep.com";
+            document.getElementById('investorInfoBox').innerText = localStorage.getItem('investorContactInfo') || "WhatsApp: +57 350 5424345 | Email: inversores@shieldsheep.com";
             mostrarToast("Acceso concedido");
         } else { mostrarToast("Código incorrecto", "warning"); }
     }
