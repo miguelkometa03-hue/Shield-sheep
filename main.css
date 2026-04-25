@@ -20,8 +20,14 @@
     box-sizing: border-box;
 }
 
+/* ── Global overflow guard ────────────────────────────────────────────── */
+*, *::before, *::after { max-width: 100%; }
+img { max-width: 100%; height: auto; }
+
+
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -974,6 +980,7 @@ footer {
     top: 0;
     left: 0;
     width: 100%;
+    max-width: 100vw;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: none;

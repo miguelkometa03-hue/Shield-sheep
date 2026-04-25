@@ -42,6 +42,68 @@
         .modal-header h2 { color: var(--oro); font-family: 'Cinzel', serif; }
         .modal-close { background: none; border: none; color: var(--gris-texto); font-size: 1.8rem; cursor: pointer; transition: 0.3s; }
         .modal-close:hover { color: var(--rojo); transform: rotate(90deg); }
+
+        /* ── Mobile Nav Drawer ───────────────────────────────── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid var(--oro);
+            color: var(--oro);
+            padding: 0.45rem 0.65rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-toggle:hover { background: var(--oro); color: var(--negro-puro); }
+
+        .mobile-nav-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1998; display: none;
+        }
+        .mobile-nav-overlay.active { display: block; }
+
+        .mobile-nav {
+            position: fixed; top: 0; left: -290px;
+            width: 280px; height: 100vh;
+            background: #0d0d0d;
+            border-right: 3px solid var(--oro);
+            z-index: 1999;
+            padding: 1.5rem 1.5rem 2rem;
+            transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+            display: flex; flex-direction: column; gap: 0;
+            overflow-y: auto;
+        }
+        .mobile-nav.active { left: 0; }
+
+        .mobile-nav-close {
+            background: none; border: none;
+            color: var(--oro); font-size: 1.4rem;
+            cursor: pointer; align-self: flex-end;
+            margin-bottom: 1.5rem; padding: 0.25rem;
+            transition: var(--transition);
+        }
+        .mobile-nav-close:hover { color: var(--rojo); transform: rotate(90deg); }
+
+        .mobile-nav a {
+            color: #ccc; text-decoration: none;
+            padding: 1rem 0.5rem;
+            font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 0.85rem;
+            border-bottom: 1px solid #222;
+            transition: var(--transition);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .mobile-nav a:hover { color: var(--oro); padding-left: 1rem; }
+        .mobile-nav a i { width: 16px; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+        }
     </style>
 </head>
 <body>
@@ -59,12 +121,26 @@
             <a href="#contacto">Contacto</a>
         </nav>
         <div class="header-actions">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
             <button class="cart-btn" onclick="toggleCart()">
                 🛒 <span id="cart-count">0</span>
             </button>
         </div>
     </div>
 </header>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="closeMobileNav()"></div>
+<nav class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Cerrar menú">✕</button>
+    <a href="#categorias" onclick="closeMobileNav()"><i class="fas fa-th-large"></i> Categorías</a>
+    <a href="#productos" onclick="closeMobileNav()"><i class="fas fa-shopping-bag"></i> Tienda</a>
+    <a href="#pedido-personalizado" onclick="closeMobileNav()"><i class="fas fa-paint-brush"></i> Personalizados</a>
+    <a href="#inversores" onclick="closeMobileNav()"><i class="fas fa-handshake"></i> Inversores</a>
+    <a href="#contacto" onclick="closeMobileNav()"><i class="fas fa-envelope"></i> Contacto</a>
+</nav>
 
 <section class="hero">
     <div class="hero-content">
@@ -84,19 +160,19 @@
         <p class="section-subtitle">Explora nuestra selección de productos diseñados con fe y calidad</p>
         <div class="categories-grid">
             <div class="category-card">
-                <img src="images/shirt7.jpg" alt="Camisetas">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80" alt="Camisetas">
                 <div class="category-info"><h3>Camisetas</h3><p>Comodidad y estilo en cada prenda</p></div>
             </div>
             <div class="category-card">
-                <img src="images/shirt8.jpg" alt="Sudaderas">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?auto=format&fit=crop&w=600&q=80" alt="Sudaderas">
                 <div class="category-info"><h3>Sudaderas</h3><p>Calidez con diseño premium</p></div>
             </div>
             <div class="category-card">
-                <img src="images/shirt9.jpg" alt="Accesorios">
+                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=600&q=80" alt="Accesorios">
                 <div class="category-info"><h3>Accesorios</h3><p>Complementos únicos y exclusivos</p></div>
             </div>
             <div class="category-card">
-                <img src="images/shirt12.jpg" alt="Gorras">
+                <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=600&q=80" alt="Gorras">
                 <div class="category-info"><h3>Gorras</h3><p>Estilo urbano y personalizado</p></div>
             </div>
         </div>
@@ -329,6 +405,18 @@
 
     renderProductos();
     actualizarContador();
+
+    function openMobileNav() {
+        document.getElementById('mobileNav').classList.add('active');
+        document.getElementById('mobileNavOverlay').classList.add('active');
+        document.getElementById('menuToggle').setAttribute('aria-expanded', 'true');
+    }
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('active');
+        document.getElementById('mobileNavOverlay').classList.remove('active');
+        document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
+    }
+    document.getElementById('menuToggle').addEventListener('click', openMobileNav);
 </script>
 </body>
 </html>
